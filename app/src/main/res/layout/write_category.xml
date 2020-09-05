@@ -96,6 +96,33 @@
 
     <LinearLayout
         android:layout_marginVertical="5dp"
+        android:id="@+id/layoutKitchen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/kitchen" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:text="주방용품"/>
+    </LinearLayout>
+    <View
+        android:background="#939292"
+        android:layout_width="match_parent"
+        android:layout_height="6px"/>
+
+    <LinearLayout
+        android:layout_marginVertical="5dp"
         android:id="@+id/layoutDigital"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -78,7 +78,7 @@
             <ImageButton
                 android:layout_gravity="center"
                 android:id="@+id/btnClothing"
-                android:layout_marginHorizontal="5dp"
+                android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
@@ -103,7 +103,7 @@
             <ImageButton
                 android:layout_gravity="center"
                 android:id="@+id/btnDaily"
-                android:layout_marginHorizontal="5dp"
+                android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
@@ -127,8 +127,33 @@
 
             <ImageButton
                 android:layout_gravity="center"
+                android:id="@+id/btnKitchen"
+                android:paddingHorizontal="10dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/kitchen" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#000000"
+                android:text="주방용품"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_gravity="center"
                 android:id="@+id/btnDigital"
-                android:layout_marginHorizontal="5dp"
+                android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
@@ -153,7 +178,7 @@
             <ImageButton
                 android:layout_gravity="center"
                 android:id="@+id/btnBook"
-                android:layout_marginHorizontal="5dp"
+                android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
@@ -178,7 +203,7 @@
             <ImageButton
                 android:layout_gravity="center"
                 android:id="@+id/btnEtc"
-                android:layout_marginHorizontal="5dp"
+                android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
