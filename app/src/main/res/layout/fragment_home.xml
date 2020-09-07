@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/edtSearch"
+            android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
@@ -24,31 +24,31 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/btnSearch"
+                android:id="@+id/btn_search"
                 android:layout_marginHorizontal="5dp"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgSearch" />
+                android:src="@drawable/search" />
 
             <ImageButton
-                android:id="@+id/btnHeart"
+                android:id="@+id/btn_heart"
                 android:layout_marginHorizontal="5dp"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgHeart" />
+                android:src="@drawable/heart" />
 
             <ImageButton
-                android:id="@+id/btnAlarm"
+                android:id="@+id/btn_alarm"
                 android:layout_marginHorizontal="5dp"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgAlarm" />
+                android:src="@drawable/bell" />
         </LinearLayout>
 
 
@@ -77,13 +77,13 @@
 
             <ImageButton
                 android:layout_gravity="center"
-                android:id="@+id/btnClothing"
+                android:id="@+id/btn_clothing"
                 android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgClothing" />
+                android:src="@drawable/clothing" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,13 +102,13 @@
 
             <ImageButton
                 android:layout_gravity="center"
-                android:id="@+id/btnDaily"
+                android:id="@+id/btn_daily"
                 android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgClean" />
+                android:src="@drawable/clean" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
 
             <ImageButton
                 android:layout_gravity="center"
-                android:id="@+id/btnKitchen"
+                android:id="@+id/btn_kitchen"
                 android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -152,13 +152,13 @@
 
             <ImageButton
                 android:layout_gravity="center"
-                android:id="@+id/btnDigital"
+                android:id="@+id/btn_digital"
                 android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgElectronic" />
+                android:src="@drawable/digital" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -177,13 +177,13 @@
 
             <ImageButton
                 android:layout_gravity="center"
-                android:id="@+id/btnBook"
+                android:id="@+id/btn_book"
                 android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgBook" />
+                android:src="@drawable/book" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -202,13 +202,13 @@
 
             <ImageButton
                 android:layout_gravity="center"
-                android:id="@+id/btnEtc"
+                android:id="@+id/btn_etc"
                 android:paddingHorizontal="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imgEtc" />
+                android:src="@drawable/etc" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -270,7 +270,7 @@
                 android:src="@drawable/sample1"
                 android:scaleType="center"
                 android:layout_marginVertical="20dp"
-                android:id="@+id/smaple1"/>
+                android:id="@+id/imageview_smaple1"/>
 
             <ImageView
                 android:layout_gravity="center"
@@ -279,7 +279,7 @@
                 android:src="@drawable/sample2"
                 android:scaleType="center"
                 android:layout_marginVertical="20dp"
-                android:id="@+id/smaple2"/>
+                android:id="@+id/imageview_smaple2"/>
 
 
             <ImageView
@@ -289,7 +289,7 @@
                 android:src="@drawable/sample3"
                 android:scaleType="center"
                 android:layout_marginVertical="20dp"
-                android:id="@+id/smaple3"/>
+                android:id="@+id/imageview_smaple3"/>
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -297,7 +297,7 @@
                 android:src="@drawable/sample4"
                 android:scaleType="center"
                 android:layout_marginVertical="20dp"
-                android:id="@+id/smaple4"/>
+                android:id="@+id/imageview_smaple4"/>
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -305,7 +305,7 @@
                 android:src="@drawable/sample5"
                 android:scaleType="center"
                 android:layout_marginVertical="20dp"
-                android:id="@+id/smaple5"/>
+                android:id="@+id/imageview_smaple5"/>
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
@@ -313,7 +313,7 @@
                 android:src="@drawable/sample6"
                 android:scaleType="center"
                 android:layout_marginVertical="20dp"
-                android:id="@+id/smaple6"/>
+                android:id="@+id/imageview_smaple6"/>
         </LinearLayout>
     </ScrollView>
 

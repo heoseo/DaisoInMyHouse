@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/btnBack"
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="←"
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btnUserSetting"
+        android:id="@+id/btn_user_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -78,7 +78,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnAlarmSetting"
+        android:id="@+id/btn_alarm_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -108,7 +108,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnRegionSetting"
+        android:id="@+id/btn_region_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -138,7 +138,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnDestinationSetting"
+        android:id="@+id/btn_destination_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -168,7 +168,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnAccountSetting"
+        android:id="@+id/btn_account_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -198,7 +198,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnBanSetting"
+        android:id="@+id/btn_ban_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -246,7 +246,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btnTOS"
+        android:id="@+id/btn_TOS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -276,7 +276,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnPrivacyPolicy"
+        android:id="@+id/btn_privacy_policy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -306,7 +306,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnLocationTOS"
+        android:id="@+id/btn_location_TOS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -336,7 +336,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnLicense"
+        android:id="@+id/btn_license"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -366,7 +366,7 @@
         android:background="#e5e5e5"/>
 
     <LinearLayout
-        android:id="@+id/btnVersionInfo"
+        android:id="@+id/btn_version_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -413,7 +413,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/btnLogout"
+        android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

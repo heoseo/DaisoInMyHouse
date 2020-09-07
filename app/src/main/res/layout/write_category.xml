@@ -20,7 +20,7 @@
             android:src="@drawable/back"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:id="@+id/btnBack"/>
+            android:id="@+id/btn_back"/>
 
         <TextView
             android:padding="5dp"
@@ -52,7 +52,7 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/imgClothing" />
+            android:src="@drawable/clothing" />
 
         <TextView
             android:layout_width="match_parent"
@@ -80,7 +80,7 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/imgClean" />
+            android:src="@drawable/clean" />
 
         <TextView
             android:layout_width="match_parent"
@@ -134,7 +134,7 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/imgElectronic" />
+            android:src="@drawable/digital" />
 
         <TextView
             android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/imgBook" />
+            android:src="@drawable/book" />
 
         <TextView
             android:layout_width="match_parent"
@@ -189,7 +189,7 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/imgEtc" />
+            android:src="@drawable/etc" />
 
         <TextView
             android:layout_width="match_parent"

@@ -20,7 +20,7 @@
             android:src="@drawable/back"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:id="@+id/btnBack"/>
+            android:id="@+id/btn_back"/>
 
         <TextView
             android:padding="5dp"
@@ -37,10 +37,10 @@
             android:layout_gravity="center"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/imgEtc"
+            android:src="@drawable/etc"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:id="@+id/btnMenu"/>
+            android:id="@+id/btn_menu"/>
 
     </LinearLayout>
 
@@ -51,7 +51,7 @@
 
         <ImageView
             android:padding="5dp"
-            android:id="@+id/imgItem"
+            android:id="@+id/imageview_item_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/sample3"
@@ -67,7 +67,7 @@
                 android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/txtPrice"
+                android:id="@+id/txt_price"
                 android:text="2,000원"
                 android:textColor="#000000"/>
 
@@ -75,7 +75,7 @@
                 android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/txtItemName"
+                android:id="@+id/tv_item_name"
                 android:text="하늘하늘 니트"
                 android:textColor="#000000"/>
 
@@ -93,14 +93,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/layoutChatting"
+        android:id="@+id/ll_chatting"
         android:orientation="vertical">
 
         <TextView
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtDate"
+            android:id="@+id/tv_date"
             android:text="-----------------------------2020.9.4-------------------------------"
             android:gravity="center"/>
 
@@ -112,7 +112,7 @@
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtTime"
+                android:id="@+id/tv_time"
                 android:text="오후 12:13"/>
             <TextView
                 android:layout_margin="5dp"
@@ -131,7 +131,7 @@
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtTime2"
+                android:id="@+id/tv_time2"
                 android:text="오후 12:13"/>
             <TextView
                 android:layout_margin="5dp"
@@ -157,7 +157,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="주소 보내기"
-            android:id="@+id/txtSendAddress"
+            android:id="@+id/tv_send_address"
             android:textColor="#000000"/>
 
         <TextView
@@ -167,7 +167,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="입금했어요"
-            android:id="@+id/txtSendMoney"
+            android:id="@+id/tv_send_money"
             android:textColor="#000000"/>
 
         <TextView
@@ -177,7 +177,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="직거래 약속"
-            android:id="@+id/txtPromise"
+            android:id="@+id/tv_promise"
             android:textColor="#000000"/>
 
 
@@ -196,7 +196,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/plus"
             android:background="@color/colorAccent"
-            android:id="@+id/btnPlus"/>
+            android:id="@+id/btn_plus"/>
 
         <EditText
             android:padding="5dp"
