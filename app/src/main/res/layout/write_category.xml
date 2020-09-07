@@ -20,7 +20,7 @@
             android:src="@drawable/back"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:id="@+id/btnBack"/>
+            android:id="@+id/btn_back"/>
 
         <TextView
             android:padding="5dp"
