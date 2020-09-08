@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btnBack"
+            android:id="@+id/btn_back"
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:padding="10dp"
@@ -40,7 +40,7 @@
 
 
         <ImageButton
-            android:id="@+id/btnPhoto"
+            android:id="@+id/btn_photo"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
             android:padding="0dp"
@@ -49,7 +49,7 @@
             android:src="@drawable/camera" />
 
         <EditText
-            android:id="@+id/register"
+            android:id="@+id/et_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -57,7 +57,7 @@
 
 
         <TextView
-            android:id="@+id/category"
+            android:id="@+id/tv_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -72,14 +72,14 @@
 
 
         <EditText
-            android:id="@+id/price"
+            android:id="@+id/et_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="가격입력" />
 
         <TextView
-            android:id="@+id/location"
+            android:id="@+id/tv_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -93,14 +93,14 @@
             android:background="#999999"/>
 
         <EditText
-            android:id="@+id/tag"
+            android:id="@+id/et_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="태그입력" />
 
         <EditText
-            android:id="@+id/explain"
+            android:id="@+id/et_explain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
@@ -115,7 +115,7 @@
         android:layout_height="85dp">
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="등록하기"

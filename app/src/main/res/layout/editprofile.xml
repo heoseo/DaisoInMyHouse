@@ -16,7 +16,7 @@
 
 
         <ImageButton
-            android:id="@+id/btnBack"
+            android:id="@+id/btn_back"
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:layout_margin="10dp"
@@ -41,7 +41,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imgProfile"
+            android:id="@+id/imageview_item_image_profile"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
@@ -54,7 +54,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/txtId"
+                android:id="@+id/tv_id"
                 android:layout_width="166dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -66,7 +66,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/btnProfileSetting"
+            android:id="@+id/btn_profile_setting"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"

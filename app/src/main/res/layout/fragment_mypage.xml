@@ -19,7 +19,7 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:id="@+id/btnAlarm"
+            android:id="@+id/btn_alarm"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginHorizontal="5dp"
@@ -29,7 +29,7 @@
             android:src="@drawable/bell" />
 
         <ImageButton
-            android:id="@+id/btnSetting"
+            android:id="@+id/btn_setting"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginHorizontal="5dp"
@@ -46,7 +46,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imgProfile"
+            android:id="@+id/imageview_profile"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
@@ -59,7 +59,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtId"
+                android:id="@+id/tv_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
@@ -102,7 +102,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/btnProfileSetting"
+            android:id="@+id/btn_profile_setting"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -124,7 +124,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/layoutHeart"
+            android:id="@+id/ll_heart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -150,7 +150,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutReview"
+            android:id="@+id/ll_review"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -176,7 +176,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutTransactionDetails"
+            android:id="@+id/ll_transaction_details"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -229,7 +229,7 @@
 <!--        </LinearLayout>-->
 
         <LinearLayout
-            android:id="@+id/layoutServiceCenter"
+            android:id="@+id/ll_service_center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -271,7 +271,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layoutSettingMyArea"
+            android:id="@+id/ll_setting_my_area"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -296,7 +296,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutAuthenticate"
+            android:id="@+id/ll_authenticate"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -321,7 +321,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutSettingKeywordNotice"
+            android:id="@+id/ll_setting_keyword_notice"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -352,7 +352,7 @@
             android:background="#BFBCBC" />
 
         <LinearLayout
-            android:id="@+id/layoutInvite"
+            android:id="@+id/ll_invite"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -377,7 +377,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutShare"
+            android:id="@+id/ll_share"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
