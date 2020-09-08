@@ -32,6 +32,9 @@ public class MyPageFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+
+
+
         return rootView;
 
     }
