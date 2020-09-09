@@ -20,6 +20,9 @@
         <activity android:name=".AlarmSettingActivity"/>
         <activity android:name=".CategoryInWriteActivity"/>
         <activity android:name=".SettingMyAreaActivity"/>
+        <activity android:name=".ProfileMenuActivity"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".CameraActivity"/>
     </application>
 
 </manifest>

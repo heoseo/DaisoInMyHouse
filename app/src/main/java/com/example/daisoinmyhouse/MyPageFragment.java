@@ -1,15 +1,11 @@
 package com.example.daisoinmyhouse;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -19,7 +15,9 @@ import androidx.fragment.app.Fragment;
 public class MyPageFragment extends Fragment {
 
     ImageButton btnSetting;
-    LinearLayout llSettingMyArea;
+    ImageButton btnArrow;
+    LinearLayout btnSettingMyArea;
+    LinearLayout btnProfile;
 
     @Nullable
     @Override
@@ -27,6 +25,8 @@ public class MyPageFragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
 
+
+        // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
 
         // 설정 버튼 -> SettingActivity 띄우기
         btnSetting = rootView.findViewById(R.id.btn_setting);
@@ -40,11 +40,29 @@ public class MyPageFragment extends Fragment {
 
 
         // 내 동네 설정 버튼 -> SettingMyAreaActivity 띄우기
-        llSettingMyArea = rootView.findViewById(R.id.ll_setting_my_area);
-        llSettingMyArea.setOnClickListener( new View.OnClickListener(){
+        btnSettingMyArea = rootView.findViewById(R.id.ll_setting_my_area);
+        btnSettingMyArea.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), SettingMyAreaActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        // 프로필 레이아웃 누르면 -> ProfileMenuActivity 띄우기
+        btnProfile = rootView.findViewById(R.id.ll_profile);
+        btnProfile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProfileMenuActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        btnArrow = rootView.findViewById(R.id.btn_profile_setting);
+        btnArrow.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ProfileMenuActivity.class);
                 getContext().startActivity(intent);
             }
         });
