@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -38,7 +37,6 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-
         // 내 동네 설정 버튼 -> SettingMyAreaActivity 띄우기
         btnSettingMyArea = rootView.findViewById(R.id.ll_setting_my_area);
         btnSettingMyArea.setOnClickListener(new View.OnClickListener(){
@@ -66,13 +64,6 @@ public class MyPageFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
-
-
-
-
-
-
-
         return rootView;
     }
 }
