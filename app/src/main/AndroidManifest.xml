@@ -26,6 +26,11 @@
         </activity>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".AlarmSettingActivity"/>
+        <activity android:name=".CategoryInWriteActivity"/>
+        <activity android:name=".SettingMyAreaActivity"/>
+        <activity android:name=".ProfileMenuActivity"
+            android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".CameraActivity"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
