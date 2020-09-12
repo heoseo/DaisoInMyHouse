@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.daisoinmyhouse">
 
+    
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,6 +33,7 @@
         <activity android:name=".ProfileMenuActivity"
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".CameraActivity"/>
+        <activity android:name=".FirtstSettingAreaActivity"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />

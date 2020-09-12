@@ -54,4 +54,17 @@
         android:textColor="#F1EAEA"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_gps_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text=" "
+        android:textColor="#000000"
+        android:background="#F3CDDA"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+
 </LinearLayout>
