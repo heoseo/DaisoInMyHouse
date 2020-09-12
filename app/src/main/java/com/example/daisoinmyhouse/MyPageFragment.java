@@ -42,7 +42,7 @@ public class MyPageFragment extends Fragment {
         btnSettingMyArea.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SettingMyAreaActivity.class);
+                Intent intent = new Intent(getContext(), FirtstSettingAreaActivity.class);
                 getContext().startActivity(intent);
             }
         });
