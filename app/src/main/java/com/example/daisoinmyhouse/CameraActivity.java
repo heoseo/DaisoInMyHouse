@@ -38,6 +38,7 @@ public class CameraActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 672;
     private String imageFilePath;
     private Uri photoUri;
+    private static int PICK_IMAGE_REQUEST = 1;
 
     private MediaScanner mMediaScanner; // 사진 저장 시 갤러리 폴더에 바로 반영사항을 업데이트 시켜주려면 이 것이 필요하다(미디어 스캐닝)
     Button btn_album_choice,btn_Photo_back;
@@ -66,8 +67,9 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 갤러리 열기
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("content://media/internal/images/media"));
-                startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
 
