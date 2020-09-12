@@ -1,7 +1,10 @@
 package com.example.daisoinmyhouse;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AlarmSettingActivity extends AppCompatActivity {
 
     Switch sbAlarm, sbChatAlarm, sbReplyitem, sbWish, sbReplyStore, sbDelivery, sbDeliveryComplete;
+    LinearLayout btnKeywordAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,15 @@ public class AlarmSettingActivity extends AppCompatActivity {
                     sbDelivery.setChecked(false);
                     sbDeliveryComplete.setChecked(false);
                 }
+            }
+        });
+
+        btnKeywordAlarm = (LinearLayout)findViewById(R.id.btn_keyword);
+        btnKeywordAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), KeywordAlarmActivity.class);
+                startActivity(intent);
             }
         });
     }

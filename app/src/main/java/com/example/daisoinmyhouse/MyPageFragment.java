@@ -17,6 +17,7 @@ public class MyPageFragment extends Fragment {
     ImageButton btnArrow;
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
+    LinearLayout btnKeyword;
 
     @Nullable
     @Override
@@ -64,6 +65,17 @@ public class MyPageFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+
+        // 키워드 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
+        btnKeyword = rootView.findViewById(R.id.ll_setting_keyword_notice);
+        btnKeyword.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getContext(), KeywordAlarmActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }
