@@ -38,15 +38,7 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        // 내 동네 설정 버튼 -> SettingMyAreaActivity 띄우기
-        btnSettingMyArea = rootView.findViewById(R.id.ll_setting_my_area);
-        btnSettingMyArea.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SettingMyAreaActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+
 
         // 프로필 레이아웃 누르면 -> ProfileMenuActivity 띄우기
         btnProfile = rootView.findViewById(R.id.ll_profile);
@@ -66,7 +58,7 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        // 키워드 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
+        // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
         btnKeyword = rootView.findViewById(R.id.ll_setting_keyword_notice);
         btnKeyword.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -1,5 +1,6 @@
 package com.example.daisoinmyhouse;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,10 +18,16 @@ public class WriteNewItemFragment extends Fragment {
 
     TextView btnSelectCategory;
     ImageButton btn_photo,btn_back;
+    MainActivity activity;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        activity = (MainActivity) getActivity();
+
+
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_new_item, container, false);
         btnSelectCategory = rootView.findViewById(R.id.tv_category);
@@ -49,8 +56,7 @@ public class WriteNewItemFragment extends Fragment {
         btn_back.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                getContext().startActivity(intent);
+                activity.onFragmentChange(1);
             }
         });
 

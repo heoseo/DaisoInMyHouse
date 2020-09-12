@@ -35,18 +35,19 @@
         <activity android:name=".AlarmSettingActivity"/>
         <activity android:name=".CategoryInWriteActivity"/>
         <activity android:name=".SettingMyAreaActivity"/>
-        <activity android:name=".ProfileMenuActivity"
-            android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".ProfileMenuActivity"/>
+
         <activity android:name=".CameraActivity"/>
         <activity android:name=".KeywordAlarmActivity"/>
         <activity android:name=".FirtstSettingAreaActivity"/>
+        <activity android:name=".ItemInformationActivity"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
 
         <provider
-            android:authorities="com.example.cameraexample"
+            android:authorities="com.example.daisoinmyhouse"
             android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
