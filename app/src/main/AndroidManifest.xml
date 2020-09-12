@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 
     <application
@@ -36,6 +38,7 @@
         <activity android:name=".ProfileMenuActivity"
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".CameraActivity"/>
+        <activity android:name=".KeywordAlarmActivity"/>
         <activity android:name=".FirtstSettingAreaActivity"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
