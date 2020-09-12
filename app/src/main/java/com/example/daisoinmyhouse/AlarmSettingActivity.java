@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
     Switch sbAlarm, sbChatAlarm, sbReplyitem, sbWish, sbReplyStore, sbDelivery, sbDeliveryComplete;
     LinearLayout btnKeywordAlarm;
+    TextView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,31 +33,33 @@ public class AlarmSettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    sbChatAlarm.setChecked(true);
-                    sbReplyitem.setChecked(true);
-                    sbWish.setChecked(true);
-                    sbReplyStore.setChecked(true);
-                    sbDelivery.setChecked(true);
-                    sbDeliveryComplete.setChecked(true);
+                    sbChatAlarm.setEnabled(true);
+                    sbReplyitem.setEnabled(true);
+                    sbWish.setEnabled(true);
+                    sbReplyStore.setEnabled(true);
+                    sbDelivery.setEnabled(true);
+                    sbDeliveryComplete.setEnabled(true);
                 }
                 else{
-                    sbChatAlarm.setChecked(false);
-                    sbReplyitem.setChecked(false);
-                    sbWish.setChecked(false);
-                    sbReplyStore.setChecked(false);
-                    sbDelivery.setChecked(false);
-                    sbDeliveryComplete.setChecked(false);
+                    sbChatAlarm.setEnabled(false);
+                    sbReplyitem.setEnabled(false);
+                    sbWish.setEnabled(false);
+                    sbReplyStore.setEnabled(false);
+                    sbDelivery.setEnabled(false);
+                    sbDeliveryComplete.setEnabled(false);
                 }
             }
         });
 
-        btnKeywordAlarm = (LinearLayout)findViewById(R.id.btn_keyword);
-        btnKeywordAlarm.setOnClickListener(new View.OnClickListener() {
+
+    // 뒤로가기 버튼
+        btnBack = (TextView) findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), KeywordAlarmActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
+
     }
 }

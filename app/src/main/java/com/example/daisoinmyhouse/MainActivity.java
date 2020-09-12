@@ -70,6 +70,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void onFragmentChange(int fragmentNum) {
+        //프래그먼트의 번호에 따라 다르게 작동하는 조건문
+        if(fragmentNum == 1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, homeFragment).commit();
+        } else if(fragmentNum == 2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, writeNewItemFragment).commit();
+        }else if(fragmentNum == 3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, chattingFragment).commit();
+        }else if(fragmentNum == 4) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, myPageFragment).commit();
+        }
+    }
+
     private void getHashKey(){
         PackageInfo packageInfo = null;
         try {
