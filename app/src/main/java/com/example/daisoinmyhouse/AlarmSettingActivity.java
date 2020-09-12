@@ -12,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AlarmSettingActivity extends AppCompatActivity {
 
-    Switch sbAlarm, sbChatAlarm, sbReplyitem, sbWish, sbReplyStore, sbDelivery, sbDeliveryComplete;
     LinearLayout btnKeywordAlarm;
     TextView btnBack;
+    Switch sbAlarm, sbChatAlarm, sbReplyitem, sbWish, sbReplyStore, sbDelivery, sbDeliveryComplete, sbKeyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
         sbReplyStore = (Switch)findViewById(R.id.sb_reply_store);
         sbDelivery = (Switch)findViewById(R.id.sb_delivery);
         sbDeliveryComplete = (Switch)findViewById(R.id.sb_delivery_complete);
+        sbKeyword = (Switch)findViewById(R.id.sb_keyword);
 
         sbAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -39,6 +40,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
                     sbReplyStore.setEnabled(true);
                     sbDelivery.setEnabled(true);
                     sbDeliveryComplete.setEnabled(true);
+                    sbKeyword.setEnabled(true);
                 }
                 else{
                     sbChatAlarm.setEnabled(false);
@@ -47,6 +49,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
                     sbReplyStore.setEnabled(false);
                     sbDelivery.setEnabled(false);
                     sbDeliveryComplete.setEnabled(false);
+                    sbKeyword.setEnabled(false);
                 }
             }
         });
