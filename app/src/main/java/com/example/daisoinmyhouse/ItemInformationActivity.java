@@ -49,9 +49,6 @@ public class ItemInformationActivity extends AppCompatActivity {
                                 .setMobileWebUrl("https://developers.kakao.com").build())
                         .setDescrption("아메리카노, 빵, 케익")
                         .build())
-                .setSocial(SocialObject.newBuilder().setLikeCount(10).setCommentCount(20)
-                        .setSharedCount(30).setViewCount(40).build())
-                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("'https://developers.kakao.com").setMobileWebUrl("'https://developers.kakao.com").build()))
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("'https://developers.kakao.com")
                         .setMobileWebUrl("'https://developers.kakao.com")
@@ -77,6 +74,3 @@ public class ItemInformationActivity extends AppCompatActivity {
         });
     }
 }
-
-
-

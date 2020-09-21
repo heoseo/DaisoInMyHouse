@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,9 +14,9 @@
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="←"
-            android:textSize="30dp"
-            android:layout_marginLeft="10dp"/>
+            android:textSize="30dp" />
 
         <TextView
             android:layout_width="330dp"
@@ -30,11 +30,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_information"
+        android:id="@+id/tv_input_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="키워드를 저장해 놓으면, 해당 키워드 관련 글이 올라올 때 알림을 받을 수 있어요. 최대 10개까지만 저장이 가능합니다."
+        android:text="키워드를 저장해 놓으면, 해당 키워드 관련 글이 올라올 때 알림을 받을 수 있어요. 키워드 등록은 최대 10개까지 가능합니다."
         android:textStyle="bold" />
 
     <LinearLayout
@@ -66,10 +66,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:background="#F44336"
         android:text="등록"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_delete_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="아래 키워드 중 삭제하고 싶은 키워드를 누르면 삭제됩니다."
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lv_keyword"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

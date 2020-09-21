@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <application
@@ -22,14 +23,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/kakao_scheme"
-                    android:host="@string/kakaolink_host" />
-            </intent-filter>
         </activity>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".AlarmSettingActivity"/>
@@ -40,7 +33,16 @@
         <activity android:name=".CameraActivity"/>
         <activity android:name=".KeywordAlarmActivity"/>
         <activity android:name=".FirtstSettingAreaActivity"/>
-        <activity android:name=".ItemInformationActivity"/>
+        <activity android:name=".ItemInformationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/kakao_scheme"
+                    android:host="@string/kakaolink_host" />
+            </intent-filter>
+        </activity>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
