@@ -165,7 +165,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_join"
+        android:id="@+id/activity_join_join_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="회원가입"

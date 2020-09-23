@@ -72,7 +72,7 @@ public class MyPageFragment extends Fragment {
         });
 
         // 로그인 & 회원가입
-        btnLogin = rootView.findViewById(R.id.btn_login);
+        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -81,14 +81,7 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        btnJoin = rootView.findViewById(R.id.btn_join);
-        btnJoin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getContext(), JoinActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+
 
         return rootView;
     }

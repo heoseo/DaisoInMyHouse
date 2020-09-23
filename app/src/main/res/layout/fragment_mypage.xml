@@ -248,18 +248,10 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/fragment_mypage_login_btn"
             android:text="로그인"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btn_join"
-            android:text="회원가입"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
 
 
     </LinearLayout>
