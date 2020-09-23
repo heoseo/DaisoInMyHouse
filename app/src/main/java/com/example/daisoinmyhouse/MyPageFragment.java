@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ public class MyPageFragment extends Fragment {
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
     LinearLayout btnKeyword;
+    Button btnLogin;
+    Button btnJoin;
 
     @Nullable
     @Override
@@ -64,6 +67,25 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getContext(), KeywordAlarmActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        // 로그인 & 회원가입
+        btnLogin = rootView.findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        btnJoin = rootView.findViewById(R.id.btn_join);
+        btnJoin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getContext(), JoinActivity.class);
                 getContext().startActivity(intent);
             }
         });
