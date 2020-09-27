@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,8 @@ import androidx.fragment.app.Fragment;
 public class WriteNewItemFragment extends Fragment {
 
     TextView btnSelectCategory;
-    ImageButton btn_photo,btn_back;
+    ImageButton btn_back;
+    ImageView btn_photo;
     MainActivity activity;
 
 
@@ -42,7 +44,7 @@ public class WriteNewItemFragment extends Fragment {
 
 
         //사진 이미지 누르면 다음화면
-        btn_photo = rootView.findViewById(R.id.btn_photo);
+        btn_photo = rootView.findViewById(R.id.imageView_photo);
         btn_photo.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view) {
