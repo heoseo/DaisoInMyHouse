@@ -1,47 +1,46 @@
 package com.example.daisoinmyhouse;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.daisoinmyhouse.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-
-import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class CameraActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE_CAPTURE = 672;
     private String imageFilePath;
     private Uri photoUri;
-    private static int PICK_IMAGE_REQUEST = 1;
+    private static final int REQUEST_CODE = 0;
 
     private MediaScanner mMediaScanner; // 사진 저장 시 갤러리 폴더에 바로 반영사항을 업데이트 시켜주려면 이 것이 필요하다(미디어 스캐닝)
-    Button btn_album_choice,btn_Photo_back;
+    Button btn_album_choice, btn_camera, btn_Photo_back;
+    ImageView imageView, writingImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +60,6 @@ public class CameraActivity extends AppCompatActivity {
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
 
-        // 갤러리 열기
-        btn_album_choice = (Button) findViewById(R.id.btn_album_choice);
-        btn_album_choice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 갤러리 열기
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-            }
-        });
 
         //전 화면 열기
         btn_Photo_back = (Button) findViewById(R.id.btn_Photo_back);
@@ -83,28 +71,74 @@ public class CameraActivity extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.btn_Camera_shooting).setOnClickListener(new View.OnClickListener() {
+        // 갤러리 열기
+        btn_album_choice = (Button) findViewById(R.id.btn_album_choice);
+        btn_album_choice.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
-                    try {
-                        photoFile = createImageFile();
-                    } catch (IOException e) {
-
-                    }
-
-                    if (photoFile != null) {
-                        photoUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName(), photoFile);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                    }
-                }
+            public void onClick(View view) {
+                // 갤러리 열기
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
 
+        imageView = (ImageView) findViewById(R.id.btn_Imageview);
+
+
+        imageView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                if(imageView.getDrawable() != null){
+                    finish();
+
+                    LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View v = inflater.inflate(R.layout.fragment_write_new_item, null);
+                    writingImage = (ImageView) v.findViewById(R.id.imageView_photo);
+
+
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    writingImage.setImageBitmap(bitmap);
+                }else{
+                    Toast.makeText(getApplicationContext(), "사진이 선택되지 않았습니다.",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+
+
+
+        //카메라 열기
+        btn_camera = (Button) findViewById(R.id.btn_Camera_shooting);
+        btn_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendTakePhotoIntent();
+            }
+        });
+    }
+
+    private void sendTakePhotoIntent(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+            File photoFile = null;
+            try{
+                photoFile = createImageFile();
+            }catch(IOException e){
+
+            }
+
+            if(photoFile != null){
+                photoUri = FileProvider.getUriForFile(this, getPackageName(), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
     }
 
     private File createImageFile() throws IOException {
@@ -117,6 +151,7 @@ public class CameraActivity extends AppCompatActivity {
                 storageDir
         );
         imageFilePath = image.getAbsolutePath();
+        mMediaScanner = MediaScanner.getInstance(getApplicationContext());
         return image;
     }
 
@@ -125,68 +160,47 @@ public class CameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+        //갤러리 사진 불러오기
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    in.close();
+                    imageView.setImageBitmap(img);
+                } catch (Exception e) {
+
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        //카메라 사진찍기
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
+
             Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
             ExifInterface exif = null;
 
-            try {
+            try{
                 exif = new ExifInterface(imageFilePath);
-            } catch (IOException e) {
+            }catch(IOException e){
                 e.printStackTrace();
             }
 
             int exifOrientation;
             int exifDegree;
 
-            if (exif != null) {
+            if(exif != null){
                 exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                 exifDegree = exifOrientationToDegress(exifOrientation);
-            } else {
+            }else{
                 exifDegree = 0;
             }
 
-            String result = "";
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HHmmss", Locale.getDefault());
-            Date curDate = new Date(System.currentTimeMillis());
-            String filename = formatter.format(curDate);
-
-            String strFolderName = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + File.separator + "HONGDROID" + File.separator;
-            File file = new File(strFolderName);
-            if (!file.exists())
-                file.mkdirs();
-
-            File f = new File(strFolderName + "/" + filename + ".png");
-            result = f.getPath();
-
-            FileOutputStream fOut = null;
-            try {
-                fOut = new FileOutputStream(f);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                result = "Save Error fOut";
-            }
-
-            // 비트맵 사진 폴더 경로에 저장
-            rotate(bitmap, exifDegree).compress(Bitmap.CompressFormat.PNG, 70, fOut);
-
-            try {
-                fOut.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                fOut.close();
-                // 방금 저장된 사진을 갤러리 폴더 반영 및 최신화
-                mMediaScanner.mediaScanning(strFolderName + "/" + filename + ".png");
-            } catch (IOException e) {
-                e.printStackTrace();
-                result = "File close Error";
-            }
-
-            // 이미지 뷰에 비트맵을 set하여 이미지 표현
-            ((ImageView) findViewById(R.id.btn_Imageview)).setImageBitmap(rotate(bitmap, exifDegree));
-
-
+            imageView.setImageURI(photoUri);
         }
     }
 
@@ -207,6 +221,8 @@ public class CameraActivity extends AppCompatActivity {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
+
+
     PermissionListener permissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
@@ -218,8 +234,5 @@ public class CameraActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "권한이 거부됨",Toast.LENGTH_SHORT).show();
         }
     };
-
-
-
 
 }
