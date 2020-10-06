@@ -43,4 +43,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
     implementation "gun0912.ted:tedpermission:2.1.0"
+    implementation 'com.android.volley:volley:1.1.1'
 }
