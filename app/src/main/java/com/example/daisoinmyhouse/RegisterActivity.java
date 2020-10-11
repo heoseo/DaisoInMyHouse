@@ -1,6 +1,8 @@
 package com.example.daisoinmyhouse;
 
 import android.os.AsyncTask;
+import android.os.Build;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+
 public class RegisterActivity extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
 
@@ -18,7 +21,7 @@ public class RegisterActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://192.168.0.6:8080/example/androidDB.jsp");
+            URL url = new URL("http://daisoinmyhouse.cafe24.com/androidDB.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
