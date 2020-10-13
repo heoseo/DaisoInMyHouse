@@ -41,7 +41,15 @@ public class JoinActivity extends AppCompatActivity {
 
                     RegisterActivity task = new RegisterActivity();
                     result = task.execute(name, id, pw, email, phone, address).get();
-                    Toast.makeText(getApplicationContext(),"회원가입이 완료되었습니다!", Toast.LENGTH_LONG);
+
+                    // 빈칸이 있는지 검사사
+                   if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
+                        Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
+                    }else{
+
+                        Toast.makeText(getApplicationContext(),"회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
