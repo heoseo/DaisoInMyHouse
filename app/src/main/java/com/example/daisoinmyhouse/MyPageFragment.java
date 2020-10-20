@@ -21,6 +21,7 @@ public class MyPageFragment extends Fragment {
     LinearLayout btnKeyword;
     Button btnLogin;
     Button btnJoin;
+    LinearLayout btnTransaction;
 
     @Nullable
     @Override
@@ -81,7 +82,15 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-
+        // 거래내역
+        btnTransaction = rootView.findViewById(R.id.ll_transaction_details);
+        btnTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), RentActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         return rootView;
     }
