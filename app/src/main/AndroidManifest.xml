@@ -31,7 +31,8 @@
         <activity android:name=".CategoryInWriteActivity"/>
         <activity android:name=".SettingMyAreaActivity"/>
         <activity android:name=".ProfileMenuActivity"/>
-
+        <activity android:name=".RentActivity"/>
+        <activity android:name=".LeaseActivity"/>
         <activity android:name=".CameraActivity"/>
         <activity android:name=".KeywordAlarmActivity"/>
         <activity android:name=".FirtstSettingAreaActivity"/>
