@@ -21,17 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainChatActivity"></activity>
-        <activity android:name=".ChatActivity"></activity>
-<!--        <activity-->
-<!--            android:name=".ChatActivity"-->
-<!--            android:theme="@style/AppTheme.NoActionBar">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".ChatListActivity"></activity>
+        <activity android:name=".MainChatActivity" />
+        <activity android:name=".ChatActivity" /> <!-- <activity -->
+        <!-- android:name=".ChatActivity" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <activity android:name=".ChatListActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,6 +65,7 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
+
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

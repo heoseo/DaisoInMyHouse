@@ -54,6 +54,9 @@ public class MainChatActivity extends AppCompatActivity {
 
 
         }
+
+
+
     }
 
 
@@ -88,10 +91,13 @@ public class MainChatActivity extends AppCompatActivity {
 
     public void clickBtn(View view) {
 
+
+
         //바꾼것도 없고, 처음 접속도 아니고..
         if(!isChanged && !isFirst){
             //ChatActivity로 전환
-            Intent intent= new Intent(this, ChatActivity.class);
+            Intent intent= new Intent(this, ChatListActivity.class);
+            intent.putExtra("my_name", G.nickName);
             startActivity(intent);
             finish();
         }else{

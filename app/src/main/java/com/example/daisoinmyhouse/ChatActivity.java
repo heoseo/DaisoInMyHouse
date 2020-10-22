@@ -22,6 +22,10 @@ import java.util.Calendar;
 
 public class ChatActivity extends AppCompatActivity {
 
+    String yourName;
+    String myName;
+    String roomName;
+
     EditText et;
     ListView listView;
 
@@ -30,6 +34,7 @@ public class ChatActivity extends AppCompatActivity {
 
     //Firebase Database 관리 객체참조변수
     FirebaseDatabase firebaseDatabase;
+    DatabaseReference reference;
 
     //'chat'노드의 참조객체 참조변수
     DatabaseReference chatRef;
@@ -42,14 +47,21 @@ public class ChatActivity extends AppCompatActivity {
         //제목줄 제목글시를 닉네임으로(또는 채팅방)
 //        getSupportActionBar().setTitle(G.nickName);
 
+        yourName = getIntent().getExtras().get("your_name").toString();
+        myName = getIntent().getExtras().get("my_name").toString();
+
         et=findViewById(R.id.et);
         listView=findViewById(R.id.listview);
         adapter=new ChatAdapter(messageItems,getLayoutInflater());
         listView.setAdapter(adapter);
 
+        // 리스트뷰가 갱신될때 하단으로 자동 스크롤
+        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+
         //Firebase DB관리 객체와 'caht'노드 참조객체 얻어오기
         firebaseDatabase= FirebaseDatabase.getInstance();
-        chatRef= firebaseDatabase.getReference("chat");
+        chatRef= firebaseDatabase.getReference("chat_list").child(yourName);;
+
 
 
         //firebaseDB에서 채팅 메세지들 실시간 읽어오기..
@@ -107,7 +119,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //firebase DB에 저장할 값(MessageItem객체) 설정
         MessageItem messageItem= new MessageItem(nickName,message,time,pofileUrl);
-        //'char'노드에 MessageItem객체를 통해
+        //'roomName'노드에 MessageItem객체를 통해
         chatRef.push().setValue(messageItem);
 
         //EditText에 있는 글씨 지우기
