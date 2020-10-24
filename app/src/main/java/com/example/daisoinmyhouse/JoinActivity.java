@@ -43,7 +43,6 @@ public class JoinActivity extends AppCompatActivity {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
-                    String result;
                     String name = nameet.getText().toString();
                     String id = idet.getText().toString();
                     String pw = pwet.getText().toString();
@@ -51,12 +50,13 @@ public class JoinActivity extends AppCompatActivity {
                     String phone = phoneet.getText().toString();
                     String address = addresset.getText().toString();
                     RegisterActivity task = new RegisterActivity();
-                    result = task.execute(name, id, pw, email, phone, address).get();
+
+                    String result = task.execute(name, id, pw, email, phone, address).get();
                     // 빈칸이 있는지 검사사
                     if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
                         Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
-                        Toast.makeText(getApplicationContext(),"회원가입이 완료되었습니다!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         finish();
                     }
                 } catch (Exception e) {
