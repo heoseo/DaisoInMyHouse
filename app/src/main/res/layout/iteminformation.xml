@@ -37,6 +37,7 @@
                     android:paddingLeft="10dp">
 
                     <TextView
+                        android:id="@+id/tv_item_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="상품이름"
@@ -44,6 +45,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tv_item_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="상품가격"
@@ -53,13 +55,14 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/imageview_share"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/btn"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:paddingTop="10dp"
-                    android:paddingRight="15dp"/>
+                    android:paddingRight="20dp" />
 
             </RelativeLayout>
 
@@ -69,6 +72,7 @@
                 android:background="#A9A9A9"/>
 
             <TextView
+                android:id="@+id/tv_item_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="상품설명"
@@ -86,11 +90,13 @@
                 android:padding="10dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageview_profile"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:src="@drawable/pf" />
 
                 <TextView
+                    android:id="@+id/tv_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="판매자"
@@ -128,11 +134,13 @@
                     android:layout_margin="10dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageview_review_profile"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/pf"/>
 
                     <TextView
+                        android:id="@+id/tv_review_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="20"
@@ -140,12 +148,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_gravity="center_vertical"/>
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/star"
-                        android:layout_gravity="end"/>
+                    <RatingBar
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center" />
 
                 </LinearLayout>
 
@@ -157,6 +165,7 @@
                     android:layout_marginRight="10dp"/>
 
                 <TextView
+                    android:id="@+id/tv_review"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="후기"

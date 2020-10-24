@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +18,9 @@ public class MyPageFragment extends Fragment {
     ImageButton btnArrow;
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
+    LinearLayout btnKeyword;
+    Button btnLogin;
+    Button btnJoin;
 
     @Nullable
     @Override
@@ -39,15 +42,6 @@ public class MyPageFragment extends Fragment {
         });
 
 
-        // 내 동네 설정 버튼 -> SettingMyAreaActivity 띄우기
-        btnSettingMyArea = rootView.findViewById(R.id.ll_setting_my_area);
-        btnSettingMyArea.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SettingMyAreaActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
 
         // 프로필 레이아웃 누르면 -> ProfileMenuActivity 띄우기
         btnProfile = rootView.findViewById(R.id.ll_profile);
@@ -67,9 +61,25 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
+        btnKeyword = rootView.findViewById(R.id.ll_setting_keyword_notice);
+        btnKeyword.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getContext(), KeywordAlarmActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
-
-
+        // 로그인 & 회원가입
+        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
 
 

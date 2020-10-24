@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -69,6 +73,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public void onFragmentChange(int fragmentNum) {
+        //프래그먼트의 번호에 따라 다르게 작동하는 조건문
+        if(fragmentNum == 1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, homeFragment).commit();
+        } else if(fragmentNum == 2) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, writeNewItemFragment).commit();
+        }else if(fragmentNum == 3) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, chattingFragment).commit();
+        }else if(fragmentNum == 4) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, myPageFragment).commit();
+        }
     }
 
     private void getHashKey(){
