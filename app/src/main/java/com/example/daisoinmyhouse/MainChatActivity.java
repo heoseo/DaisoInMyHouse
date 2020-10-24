@@ -97,7 +97,6 @@ public class MainChatActivity extends AppCompatActivity {
         if(!isChanged && !isFirst){
             //ChatActivity로 전환
             Intent intent= new Intent(this, ChatListActivity.class);
-            intent.putExtra("my_name", G.nickName);
             startActivity(intent);
             finish();
         }else{

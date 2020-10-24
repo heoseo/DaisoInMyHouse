@@ -40,7 +40,6 @@ public class ChatListActivity extends AppCompatActivity {
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
     private String name;
 
-    private String myName;
     private String yourName;
 
     Map<String, Object> map = new HashMap<String, Object>();
@@ -53,7 +52,6 @@ public class ChatListActivity extends AppCompatActivity {
 
         //MainChatActivity에서 닉네임을 가져옵니다.
         Intent intent = getIntent();
-        myName = intent.getStringExtra("my_name");
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -74,7 +72,7 @@ public class ChatListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         yourName = et_inDialog.getText().toString();
-                        map.put(yourName, "");
+                        map.put(yourName + ">" + G.nickName, "");
                         reference.updateChildren(map);
                     }
                 });
@@ -99,7 +97,29 @@ public class ChatListActivity extends AppCompatActivity {
                 Iterator i = dataSnapshot.getChildren().iterator();
 
                 while (i.hasNext()) {
-                    set.add(((DataSnapshot) i.next()).getKey());
+//                    set.add(((DataSnapshot) i.next()).getKey());
+                    String getKey = ((DataSnapshot) i.next()).getKey();
+                    String roomName = "";
+
+                    // >를 기준으로 문자열을 추출할 것이다.
+                    // 먼저 >의 인덱스를 찾는다.
+                    int idx = getKey.indexOf(">");
+
+                    // > 앞부분을 추출
+                    // substring은 첫번째 지정한 인덱스는 포함하지 않는다.
+                    String firstName = getKey.substring(0, idx);
+
+                    // 뒷부분을 추출
+                    // 아래 substring은 @ 바로 뒷부분인 n부터 추출된다.
+                    String lastName = getKey.substring(idx+1);
+
+
+                    if(G.nickName.equals(firstName))
+                        set.add(firstName);
+                    else if(G.nickName.equals(lastName))
+                        set.add(lastName);
+                    else
+                        finish();
                 }
 
                 arr_roomList.clear();
@@ -122,7 +142,7 @@ public class ChatListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("your_name", ((TextView) view).getText().toString());
-                intent.putExtra("my_name", myName);
+                intent.putExtra("my_name", G.nickName);
                 startActivity(intent);
             }
         });

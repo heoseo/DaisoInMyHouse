@@ -113,14 +113,63 @@ public class ChatActivity extends AppCompatActivity {
         String message= et.getText().toString();
         String pofileUrl= G.porfileUrl;
 
-        //메세지 작성 시간 문자열로..
+
+
+        // 시간, 날짜 관련
         Calendar calendar= Calendar.getInstance(); //현재 시간을 가지고 있는 객체
+
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int date = calendar.get(Calendar.DATE);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        String hourStr="";
+        if(hour >= 12)
+            hourStr = "오후 " + (hour-12) + "시";
+        else
+            hourStr = "오전 " + hour + "시";
+
+        String korDayOfWeek = "";
+        switch (dayOfWeek) {
+            case 1:
+                korDayOfWeek = "일요일";
+                break;
+            case 2:
+                korDayOfWeek = "월요일";
+                break;
+            case 3:
+                korDayOfWeek = "화요일";
+                break;
+            case 4:
+                korDayOfWeek = "수요일";
+                break;
+            case 5:
+                korDayOfWeek = "목요일";
+                break;
+            case 6:
+                korDayOfWeek = "금요일";
+                break;
+            case 7:
+                korDayOfWeek = "토요일";
+                break;
+        }
+
+        //메세지 작성 시간 문자열로..
+
         String time=calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE); //14:16
+        String todayDate = year + "." + month+"."+date+" " + korDayOfWeek;
+
+
 
         //firebase DB에 저장할 값(MessageItem객체) 설정
         MessageItem messageItem= new MessageItem(nickName,message,time,pofileUrl);
         //'roomName'노드에 MessageItem객체를 통해
-        chatRef.push().setValue(messageItem);
+        chatRef.child(todayDate).push().setValue(messageItem);
 
         //EditText에 있는 글씨 지우기
         et.setText("");
