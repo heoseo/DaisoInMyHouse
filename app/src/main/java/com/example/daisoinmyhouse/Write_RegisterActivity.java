@@ -12,12 +12,13 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class Write_RegisterActivity {
+public class Write_RegisterActivity extends AsyncTask<String, Void, String>  {
     String sendMsg, receiveMsg;
+
+    @Override
     protected String doInBackground(String... strings) {
         try {
             String str;
-            // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
             URL url = new URL("http://daisoinmyhouse.cafe24.com/writeAction.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
