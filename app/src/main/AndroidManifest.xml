@@ -22,9 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatListActivity"></activity>
-        <activity android:name=".MainChatActivity" />
-        <activity android:name=".ChatActivity" /> <!-- <activity -->
+        <activity android:name=".ChattingListActivity"></activity>
+        <activity android:name=".ChattingMainActivity" />
+        <activity android:name=".ChattingActivity" /> <!-- <activity -->
         <!-- android:name=".ChatActivity" -->
         <!-- android:theme="@style/AppTheme.NoActionBar"> -->
         <!-- <intent-filter> -->

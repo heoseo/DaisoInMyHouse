@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,7 +24,7 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainChatActivity extends AppCompatActivity {
+public class ChattingMainActivity extends AppCompatActivity {
 
     EditText etName;
     CircleImageView ivProfile;
@@ -45,9 +44,9 @@ public class MainChatActivity extends AppCompatActivity {
 
         //폰에 저장되어 있는 프로필 읽어오기
         loadData();
-        if (G.nickName != null) {
-            etName.setText(G.nickName);
-            Picasso.get().load(G.porfileUrl).into(ivProfile);
+        if (StaticUserInformation.nickName != null) {
+            etName.setText(StaticUserInformation.nickName);
+            Picasso.get().load(StaticUserInformation.porfileUrl).into(ivProfile);
 
             //처음이 아니다, 즉, 이미 접속한 적이 있다.
             isFirst = false;
@@ -96,7 +95,7 @@ public class MainChatActivity extends AppCompatActivity {
         //바꾼것도 없고, 처음 접속도 아니고..
         if(!isChanged && !isFirst){
             //ChatActivity로 전환
-            Intent intent= new Intent(this, ChatListActivity.class);
+            Intent intent= new Intent(this, ChattingListActivity.class);
             startActivity(intent);
             finish();
         }else{
@@ -108,7 +107,7 @@ public class MainChatActivity extends AppCompatActivity {
 
     void saveData(){
         //EditText의 닉네임 가져오기 [전역변수에]
-        G.nickName= etName.getText().toString();
+        StaticUserInformation.nickName= etName.getText().toString();
 
         //이미지를 선택하지 않았을 수도 있으므로
         if(imgUri==null) return;
@@ -133,7 +132,7 @@ public class MainChatActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         //파라미터로 firebase의 저장소에 저장되어 있는
                         //이미지에 대한 다운로드 주소(URL)을 문자열로 얻어오기
-                        G.porfileUrl= uri.toString();
+                        StaticUserInformation.porfileUrl= uri.toString();
 
                         //1. Firebase Database에 nickName, profileUrl을 저장
                         //firebase DB관리자 객체 소환
@@ -142,19 +141,19 @@ public class MainChatActivity extends AppCompatActivity {
                         DatabaseReference profileRef= firebaseDatabase.getReference("profiles");
 
                         //닉네임을 key 식별자로 하고 프로필 이미지의 주소를 값으로 저장
-                        profileRef.child(G.nickName).setValue(G.porfileUrl);
-                        Toast.makeText(MainChatActivity.this, G.nickName + "님 프로필 저장 완료", Toast.LENGTH_SHORT).show();
+                        profileRef.child(StaticUserInformation.nickName).setValue(StaticUserInformation.porfileUrl);
+                        Toast.makeText(ChattingMainActivity.this, StaticUserInformation.nickName + "님 프로필 저장 완료", Toast.LENGTH_SHORT).show();
 
                         //2. 내 phone에 nickName, profileUrl을 저장
                         SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
                         SharedPreferences.Editor editor=preferences.edit();
 
-                        editor.putString("nickName",G.nickName);
-                        editor.putString("profileUrl", G.porfileUrl);
+                        editor.putString("nickName", StaticUserInformation.nickName);
+                        editor.putString("profileUrl", StaticUserInformation.porfileUrl);
 
                         editor.commit();
                         //저장이 완료되었으니 ChatActivity로 전환
-                        Intent intent=new Intent(MainChatActivity.this, ChatListActivity.class);
+                        Intent intent=new Intent(ChattingMainActivity.this, ChattingListActivity.class);
                         startActivity(intent);
                         finish();
 
@@ -167,8 +166,8 @@ public class MainChatActivity extends AppCompatActivity {
     //내 phone에 저장되어 있는 프로필정보 읽어오기
     void loadData(){
         SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
-        G.nickName=preferences.getString("nickName", null);
-        G.porfileUrl=preferences.getString("profileUrl", null);
+        StaticUserInformation.nickName=preferences.getString("nickName", null);
+        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
 
 
     }

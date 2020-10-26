@@ -27,7 +27,7 @@ public class ChattingFragment extends Fragment {
         btnChat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(getContext(), MainChatActivity.class);
+                Intent intent = new Intent(getContext(), ChattingMainActivity.class);
                 getContext().startActivity(intent);
             }
         });

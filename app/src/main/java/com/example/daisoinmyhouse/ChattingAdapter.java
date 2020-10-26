@@ -12,24 +12,24 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChatAdapter extends BaseAdapter {
+public class ChattingAdapter extends BaseAdapter {
 
-    ArrayList<MessageItem> messageItems;
+    ArrayList<ChattingMessageItem> chattingMessageItems;
     LayoutInflater layoutInflater;
 
-    public ChatAdapter(ArrayList<MessageItem> messageItems, LayoutInflater layoutInflater) {
-        this.messageItems = messageItems;
+    public ChattingAdapter(ArrayList<ChattingMessageItem> chattingMessageItems, LayoutInflater layoutInflater) {
+        this.chattingMessageItems = chattingMessageItems;
         this.layoutInflater = layoutInflater;
     }
 
     @Override
     public int getCount() {
-        return messageItems.size();
+        return chattingMessageItems.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return messageItems.get(position);
+        return chattingMessageItems.get(position);
     }
 
     @Override
@@ -41,13 +41,13 @@ public class ChatAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
 
         //현재 보여줄 번째의(position)의 데이터로 뷰를 생성
-        MessageItem item=messageItems.get(position);
+        ChattingMessageItem item= chattingMessageItems.get(position);
 
         //재활용할 뷰는 사용하지 않음!!
         View itemView=null;
 
         //메세지가 내 메세지인지??
-        if(item.getName().equals(G.nickName)){
+        if(item.getName().equals(StaticUserInformation.nickName)){
             itemView= layoutInflater.inflate(R.layout.my_msgbox,viewGroup,false);
         }else{
             itemView= layoutInflater.inflate(R.layout.other_msgbox,viewGroup,false);

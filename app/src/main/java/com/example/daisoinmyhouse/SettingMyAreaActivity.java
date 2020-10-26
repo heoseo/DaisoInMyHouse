@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,7 @@ import java.util.Locale;
 public class SettingMyAreaActivity extends AppCompatActivity {
 
     private GpsTracker gpsTracker;
+    String address;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -60,7 +62,7 @@ public class SettingMyAreaActivity extends AppCompatActivity {
                 double latitude = gpsTracker.getLatitude();
                 double longitude = gpsTracker.getLongitude();
 
-                String address = getCurrentAddress(latitude, longitude);
+                address = getCurrentAddress(latitude, longitude);
                 tvAddress.setText(address);
 
                 Toast.makeText(SettingMyAreaActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
@@ -71,9 +73,15 @@ public class SettingMyAreaActivity extends AppCompatActivity {
         btnAreaSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                SaveAreaInDBActivity task = new SaveAreaInDBActivity();
 
-//                String result = task.execute(G.nickName, tvAddress).get();
+                StaticUserInformation.myArea = address;
+                SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
+                SharedPreferences.Editor editor=preferences.edit();
+
+                editor.putString("myArea", StaticUserInformation.myArea);
+
+                editor.commit();
+
             }
 
         });

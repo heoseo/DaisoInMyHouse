@@ -1,13 +1,13 @@
 package com.example.daisoinmyhouse;
 
-public class MessageItem {
+public class ChattingMessageItem {
 
     String name;
     String message;
     String time;
     String pofileUrl;
 
-    public MessageItem(String name, String message, String time, String pofileUrl) {
+    public ChattingMessageItem(String name, String message, String time, String pofileUrl) {
         this.name = name;
         this.message = message;
         this.time = time;
@@ -16,7 +16,7 @@ public class MessageItem {
 
     //firebase DB에 객체로 값을 읽어올 때..
     //파라미터가 비어있는 생성자가 핑요함.
-    public MessageItem() {
+    public ChattingMessageItem() {
     }
 
     //Getter & Setter

@@ -10,21 +10,17 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChattingActivity extends AppCompatActivity {
 
     String yourName;
     String roomName;
@@ -32,8 +28,8 @@ public class ChatActivity extends AppCompatActivity {
     EditText et;
     ListView listView;
 
-    ArrayList<MessageItem> messageItems=new ArrayList<>();
-    ChatAdapter adapter;
+    ArrayList<ChattingMessageItem> chattingMessageItems =new ArrayList<>();
+    ChattingAdapter adapter;
 
     //Firebase Database 관리 객체참조변수
     FirebaseDatabase firebaseDatabase;
@@ -56,7 +52,7 @@ public class ChatActivity extends AppCompatActivity {
 
         et=findViewById(R.id.et);
         listView=findViewById(R.id.listview);
-        adapter=new ChatAdapter(messageItems,getLayoutInflater());
+        adapter=new ChattingAdapter(chattingMessageItems,getLayoutInflater());
         listView.setAdapter(adapter);
 
         // 리스트뷰가 갱신될때 하단으로 자동 스크롤
@@ -79,14 +75,14 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 //새로 추가된 데이터(값 : MessageItem객체) 가져오기
-                MessageItem messageItem= dataSnapshot.getValue(MessageItem.class);
+                ChattingMessageItem chattingMessageItem = dataSnapshot.getValue(ChattingMessageItem.class);
 
                 //새로운 메세지를 리스뷰에 추가하기 위해 ArrayList에 추가
-                messageItems.add(messageItem);
+                chattingMessageItems.add(chattingMessageItem);
 
                 //리스트뷰를 갱신
                 adapter.notifyDataSetChanged();
-                listView.setSelection(messageItems.size()-1); //리스트뷰의 마지막 위치로 스크롤 위치 이동
+                listView.setSelection(chattingMessageItems.size()-1); //리스트뷰의 마지막 위치로 스크롤 위치 이동
             }
 
             @Override
@@ -117,9 +113,9 @@ public class ChatActivity extends AppCompatActivity {
     public void clickSend(View view) {
 
         //firebase DB에 저장할 값들( 닉네임, 메세지, 프로필 이미지URL, 시간)
-        String nickName= G.nickName;
+        String nickName= StaticUserInformation.nickName;
         String message= et.getText().toString();
-        String pofileUrl= G.porfileUrl;
+        String pofileUrl= StaticUserInformation.porfileUrl;
 
 
 
@@ -175,9 +171,9 @@ public class ChatActivity extends AppCompatActivity {
 
 
         //firebase DB에 저장할 값(MessageItem객체) 설정
-        MessageItem messageItem= new MessageItem(nickName,message,time,pofileUrl);
+        ChattingMessageItem chattingMessageItem = new ChattingMessageItem(nickName,message,time,pofileUrl);
         //'roomName'노드에 MessageItem객체를 통해
-        chatRef.push().setValue(messageItem);
+        chatRef.push().setValue(chattingMessageItem);
 
 
 

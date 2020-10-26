@@ -1,6 +1,5 @@
 package com.example.daisoinmyhouse;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class ChatListActivity extends AppCompatActivity {
+public class ChattingListActivity extends AppCompatActivity {
 
 
     private ListView listView;
@@ -66,16 +64,16 @@ public class ChatListActivity extends AppCompatActivity {
         btn_create = (Button) findViewById(R.id.btn_create);
         btn_create.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                final EditText et_inDialog = new EditText(ChatListActivity.this);
+                final EditText et_inDialog = new EditText(ChattingListActivity.this);
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(ChatListActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ChattingListActivity.this);
                 builder.setTitle("채팅방 이름 입력");
                 builder.setView(et_inDialog);
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         yourName = et_inDialog.getText().toString();
-                        map.put(G.nickName + ">" + yourName, G.nickName + ">" + yourName);
+                        map.put(StaticUserInformation.nickName + ">" + yourName, StaticUserInformation.nickName + ">" + yourName);
                         reference.updateChildren(map);
                     }
                 });
@@ -117,9 +115,9 @@ public class ChatListActivity extends AppCompatActivity {
 
                     try{
 
-                        if(G.nickName.equals(firstName))
+                        if(StaticUserInformation.nickName.equals(firstName))
                             set.add(lastName);
-                        else if(G.nickName.equals(lastName))
+                        else if(StaticUserInformation.nickName.equals(lastName))
                             set.add(firstName);
                         else
                             finish();
@@ -149,7 +147,7 @@ public class ChatListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 System.out.println("@@@@@@@@@@@@@@@"+getRoomName);
                 intent.putExtra("your_name", ((TextView) view).getText().toString());
                 intent.putExtra("room_name", getRoomName);
