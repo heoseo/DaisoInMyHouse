@@ -134,7 +134,6 @@ public class MainChatActivity extends AppCompatActivity {
                         //파라미터로 firebase의 저장소에 저장되어 있는
                         //이미지에 대한 다운로드 주소(URL)을 문자열로 얻어오기
                         G.porfileUrl= uri.toString();
-                        Toast.makeText(MainChatActivity.this, "프로필 저장 완료", Toast.LENGTH_SHORT).show();
 
                         //1. Firebase Database에 nickName, profileUrl을 저장
                         //firebase DB관리자 객체 소환
@@ -144,6 +143,7 @@ public class MainChatActivity extends AppCompatActivity {
 
                         //닉네임을 key 식별자로 하고 프로필 이미지의 주소를 값으로 저장
                         profileRef.child(G.nickName).setValue(G.porfileUrl);
+                        Toast.makeText(MainChatActivity.this, G.nickName + "님 프로필 저장 완료", Toast.LENGTH_SHORT).show();
 
                         //2. 내 phone에 nickName, profileUrl을 저장
                         SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
@@ -154,7 +154,7 @@ public class MainChatActivity extends AppCompatActivity {
 
                         editor.commit();
                         //저장이 완료되었으니 ChatActivity로 전환
-                        Intent intent=new Intent(MainChatActivity.this, ChatActivity.class);
+                        Intent intent=new Intent(MainChatActivity.this, ChatListActivity.class);
                         startActivity(intent);
                         finish();
 

@@ -10,20 +10,23 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 public class ChatActivity extends AppCompatActivity {
 
     String yourName;
-    String myName;
     String roomName;
 
     EditText et;
@@ -48,7 +51,8 @@ public class ChatActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(G.nickName);
 
         yourName = getIntent().getExtras().get("your_name").toString();
-        myName = getIntent().getExtras().get("my_name").toString();
+        roomName = getIntent().getExtras().get("room_name").toString();
+
 
         et=findViewById(R.id.et);
         listView=findViewById(R.id.listview);
@@ -60,7 +64,9 @@ public class ChatActivity extends AppCompatActivity {
 
         //Firebase DB관리 객체와 'caht'노드 참조객체 얻어오기
         firebaseDatabase= FirebaseDatabase.getInstance();
-        chatRef= firebaseDatabase.getReference("chat_list").child(yourName);;
+        chatRef= firebaseDatabase.getReference("chat_list").child(roomName);
+        System.out.println("roomName: " + roomName);
+
 
 
 
@@ -105,6 +111,8 @@ public class ChatActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     public void clickSend(View view) {
 
@@ -169,7 +177,9 @@ public class ChatActivity extends AppCompatActivity {
         //firebase DB에 저장할 값(MessageItem객체) 설정
         MessageItem messageItem= new MessageItem(nickName,message,time,pofileUrl);
         //'roomName'노드에 MessageItem객체를 통해
-        chatRef.child(todayDate).push().setValue(messageItem);
+        chatRef.push().setValue(messageItem);
+
+
 
         //EditText에 있는 글씨 지우기
         et.setText("");

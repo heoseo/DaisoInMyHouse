@@ -1,5 +1,6 @@
 package com.example.daisoinmyhouse;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +41,7 @@ public class ChatListActivity extends AppCompatActivity {
     private ArrayList<String> arr_roomList = new ArrayList<>();
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
     private String name;
+    String getRoomName;
 
     private String yourName;
 
@@ -72,7 +75,7 @@ public class ChatListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         yourName = et_inDialog.getText().toString();
-                        map.put(yourName + ">" + G.nickName, "");
+                        map.put(G.nickName + ">" + yourName, G.nickName + ">" + yourName);
                         reference.updateChildren(map);
                     }
                 });
@@ -98,28 +101,33 @@ public class ChatListActivity extends AppCompatActivity {
 
                 while (i.hasNext()) {
 //                    set.add(((DataSnapshot) i.next()).getKey());
-                    String getKey = ((DataSnapshot) i.next()).getKey();
-                    String roomName = "";
+                     getRoomName = ((DataSnapshot) i.next()).getKey();
 
                     // >를 기준으로 문자열을 추출할 것이다.
                     // 먼저 >의 인덱스를 찾는다.
-                    int idx = getKey.indexOf(">");
+                    int idx = getRoomName.indexOf(">");
 
                     // > 앞부분을 추출
                     // substring은 첫번째 지정한 인덱스는 포함하지 않는다.
-                    String firstName = getKey.substring(0, idx);
+                    String firstName = getRoomName.substring(0, idx);
 
                     // 뒷부분을 추출
                     // 아래 substring은 @ 바로 뒷부분인 n부터 추출된다.
-                    String lastName = getKey.substring(idx+1);
+                    String lastName = getRoomName.substring(idx+1);
 
+                    try{
 
-                    if(G.nickName.equals(firstName))
-                        set.add(firstName);
-                    else if(G.nickName.equals(lastName))
-                        set.add(lastName);
-                    else
+                        if(G.nickName.equals(firstName))
+                            set.add(lastName);
+                        else if(G.nickName.equals(lastName))
+                            set.add(firstName);
+                        else
+                            finish();
+                    }
+                    catch(Exception e){
                         finish();
+                    }
+
                 }
 
                 arr_roomList.clear();
@@ -135,14 +143,16 @@ public class ChatListActivity extends AppCompatActivity {
 
 
 
+
         // 리스트뷰의 채팅방을 클릭했을 때 반응
         // 채팅방의 이름과 입장하는 유저의 이름을 전달
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                System.out.println("@@@@@@@@@@@@@@@"+getRoomName);
                 intent.putExtra("your_name", ((TextView) view).getText().toString());
-                intent.putExtra("my_name", G.nickName);
+                intent.putExtra("room_name", getRoomName);
                 startActivity(intent);
             }
         });
