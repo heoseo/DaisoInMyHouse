@@ -1,7 +1,6 @@
 package com.example.daisoinmyhouse;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -10,9 +9,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-public class RegisterActivity extends AsyncTask<String, Void, String> {
+
+public class SaveAreaInDBActivity extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
     @Override
     protected String doInBackground(String... strings) {

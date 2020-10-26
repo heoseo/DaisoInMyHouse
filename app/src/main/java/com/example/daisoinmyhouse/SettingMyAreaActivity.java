@@ -35,7 +35,7 @@ public class SettingMyAreaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_my_location);
+        setContentView(R.layout.activity_setting_my_area);
 
         if (!checkLocationServicesStatus()) {
 
@@ -48,8 +48,8 @@ public class SettingMyAreaActivity extends AppCompatActivity {
         final TextView tvAddress = (TextView)findViewById(R.id.tv_gps_test);
 
 
-        Button ShowLocationButton = (Button) findViewById(R.id.btn_find_current_location);
-        ShowLocationButton.setOnClickListener(new View.OnClickListener()
+        Button btnShowLocation = (Button) findViewById(R.id.btn_find_current_location);
+        btnShowLocation.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View arg0)
@@ -65,6 +65,17 @@ public class SettingMyAreaActivity extends AppCompatActivity {
 
                 Toast.makeText(SettingMyAreaActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
             }
+        });
+
+        Button btnAreaSave = (Button) findViewById(R.id.btn_save_area);
+        btnAreaSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                SaveAreaInDBActivity task = new SaveAreaInDBActivity();
+
+//                String result = task.execute(G.nickName, tvAddress).get();
+            }
+
         });
 
     }
