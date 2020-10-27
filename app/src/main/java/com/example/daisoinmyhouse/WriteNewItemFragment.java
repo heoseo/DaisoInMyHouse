@@ -2,6 +2,9 @@ package com.example.daisoinmyhouse;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,13 +47,17 @@ public class WriteNewItemFragment extends Fragment {
 
 
 
-        //사진 이미지 누르면 다음화면
+        //사진 이미지 누르면 사진선택화면
         btn_photo = rootView.findViewById(R.id.imageView_photo);
         btn_photo.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CameraActivity.class);
                 getContext().startActivity(intent);
+
+
+//                onActivityResult실행
+                startActivityForResult(intent, 100);
             }
         });
 
@@ -66,5 +74,19 @@ public class WriteNewItemFragment extends Fragment {
 
 
         return rootView;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        if(requestCode == 100 && resultCode == 1) {
+
+            // cameraactivity에서 받아온 uri
+            Uri uri = Uri.parse(intent.getExtras().get("imageUri").toString());
+            btn_photo.setImageURI(uri);
+//            Toast.makeText(getContext(), "test : " + intent.getExtras().get("test").toString(), Toast.LENGTH_LONG).show();
+        }
+
     }
 }

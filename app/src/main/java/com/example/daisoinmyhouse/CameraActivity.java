@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,16 +95,19 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(imageView.getDrawable() != null){
+                    // drawable을 uri로 바꿈.
+                    Uri uri = Uri.parse(imageView.getDrawable().toString());
+
+
+                    // intent로 writenewitemfragment에 넘긴후 finish.
+                    Intent intent = new Intent();
+//                    intent.putExtra("test","1");
+                    intent.putExtra("imageUri", uri.toString());
+                    setResult(1, intent);
                     finish();
 
-                    LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View v = inflater.inflate(R.layout.fragment_write_new_item, null);
-                    writingImage = (ImageView) v.findViewById(R.id.imageView_photo);
 
 
-                    BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
-                    Bitmap bitmap = bitmapDrawable.getBitmap();
-                    writingImage.setImageBitmap(bitmap);
                 }else{
                     Toast.makeText(getApplicationContext(), "사진이 선택되지 않았습니다.",Toast.LENGTH_LONG).show();
                 }
@@ -159,7 +164,8 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
+
 
         //갤러리 사진 불러오기
         if (requestCode == REQUEST_CODE) {
