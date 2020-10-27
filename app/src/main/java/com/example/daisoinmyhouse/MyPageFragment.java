@@ -1,5 +1,7 @@
 package com.example.daisoinmyhouse;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,23 +53,39 @@ public class MyPageFragment extends Fragment {
 
 
 
-        // 프로필 레이아웃 누르면 -> ProfileMenuActivity 띄우기
-        btnProfile = rootView.findViewById(R.id.ll_profile);
-        btnProfile.setOnClickListener(new View.OnClickListener(){
+        // 수정하기, 공유하기 팝업띄우기
+        ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
+        btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ProfileMenuActivity.class);
-                getContext().startActivity(intent);
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("리스트 추가 예제");
+
+                builder.setItems(R.array.menu_profile_popup, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int pos)
+                    {
+                        String[] items = getResources().getStringArray(R.array.menu_profile_popup);
+                        String str = items[pos];
+                        Toast.makeText(getActivity().getApplicationContext(),str,Toast.LENGTH_LONG).show();
+
+                        switch (str){
+                            case "수정하기":
+                                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
+                                getContext().startActivity(intent);
+                                break;
+                            case "공유하기":
+                                break;
+                        }
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
-        btnArrow = rootView.findViewById(R.id.btn_profile_setting);
-        btnArrow.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ProfileMenuActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+
 
         // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
         btnKeyword = rootView.findViewById(R.id.ll_setting_keyword_notice);

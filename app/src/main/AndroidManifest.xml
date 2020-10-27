@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChattingListActivity"></activity>
+        <activity android:name=".ProfileEditActivity"></activity>
+        <activity android:name=".ChattingListActivity" />
         <activity android:name=".ChattingMainActivity" />
         <activity android:name=".ChattingActivity" /> <!-- <activity -->
         <!-- android:name=".ChatActivity" -->
@@ -32,11 +33,10 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,7 +44,6 @@
         <activity android:name=".AlarmSettingActivity" />
         <activity android:name=".CategoryInWriteActivity" />
         <activity android:name=".SettingMyAreaActivity" />
-        <activity android:name=".ProfileMenuActivity" />
         <activity android:name=".RentActivity" />
         <activity android:name=".LeaseActivity" />
         <activity android:name=".CameraActivity" />
@@ -65,7 +64,6 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
-
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

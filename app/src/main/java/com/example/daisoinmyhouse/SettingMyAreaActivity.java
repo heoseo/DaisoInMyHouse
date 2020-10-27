@@ -74,6 +74,8 @@ public class SettingMyAreaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                // 현재 유저 정보에 위치 저장.(핸드폰에)
                 StaticUserInformation.myArea = address;
                 SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
                 SharedPreferences.Editor editor=preferences.edit();

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,18 +28,25 @@ public class ItemInformationActivity extends AppCompatActivity {
 
     ImageView ivShare;
 
+    // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
+    String productID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iteminformation);
 
+        productID = getIntent().getExtras().get("productID").toString();
+
+        // 공유하기 이미지뷰(아이콘) 누르면 카톡공유.
         ivShare = (ImageView)findViewById(R.id.imageview_share);
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + productID, Toast.LENGTH_LONG).show();
                 kakaolink();
             }
         });
+
     }
 
     public void kakaolink() {
@@ -49,6 +57,9 @@ public class ItemInformationActivity extends AppCompatActivity {
                                 .setMobileWebUrl("https://developers.kakao.com").build())
                         .setDescrption("아메리카노, 빵, 케익")
                         .build())
+                .setSocial(SocialObject.newBuilder().setLikeCount(10).setCommentCount(20)
+                        .setSharedCount(30).setViewCount(40).build())
+                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("'https://developers.kakao.com").setMobileWebUrl("'https://developers.kakao.com").build()))
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("'https://developers.kakao.com")
                         .setMobileWebUrl("'https://developers.kakao.com")
