@@ -3,15 +3,18 @@
     package="com.example.daisoinmyhouse">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-feature android:name = "android.hardware.camera" android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,53 +22,64 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ChatListActivity"></activity>
+        <activity android:name=".MainChatActivity" />
+        <activity android:name=".ChatActivity" /> <!-- <activity -->
+        <!-- android:name=".ChatActivity" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity"/>
-        <activity android:name=".AlarmSettingActivity"/>
-        <activity android:name=".CategoryInWriteActivity"/>
-        <activity android:name=".SettingMyAreaActivity"/>
-        <activity android:name=".ProfileMenuActivity"/>
-        <activity android:name=".RentActivity"/>
-        <activity android:name=".LeaseActivity"/>
-        <activity android:name=".CameraActivity"/>
-        <activity android:name=".KeywordAlarmActivity"/>
-        <activity android:name=".FirtstSettingAreaActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".JoinActivity"/>
-        <activity android:name=".FindAddressActivity"/>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".AlarmSettingActivity" />
+        <activity android:name=".CategoryInWriteActivity" />
+        <activity android:name=".SettingMyAreaActivity" />
+        <activity android:name=".ProfileMenuActivity" />
+        <activity android:name=".RentActivity" />
+        <activity android:name=".LeaseActivity" />
+        <activity android:name=".CameraActivity" />
+        <activity android:name=".KeywordAlarmActivity" />
+        <activity android:name=".FirtstSettingAreaActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".JoinActivity" />
+        <activity android:name=".FindAddressActivity" />
         <activity android:name=".ItemInformationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/kakao_scheme"
-                    android:host="@string/kakaolink_host" />
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
+
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
 
-
         <provider
-            android:authorities="com.example.daisoinmyhouse"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.daisoinmyhouse"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-
         </provider>
-
     </application>
 
 </manifest>

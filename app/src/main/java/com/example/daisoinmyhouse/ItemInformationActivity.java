@@ -30,7 +30,7 @@ public class ItemInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.iteminformation);
+        setContentView(R.layout.activity_iteminformation);
 
         ivShare = (ImageView)findViewById(R.id.imageview_share);
         ivShare.setOnClickListener(new View.OnClickListener() {
