@@ -58,7 +58,10 @@ public class ChattingListActivity extends AppCompatActivity {
 
         // 채팅방 리스트를 보여줍니다
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arr_roomList);
+
+        System.out.println(1);
         listView.setAdapter(arrayAdapter);
+        System.out.println(2);
 
         // 다이얼로그에서 채팅방 이름을 적어서 채팅방을 생성합니다
         btn_create = (Button) findViewById(R.id.btn_create);
@@ -93,6 +96,7 @@ public class ChattingListActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(3);
 
                 Set<String> set = new HashSet<String>();
                 Iterator i = dataSnapshot.getChildren().iterator();
@@ -119,11 +123,12 @@ public class ChattingListActivity extends AppCompatActivity {
                             set.add(lastName);
                         else if(StaticUserInformation.nickName.equals(lastName))
                             set.add(firstName);
-                        else
-                            finish();
+//                        else
+//                            finish();
                     }
                     catch(Exception e){
-                        finish();
+                        System.out.println("예외발생함");
+                        e.printStackTrace();
                     }
 
                 }

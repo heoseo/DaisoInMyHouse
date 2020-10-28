@@ -90,10 +90,15 @@ public class ChattingMainActivity extends AppCompatActivity {
 
     public void clickBtn(View view) {
 
-
-
+        etName = findViewById(R.id.et_name);
+        if(!StaticUserInformation.nickName.equals(etName.getText().toString()))
+        {
+            System.out.println("닉넴바뀜");
+            saveData();
+            isChanged = true;
+        }
         //바꾼것도 없고, 처음 접속도 아니고..
-        if(!isChanged && !isFirst){
+        else if(!isChanged && !isFirst){
             //ChatActivity로 전환
             Intent intent= new Intent(this, ChattingListActivity.class);
             startActivity(intent);
@@ -101,16 +106,25 @@ public class ChattingMainActivity extends AppCompatActivity {
         }else{
             //1. save작업
             saveData();
+            //저장이 완료되었으니 ChatActivity로 전환
+            Intent intent=new Intent(this, ChattingListActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
 
     void saveData(){
         //EditText의 닉네임 가져오기 [전역변수에]
+        etName = findViewById(R.id.et_name);
         StaticUserInformation.nickName= etName.getText().toString();
 
         //이미지를 선택하지 않았을 수도 있으므로
-        if(imgUri==null) return;
+        if(imgUri==null){
+            System.out.println("이미지 선택 안함");
+            Toast.makeText(ChattingMainActivity.this, "프로필 사진을 선택하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //Firebase storage에 이미지 저장하기 위해 파일명 만들기(날짜를 기반으로)
         SimpleDateFormat sdf= new SimpleDateFormat("yyyMMddhhmmss"); //20191024111224
@@ -152,10 +166,7 @@ public class ChattingMainActivity extends AppCompatActivity {
                         editor.putString("profileUrl", StaticUserInformation.porfileUrl);
 
                         editor.commit();
-                        //저장이 완료되었으니 ChatActivity로 전환
-                        Intent intent=new Intent(ChattingMainActivity.this, ChattingListActivity.class);
-                        startActivity(intent);
-                        finish();
+
 
                     }
                 });
