@@ -64,6 +64,7 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginTest"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

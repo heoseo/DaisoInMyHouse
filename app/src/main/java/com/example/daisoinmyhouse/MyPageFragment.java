@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,9 +22,11 @@ import androidx.fragment.app.Fragment;
 
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.squareup.picasso.Picasso;
 
 public class MyPageFragment extends Fragment {
 
+    ImageView imgViewProfile;
     ImageButton btnSetting;
     ImageButton btnArrow;
     LinearLayout btnSettingMyArea;
@@ -31,6 +35,7 @@ public class MyPageFragment extends Fragment {
     Button btnLogin;
     Button btnLogout;
     LinearLayout btnTransaction;
+    TextView tvID;
 
     @Nullable
     @Override
@@ -51,7 +56,11 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        imgViewProfile = rootView.findViewById(R.id.imageview_profile);
+        Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
 
+        tvID = rootView.findViewById(R.id.tv_id);
+        tvID.setText(StaticUserInformation.nickName);
 
         // 수정하기, 공유하기 팝업띄우기
         ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);

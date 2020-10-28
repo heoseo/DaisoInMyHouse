@@ -38,7 +38,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,17 +72,39 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        id_et = (EditText)findViewById(R.id.et_id);
-        pw_et = (EditText)findViewById(R.id.et_pw);
+        id_et = (EditText)findViewById(R.id.et_login_id);
+        pw_et = (EditText)findViewById(R.id.et_login_password);
 
         btnLogin = (Button)findViewById(R.id.activity_login_login_btn);
 
-        session = Session.getCurrentSession();
-        session.addCallback(sessionCallback);
+//        session = Session.getCurrentSession();
+//        session.addCallback(sessionCallback);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                session.open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+                try{
+                    user_id = id_et.getText().toString();
+                    user_pw = pw_et.getText().toString();
+
+                    LoginAction loginAction = new LoginAction();
+                    String result = loginAction.execute(user_id, user_pw).get();
+
+                    StaticUserInformation.nickName = result;
+
+                    // String[][] parsedData = jsonParserList(result);
+
+                    // Intent intent = new Intent(getApplicationContext(), LoginTest.class);
+                    // intent.putExtra("name", parsedData[0][0]);
+                    // intent.putExtra("id", parsedData[0][1]);
+                    // intent.putExtra("email", parsedData[0][2]);
+                    //intent.putExtra("phone", parsedData[0][3]);
+                    // intent.putExtra("address", parsedData[0][4]);
+                    // startActivity(intent);
+                }catch (Exception e){
+                    Log.i("DB", "에러");
+                }
+                //session.open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
             }
         });
 
@@ -106,5 +134,40 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    public String[][] jsonParserList(String pRecvServerPage) {
+        Log.i("서버에서 받은 전체 내용 : ", pRecvServerPage);
+
+        try {
+            JSONObject json = new JSONObject(pRecvServerPage);
+            JSONArray jArr = json.getJSONArray("list");
+
+            // 받아온 pRecvServerPage를 분석하는 부분
+            String[] jsonName = {"name", "id", "email", "phone", "address"};
+            String[][] parseredData = new String[jArr.length()][jsonName.length];
+            for (int i = 0; i < jArr.length(); i++) {
+                json = jArr.getJSONObject(i);
+                if(json != null) {
+                    for(int j = 0; j < jsonName.length; j++) {
+                        parseredData[i][j] = json.getString(jsonName[j]);
+                    }
+                }
+            }
+
+            // 분해 된 데이터를 확인하기 위한 부분
+            for(int i=0; i<parseredData.length; i++){
+                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][0]);
+                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][1]);
+                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][2]);
+                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][3]);
+                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][4]);
+            }
+            return parseredData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
