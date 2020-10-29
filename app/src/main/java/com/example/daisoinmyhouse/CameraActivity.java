@@ -87,6 +87,8 @@ public class CameraActivity extends AppCompatActivity {
         });
 
 
+
+        
         imageView = (ImageView) findViewById(R.id.btn_Imageview);
 
 
