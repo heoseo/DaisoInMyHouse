@@ -19,8 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import static android.app.Activity.RESULT_OK;
+
 public class WriteNewItemFragment extends Fragment {
 
+    private static final int REQUEST_AREA = 50;
     TextView btnSelectCategory;
     TextView btnSetLocation;
     ImageButton btn_back;
@@ -73,6 +76,7 @@ public class WriteNewItemFragment extends Fragment {
         });
 
 
+        // 지역설정
         btnSetLocation = rootView.findViewById(R.id.tv_location);
         if(StaticUserInformation.myArea != null){
             btnSetLocation.setText(StaticUserInformation.myArea);
@@ -80,10 +84,8 @@ public class WriteNewItemFragment extends Fragment {
         btnSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SettingMyAreaActivity.class);
-                getContext().startActivity(intent);
+//                startActivityForResult(new Intent(getContext(), SettingMyAreaActivity.class) ,0);
 
-                startActivityForResult(intent, 100);
             }
         });
 
@@ -98,6 +100,23 @@ public class WriteNewItemFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
+        super.onActivityResult(requestCode, resultCode, intent);
+//
+//        if (resultCode != RESULT_OK) {
+//            Toast.makeText(MainActivity.this, "결과가 성공이 아님.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if (requestCode == REQUEST_AREA) {
+//            String resultMsg = data.getStringExtra("result_msg");
+//            textView.setText(resultMsg);
+//
+//            Toast.makeText(MainActivity.this, "결과 : " + resultMsg, Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(MainActivity.this, "REQUEST_ACT가 아님", Toast.LENGTH_SHORT).show();
+//        }
+
+
         if(requestCode == 100 && resultCode == 1) {
 
             // cameraactivity에서 받아온 uri

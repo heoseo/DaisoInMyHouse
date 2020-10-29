@@ -85,10 +85,9 @@ public class SettingMyAreaActivity extends AppCompatActivity {
 
                 editor.commit();
 //
-                Intent intent = new Intent();
-                intent.putExtra("area", address);
-                setResult(1, intent);
+                setResult(RESULT_OK);
                 finish();
+
 
             }
 
