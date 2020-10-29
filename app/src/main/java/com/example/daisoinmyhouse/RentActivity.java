@@ -16,6 +16,7 @@ public class RentActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RentAdapter adapter;
     TextView tv_lease;
+    TextView btn_back;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,15 @@ public class RentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LeaseActivity.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        btn_back = (TextView) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });

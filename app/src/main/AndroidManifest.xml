@@ -65,6 +65,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginTest"/>
+        <activity android:name=".WishlistActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

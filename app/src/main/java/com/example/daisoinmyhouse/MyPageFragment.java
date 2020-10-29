@@ -36,6 +36,7 @@ public class MyPageFragment extends Fragment {
     Button btnLogout;
     LinearLayout btnTransaction;
     TextView tvID;
+    LinearLayout btnWishlist;
 
     @Nullable
     @Override
@@ -136,6 +137,18 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), RentActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+
+
+        //찜한 목록 띄우기
+        btnWishlist = rootView.findViewById((R.id.ll_heart));
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), WishlistActivity.class);
                 getContext().startActivity(intent);
             }
         });

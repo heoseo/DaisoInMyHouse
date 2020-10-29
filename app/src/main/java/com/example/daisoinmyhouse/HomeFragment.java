@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
+    ImageButton btn_wishlist;
 
     @Nullable
     @Override
@@ -31,6 +33,18 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
+
+        //위시리스트 띄우기
+        btn_wishlist = v.findViewById(R.id.img_btn_heart);
+        btn_wishlist.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), WishlistActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
 
         return v;
     }
