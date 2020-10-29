@@ -91,20 +91,30 @@ public class ChattingMainActivity extends AppCompatActivity {
     public void clickBtn(View view) {
 
         etName = findViewById(R.id.et_name);
-        if(!StaticUserInformation.nickName.equals(etName.getText().toString()))
-        {
-            System.out.println("닉넴바뀜");
-            saveData();
-            isChanged = true;
+        try{
+
+            if(!StaticUserInformation.nickName.equals(etName.getText().toString()))
+            {
+                System.out.println("닉넴바뀜");
+                saveData();
+                isChanged = true;
+            }
+            //바꾼것도 없고, 처음 접속도 아니고..
+            else if(!isChanged && !isFirst){
+                //ChatActivity로 전환
+                Intent intent= new Intent(this, ChattingListActivity.class);
+                startActivity(intent);
+                finish();
+            }else{
+                //1. save작업
+                saveData();
+                //저장이 완료되었으니 ChatActivity로 전환
+                Intent intent=new Intent(this, ChattingListActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
-        //바꾼것도 없고, 처음 접속도 아니고..
-        else if(!isChanged && !isFirst){
-            //ChatActivity로 전환
-            Intent intent= new Intent(this, ChattingListActivity.class);
-            startActivity(intent);
-            finish();
-        }else{
-            //1. save작업
+        catch(Exception e){
             saveData();
             //저장이 완료되었으니 ChatActivity로 전환
             Intent intent=new Intent(this, ChattingListActivity.class);

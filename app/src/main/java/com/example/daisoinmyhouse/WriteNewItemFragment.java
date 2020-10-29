@@ -22,9 +22,11 @@ import androidx.fragment.app.Fragment;
 public class WriteNewItemFragment extends Fragment {
 
     TextView btnSelectCategory;
+    TextView btnSetLocation;
     ImageButton btn_back;
     ImageView btn_photo;
     MainActivity activity;
+
 
 
     @Nullable
@@ -69,6 +71,22 @@ public class WriteNewItemFragment extends Fragment {
                 activity.onFragmentChange(1);
             }
         });
+
+
+        btnSetLocation = rootView.findViewById(R.id.tv_location);
+        if(StaticUserInformation.myArea != null){
+            btnSetLocation.setText(StaticUserInformation.myArea);
+        }
+        btnSetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SettingMyAreaActivity.class);
+                getContext().startActivity(intent);
+
+                startActivityForResult(intent, 100);
+            }
+        });
+
 
 
 

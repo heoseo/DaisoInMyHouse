@@ -75,14 +75,20 @@ public class SettingMyAreaActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                // 현재 유저 정보에 위치 저장.(핸드폰에)
+                // 현재 위치 저장 (StaticUserInformation 클래스에)
                 StaticUserInformation.myArea = address;
+                // 현재 유저 정보에 위치 저장.(핸드폰에)
                 SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
                 SharedPreferences.Editor editor=preferences.edit();
 
                 editor.putString("myArea", StaticUserInformation.myArea);
 
                 editor.commit();
+//
+                Intent intent = new Intent();
+                intent.putExtra("area", address);
+                setResult(1, intent);
+                finish();
 
             }
 
@@ -135,6 +141,8 @@ public class SettingMyAreaActivity extends AppCompatActivity {
 
         }
     }
+
+
 
     void checkRunTimePermission(){
 

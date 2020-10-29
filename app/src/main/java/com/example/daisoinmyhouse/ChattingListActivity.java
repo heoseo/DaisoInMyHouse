@@ -39,7 +39,7 @@ public class ChattingListActivity extends AppCompatActivity {
     private ArrayList<String> arr_roomList = new ArrayList<>();
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
     private String name;
-    String getRoomName;
+    String getNewRoomName;
 
     private String yourName;
 
@@ -103,28 +103,32 @@ public class ChattingListActivity extends AppCompatActivity {
 
                 while (i.hasNext()) {
 //                    set.add(((DataSnapshot) i.next()).getKey());
-                     getRoomName = ((DataSnapshot) i.next()).getKey();
+                     getNewRoomName = ((DataSnapshot) i.next()).getKey();
 
                     // >를 기준으로 문자열을 추출할 것이다.
                     // 먼저 >의 인덱스를 찾는다.
-                    int idx = getRoomName.indexOf(">");
+                    int idx = getNewRoomName.indexOf(">");
 
                     // > 앞부분을 추출
                     // substring은 첫번째 지정한 인덱스는 포함하지 않는다.
-                    String firstName = getRoomName.substring(0, idx);
+                    String firstName = getNewRoomName.substring(0, idx);
 
                     // 뒷부분을 추출
                     // 아래 substring은 @ 바로 뒷부분인 n부터 추출된다.
-                    String lastName = getRoomName.substring(idx+1);
+                    String lastName = getNewRoomName.substring(idx+1);
 
                     try{
 
                         if(StaticUserInformation.nickName.equals(firstName))
+                        {
                             set.add(lastName);
+                        }
                         else if(StaticUserInformation.nickName.equals(lastName))
+                        {
                             set.add(firstName);
-//                        else
-//                            finish();
+                        }
+
+                        StaticUserInformation.roomSet.add(getNewRoomName);
                     }
                     catch(Exception e){
                         System.out.println("예외발생함");
@@ -153,9 +157,9 @@ public class ChattingListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-                System.out.println("@@@@@@@@@@@@@@@"+getRoomName);
+                System.out.println("@@@@@@@@@@@@@@@"+ getNewRoomName);
                 intent.putExtra("your_name", ((TextView) view).getText().toString());
-                intent.putExtra("room_name", getRoomName);
+                intent.putExtra("room_name", getNewRoomName);
                 startActivity(intent);
             }
         });

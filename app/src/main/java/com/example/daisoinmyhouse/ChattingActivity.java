@@ -6,19 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.FirebaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 public class ChattingActivity extends AppCompatActivity {
 
@@ -37,6 +41,7 @@ public class ChattingActivity extends AppCompatActivity {
 
     //'chat'노드의 참조객체 참조변수
     DatabaseReference chatRef;
+    DatabaseReference chatRef2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +51,23 @@ public class ChattingActivity extends AppCompatActivity {
         //제목줄 제목글시를 닉네임으로(또는 채팅방)
 //        getSupportActionBar().setTitle(G.nickName);
 
-        yourName = getIntent().getExtras().get("your_name").toString();
-        roomName = getIntent().getExtras().get("room_name").toString();
 
+        yourName = getIntent().getExtras().get("your_name").toString();
+
+        firebaseDatabase= FirebaseDatabase.getInstance();
+
+
+        Iterator itr = StaticUserInformation.roomSet.iterator();
+        while(itr.hasNext()) {
+            String get = (String)itr.next();
+
+            if(get.equals(StaticUserInformation.nickName +">"+ yourName))
+                roomName = StaticUserInformation.nickName +">"+ yourName;
+            else if(get.equals(yourName +">"+StaticUserInformation.nickName))
+                roomName = yourName +">"+StaticUserInformation.nickName;
+        }
+
+        chatRef= firebaseDatabase.getReference().child("chat_list").child(roomName);
 
         et=findViewById(R.id.et);
         listView=findViewById(R.id.listview);
@@ -59,8 +78,7 @@ public class ChattingActivity extends AppCompatActivity {
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
         //Firebase DB관리 객체와 'caht'노드 참조객체 얻어오기
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        chatRef= firebaseDatabase.getReference("chat_list").child(roomName);
+        System.out.println("!!!!!!!!!!!roomname은 " + roomName + "임");
         System.out.println("roomName: " + roomName);
 
 
