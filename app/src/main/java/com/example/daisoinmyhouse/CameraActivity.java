@@ -208,6 +208,8 @@ public class CameraActivity extends AppCompatActivity {
 
             imageView.setImageURI(photoUri);
         }
+
+
     }
 
     private int exifOrientationToDegress(int exifOrientation) {
