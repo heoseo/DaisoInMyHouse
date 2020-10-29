@@ -2,15 +2,21 @@ package com.example.daisoinmyhouse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 public class MyPageFragment extends Fragment {
 
@@ -20,7 +26,8 @@ public class MyPageFragment extends Fragment {
     LinearLayout btnProfile;
     LinearLayout btnKeyword;
     Button btnLogin;
-    Button btnJoin;
+    Button btnLogout;
+    LinearLayout btnTransaction;
 
     @Nullable
     @Override
@@ -81,7 +88,29 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserManagement.getInstance()
+                        .requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                Log.d("KAKAO_API", "로그아웃 되었습니다.");
+                            }
+                        });
+            }
+        });
 
+        // 거래내역
+        btnTransaction = rootView.findViewById(R.id.ll_transaction_details);
+        btnTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), RentActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         return rootView;
     }

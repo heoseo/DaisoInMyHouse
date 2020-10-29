@@ -49,6 +49,7 @@
 
 
 
+
         <EditText
             android:id="@+id/et_register"
             android:layout_width="match_parent"
@@ -56,27 +57,33 @@
             android:layout_marginTop="15dp"
             android:hint="상품명 등록" />
 
-
-        <TextView
-            android:id="@+id/tv_category"
+        <EditText
+            android:id="@+id/writeCate"
+            android:text="카테고리 선택"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:textSize="18dp"
-            android:hint=" 카테고리 선택" />
+            />
 
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="#999999"/>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/product"></Spinner>
+
+        <TextView
+            android:id="@+id/et_category"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:text="드롭다운 결과"/>
 
 
         <EditText
             android:id="@+id/et_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="1dp"
             android:hint="가격입력" />
 
         <TextView
@@ -109,7 +116,8 @@
             android:gravity="center"
             android:hint="게시글 내용을 작성해주세요" />
 
-    </LinearLayout>
+        </LinearLayout>
+\
 
     <LinearLayout
         android:layout_width="match_parent"

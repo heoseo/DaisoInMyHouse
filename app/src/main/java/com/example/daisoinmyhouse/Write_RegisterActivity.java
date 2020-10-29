@@ -2,6 +2,7 @@ package com.example.daisoinmyhouse;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.net.URL;
 
 public class Write_RegisterActivity extends AsyncTask<String, Void, String>  {
     String sendMsg, receiveMsg;
+
 
     @Override
     protected String doInBackground(String... strings) {
