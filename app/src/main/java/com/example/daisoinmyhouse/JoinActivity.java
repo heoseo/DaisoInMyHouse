@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.StringTokenizer;
 
 public class JoinActivity extends AppCompatActivity {
 
@@ -15,6 +18,7 @@ public class JoinActivity extends AppCompatActivity {
 
     Button joinBtn, zipCodeBtn;
     EditText nameet, idet, pwet, pwet_confirm, emailet, phoneet, addresset;
+    TextView zipcodetv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,7 @@ public class JoinActivity extends AppCompatActivity {
 
         joinBtn = (Button)findViewById(R.id.activity_join_join_btn);
         zipCodeBtn = (Button)findViewById(R.id.btn_zip_code);
+        zipcodetv = (TextView)findViewById(R.id.tv_zip_code);
 
         nameet = (EditText)findViewById(R.id.et_name);
         idet = (EditText)findViewById(R.id.et_id);
@@ -48,11 +53,25 @@ public class JoinActivity extends AppCompatActivity {
                     String pw = pwet.getText().toString();
                     String email = emailet.getText().toString();
                     String phone = phoneet.getText().toString();
-                    String address = addresset.getText().toString();
+
                     RegisterActivity task = new RegisterActivity();
 
+                    String zip = zipcodetv.getText().toString();
+                    String adress = addresset.getText().toString();
+
+                    String address = zip + adress;
+
                     String result = task.execute(name, id, pw, email, phone, address).get();
-                    // 빈칸이 있는지 검사사
+
+
+
+                    // 빈칸이 있는지 검사
+                    if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
+                        Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
                     if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
                         Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
@@ -73,8 +92,14 @@ public class JoinActivity extends AppCompatActivity {
             case SEARCH_ADDRESS_ACTIVITY:
                 if (resultCode == RESULT_OK) {
                     String data = intent.getExtras().getString("data");
+
+                    String zipcode = data.substring(0, 5);
+                    String adr = data.substring(7);
+
                     if (data != null) {
                         addresset.setText(data);
+                        zipcodetv.setText(zipcode);
+                        addresset.setText(adr);
                     }
                 }
                 break;

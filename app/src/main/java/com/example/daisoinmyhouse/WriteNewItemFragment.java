@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +23,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 
 public class WriteNewItemFragment extends Fragment {
@@ -32,7 +36,7 @@ public class WriteNewItemFragment extends Fragment {
     TextView cattegory;
     Button writeBtn;
     TextView btnSetLocation;
-    ImageButton btn_back;
+    TextView btn_back;
     ImageView btn_photo;
     MainActivity activity;
     Spinner spinner;
@@ -82,14 +86,6 @@ public class WriteNewItemFragment extends Fragment {
             }
         });
 
-        //뒤로가기 이미지 누르면 처음 메인
-        btn_back = rootView.findViewById(R.id.btn_back);
-        btn_back.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                activity.onFragmentChange(1);
-            }
-        });
 
 
         // 지역설정
@@ -140,7 +136,7 @@ public class WriteNewItemFragment extends Fragment {
         return rootView;
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
@@ -149,6 +145,21 @@ public class WriteNewItemFragment extends Fragment {
         if (resultCode != RESULT_OK) {
 //            Toast.makeText(getContext(), "결과가 성공이 아님.", Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        switch(resultCode) {
+            //카메라 사진 촬영 받아온 uri
+            case 1:
+                Uri uri = Uri.parse(intent.getExtras().get("imageUri").toString());
+                btn_photo.setImageURI(uri);
+                break;
+
+            //갤러리 사진 받아온 bitmap
+            case 2:
+                byte[] decodedByteArray = Base64.decode(intent.getExtras().get("imageBitmap").toString(), Base64.NO_WRAP);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+                btn_photo.setImageBitmap(bitmap);
+                break;
         }
 
         if (requestCode == REQUEST_AREA) {
@@ -161,13 +172,7 @@ public class WriteNewItemFragment extends Fragment {
         }
 
 
-        if(requestCode == 100 && resultCode == 1) {
 
-            // cameraactivity에서 받아온 uri
-            Uri uri = Uri.parse(intent.getExtras().get("imageUri").toString());
-            btn_photo.setImageURI(uri);
-//            Toast.makeText(getContext(), "test : " + intent.getExtras().get("test").toString(), Toast.LENGTH_LONG).show();
-        }
 
     }
 }

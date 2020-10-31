@@ -1,13 +1,10 @@
 package com.example.daisoinmyhouse;
 
-import android.app.AppComponentFactory;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
@@ -49,6 +46,8 @@ public class ItemInformationActivity extends AppCompatActivity {
 
     }
 
+
+    // 카카오톡 공유
     public void kakaolink() {
         FeedTemplate params = FeedTemplate
                 .newBuilder(ContentObject.newBuilder("디저트 사진",
@@ -59,7 +58,6 @@ public class ItemInformationActivity extends AppCompatActivity {
                         .build())
                 .setSocial(SocialObject.newBuilder().setLikeCount(10).setCommentCount(20)
                         .setSharedCount(30).setViewCount(40).build())
-                .addButton(new ButtonObject("웹에서 보기", LinkObject.newBuilder().setWebUrl("'https://developers.kakao.com").setMobileWebUrl("'https://developers.kakao.com").build()))
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("'https://developers.kakao.com")
                         .setMobileWebUrl("'https://developers.kakao.com")
@@ -79,9 +77,7 @@ public class ItemInformationActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSuccess(KakaoLinkResponse result) {
-                // 템플릿 밸리데이션과 쿼터 체크가 성공적으로 끝남. 톡에서 정상적으로 보내졌는지 보장은 할 수 없다. 전송 성공 유무는 서버콜백 기능을 이용하여야 한다.
-            }
+            public void onSuccess(KakaoLinkResponse result) { }
         });
     }
 }

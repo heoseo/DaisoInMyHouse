@@ -9,128 +9,175 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <ImageButton
+        <TextView
             android:id="@+id/btn_back"
-            android:layout_width="50dp"
-            android:layout_height="80dp"
-            android:padding="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_margin="10dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/back" />
+            android:text = "←"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
+
 
         <TextView
-            android:layout_width="328dp"
-            android:layout_height="match_parent"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="마켓 글쓰기"
-            android:textSize="30dp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
+        android:layout_weight = "1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/imageView_photo"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/camera" />
-
-
-
-        <EditText
-            android:id="@+id/et_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="상품명 등록" />
-
-
-        <EditText
-            android:id="@+id/writeCate"
-            android:text="카테고리 선택"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"/>
-
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/product"></Spinner>
-
-        <TextView
-            android:id="@+id/et_category"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:text="드롭다운 결과"/>
-
-
-        <EditText
-            android:id="@+id/et_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:hint="가격입력" />
-
-        <TextView
-            android:id="@+id/tv_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint=" 위치설정"
-            android:textSize="18dp"
-            tools:ignore="DuplicateIds" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="#999999"/>
-
-        <EditText
-            android:id="@+id/et_tag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="태그입력" />
-
-        <EditText
-            android:id="@+id/et_explain"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:hint="게시글 내용을 작성해주세요" />
+            android:orientation="vertical">
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="85dp">
+            <ImageView
+                android:id="@+id/imageView_photo"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="15dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/camera" />
 
-        <Button
-            android:id="@+id/btn_register"
+
+
+
+            <EditText
+                android:id="@+id/et_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="상품명 등록" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:hint=" 카테고리 선택"
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:id="@+id/et_category"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="드롭다운 결과"/>
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/product"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#999999" />
+
+            <EditText
+                android:id="@+id/et_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="가격입력" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint=" 위치설정"
+                android:textSize="18dp"
+                tools:ignore="DuplicateIds" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#999999" />
+
+            <EditText
+                android:id="@+id/et_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="태그입력" />
+
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/et_explain"
+                        android:layout_width="match_parent"
+                        android:layout_height="210dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:hint="게시글 내용을 작성해주세요"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/red"
+            android:layout_height="wrap_content">
 
-            android:text="등록하기"
-            android:textColor="@color/white"
-            android:textSize="@android:dimen/app_icon_size" />
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/red"
 
-    </LinearLayout>
+                    android:text="등록하기"
+                    android:textColor="@color/white"
+                    android:backgroundTint="#9C27B0"
+                    android:textSize="30dp" />
+
+        </LinearLayout>
 
 </LinearLayout>
