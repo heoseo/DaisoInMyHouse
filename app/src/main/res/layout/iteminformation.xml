@@ -58,11 +58,21 @@
                     android:id="@+id/imageview_share"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/btn"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
                     android:paddingTop="10dp"
-                    android:paddingRight="20dp" />
+                    android:paddingRight="20dp"
+                    android:src="@drawable/btn" />
+
+                <ImageView
+                    android:id="@+id/imageview_wish"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="65dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="20dp"
+                    android:src="@drawable/heart" />
 
             </RelativeLayout>
 

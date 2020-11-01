@@ -103,7 +103,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/btn_profile_setting"
+            android:id="@+id/btn_profile_popup"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -250,6 +250,12 @@
         <Button
             android:id="@+id/fragment_mypage_login_btn"
             android:text="로그인"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/fragment_mypage_logout_btn"
+            android:text="로그아웃"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

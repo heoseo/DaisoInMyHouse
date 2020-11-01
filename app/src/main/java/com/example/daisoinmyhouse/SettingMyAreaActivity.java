@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,7 @@ import java.util.Locale;
 public class SettingMyAreaActivity extends AppCompatActivity {
 
     private GpsTracker gpsTracker;
+    String address;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -35,7 +37,7 @@ public class SettingMyAreaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_my_location);
+        setContentView(R.layout.activity_setting_my_area);
 
         if (!checkLocationServicesStatus()) {
 
@@ -48,8 +50,8 @@ public class SettingMyAreaActivity extends AppCompatActivity {
         final TextView tvAddress = (TextView)findViewById(R.id.tv_gps_test);
 
 
-        Button ShowLocationButton = (Button) findViewById(R.id.btn_find_current_location);
-        ShowLocationButton.setOnClickListener(new View.OnClickListener()
+        Button btnShowLocation = (Button) findViewById(R.id.btn_find_current_location);
+        btnShowLocation.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View arg0)
@@ -60,11 +62,38 @@ public class SettingMyAreaActivity extends AppCompatActivity {
                 double latitude = gpsTracker.getLatitude();
                 double longitude = gpsTracker.getLongitude();
 
-                String address = getCurrentAddress(latitude, longitude);
+                address = getCurrentAddress(latitude, longitude);
                 tvAddress.setText(address);
 
                 Toast.makeText(SettingMyAreaActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
             }
+        });
+
+        Button btnAreaSave = (Button) findViewById(R.id.btn_save_area);
+        btnAreaSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+
+                // 현재 위치 저장 (StaticUserInformation 클래스에)
+                StaticUserInformation.myArea = address;
+                // 현재 유저 정보에 위치 저장.(핸드폰에)
+                SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
+                SharedPreferences.Editor editor=preferences.edit();
+
+                editor.putString("myArea", StaticUserInformation.myArea);
+
+                editor.commit();
+//
+                Intent intent = new Intent();
+                intent.putExtra("result_msg", address);
+                setResult(RESULT_OK, intent);
+                finish();
+
+
+
+            }
+
         });
 
     }
@@ -114,6 +143,8 @@ public class SettingMyAreaActivity extends AppCompatActivity {
 
         }
     }
+
+
 
     void checkRunTimePermission(){
 

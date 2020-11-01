@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DaisoInMyHouse</string>
+
+    <string-array name="menu_profile_popup">
+        <item>"수정하기"</item>
+        <item>"공유하기"</item>
+    </string-array>
 </resources>
+

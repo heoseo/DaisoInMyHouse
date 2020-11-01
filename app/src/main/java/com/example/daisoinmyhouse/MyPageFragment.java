@@ -1,26 +1,42 @@
 package com.example.daisoinmyhouse;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.squareup.picasso.Picasso;
+
 public class MyPageFragment extends Fragment {
 
+    ImageView imgViewProfile;
     ImageButton btnSetting;
     ImageButton btnArrow;
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
     LinearLayout btnKeyword;
     Button btnLogin;
-    Button btnJoin;
+    Button btnLogout;
+    LinearLayout btnTransaction;
+    TextView tvID;
+    LinearLayout btnWishlist;
 
     @Nullable
     @Override
@@ -41,25 +57,45 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        imgViewProfile = rootView.findViewById(R.id.imageview_profile);
+        Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
 
+        tvID = rootView.findViewById(R.id.tv_id);
+        tvID.setText(StaticUserInformation.nickName);
 
-        // 프로필 레이아웃 누르면 -> ProfileMenuActivity 띄우기
-        btnProfile = rootView.findViewById(R.id.ll_profile);
-        btnProfile.setOnClickListener(new View.OnClickListener(){
+        // 수정하기, 공유하기 팝업띄우기
+        ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
+        btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ProfileMenuActivity.class);
-                getContext().startActivity(intent);
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("리스트 추가 예제");
+
+                builder.setItems(R.array.menu_profile_popup, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int pos)
+                    {
+                        String[] items = getResources().getStringArray(R.array.menu_profile_popup);
+                        String str = items[pos];
+                        Toast.makeText(getActivity().getApplicationContext(),str,Toast.LENGTH_LONG).show();
+
+                        switch (str){
+                            case "수정하기":
+                                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
+                                getContext().startActivity(intent);
+                                break;
+                            case "공유하기":
+                                break;
+                        }
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
-        btnArrow = rootView.findViewById(R.id.btn_profile_setting);
-        btnArrow.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ProfileMenuActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+
 
         // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
         btnKeyword = rootView.findViewById(R.id.ll_setting_keyword_notice);
@@ -81,7 +117,41 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserManagement.getInstance()
+                        .requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                Log.d("KAKAO_API", "로그아웃 되었습니다.");
+                            }
+                        });
+            }
+        });
 
+        // 거래내역
+        btnTransaction = rootView.findViewById(R.id.ll_transaction_details);
+        btnTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), RentActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+
+
+        //찜한 목록 띄우기
+        btnWishlist = rootView.findViewById((R.id.ll_heart));
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), WishlistActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         return rootView;
     }

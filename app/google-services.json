@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "90233470497",
+    "firebase_url": "https://daisoinmyhouse.firebaseio.com",
+    "project_id": "daisoinmyhouse",
+    "storage_bucket": "daisoinmyhouse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90233470497:android:b6ab1c2cf25dc150cb2d60",
+        "android_client_info": {
+          "package_name": "com.example.daisoinmyhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90233470497-3h7ba8dijiafuko3rhmjqhkldd4ufahs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuAjAbs90x_fHJssi5eMagd7e2_WMtWF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90233470497-3h7ba8dijiafuko3rhmjqhkldd4ufahs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

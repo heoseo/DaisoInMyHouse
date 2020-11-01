@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AlarmSettingActivity extends AppCompatActivity {
 
-    LinearLayout btnKeywordAlarm;
     TextView btnBack;
     Switch sbAlarm, sbChatAlarm, sbReplyitem, sbWish, sbReplyStore, sbDelivery, sbDeliveryComplete, sbKeyword;
 

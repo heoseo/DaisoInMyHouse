@@ -14,6 +14,7 @@ import org.w3c.dom.Text;
 public class SettingActivity extends AppCompatActivity {
 
     LinearLayout btnAlarmSetting;
+    LinearLayout btnAreaSetting;
     TextView btnBack;
 
     @Override
@@ -26,6 +27,14 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AlarmSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnAreaSetting = (LinearLayout)findViewById(R.id.btn_region_setting);
+        btnAreaSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SettingMyAreaActivity.class);
                 startActivity(intent);
             }
         });

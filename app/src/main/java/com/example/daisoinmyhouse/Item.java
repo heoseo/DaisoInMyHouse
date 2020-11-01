@@ -6,17 +6,21 @@ public class Item {
     String time;
     int price;
     int imageRes;
+    //1028코드추가
+    String productID;
 
     public Item(){
 
     }
 
-    public Item(String name, String location, String time, int price, int imageRes){
+    public Item(String name, String location, String time, int price, int imageRes, String productID){
         this.name = name;
         this.location = location;
         this.time = time;
         this.price = price;
         this.imageRes = imageRes;
+        //1028 코드추가
+        this.productID = productID;
     }
 
     public String getName() {
@@ -57,5 +61,14 @@ public class Item {
 
     public void setImageRes(int imageRes) {
         this.imageRes = imageRes;
+    }
+
+    // 1028코드추가
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
     }
 }
