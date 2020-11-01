@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -45,7 +48,8 @@ public class MyPageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
+
         preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
@@ -63,20 +67,25 @@ public class MyPageFragment extends Fragment {
         imgViewProfile = rootView.findViewById(R.id.imageview_profile);
         tvID = rootView.findViewById(R.id.tv_id);
 
-        System.out.println("@@@@@@@@@@불러오기전shared.nickname : " + StaticUserInformation.nickName);
 
         StaticUserInformation.nickName=preferences.getString("nickName", null);
         StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
 
        if (StaticUserInformation.nickName != null) {
-            System.out.println("@@@@@@@@@@shared.nickname : " + StaticUserInformation.nickName);
             tvID.setText(StaticUserInformation.nickName);
             Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
 
         }
+       else if(StaticUserInformation.nickName == null){
+           tvID.setText("로그인해주세요");
+
+           Resources res = getResources();
+           Drawable drawable = res.getDrawable(R.drawable.ic_baseline_person_24);
+           Picasso.get().load(String.valueOf(drawable)).into(imgViewProfile);
+       }
 
 
-        // 수정하기, 공유하기 팝업띄우기
+        // 로그아웃, 수정하기, 공유하기 팝업띄우기
         ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
         btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,11 +145,14 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor=preferences.edit();
-                editor.putString("nickName", "" +"임");
+                editor.putString("nickName", null);
+                editor.putString("profileUrl", null);
                 editor.apply();
-                System.out.println("preferences.nickname= " + preferences.getString("nickName", null));
                 StaticUserInformation.nickName=preferences.getString("nickName", null);
-                System.out.println("로그아웃!!!nickname :" + StaticUserInformation.nickName);
+                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+                refresh();
+
             }
         });
 
@@ -167,5 +179,11 @@ public class MyPageFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
     }
 }
