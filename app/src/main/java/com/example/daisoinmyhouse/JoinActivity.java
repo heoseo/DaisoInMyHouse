@@ -4,21 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.StringTokenizer;
 
 public class JoinActivity extends AppCompatActivity {
 
     private static final int SEARCH_ADDRESS_ACTIVITY = 10000;
 
     Button joinBtn, zipCodeBtn;
-    EditText nameet, idet, pwet, pwet_confirm, emailet, phoneet, addresset;
+    EditText nameet, idet, pwet, pwet_confirm, emailet, phoneet1, phoneet2, phoneet3, addresset1, addresset2;
     TextView zipcodetv;
+    Spinner emails;
+    LinearLayout pwll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,16 @@ public class JoinActivity extends AppCompatActivity {
         pwet = (EditText)findViewById(R.id.et_pw);
         pwet_confirm = (EditText)findViewById(R.id.et_pw_confirm);
         emailet = (EditText)findViewById(R.id.et_email);
-        phoneet = (EditText)findViewById(R.id.et_phone);
-        addresset = (EditText)findViewById(R.id.et_address);
+        phoneet1 = (EditText)findViewById(R.id.et_phone1);
+        phoneet2 = (EditText)findViewById(R.id.et_phone2);
+        phoneet3 = (EditText)findViewById(R.id.et_phone3);
+        addresset1 = (EditText)findViewById(R.id.et_address1);
+        addresset2 = (EditText)findViewById(R.id.et_address2);
+
+        emails = (Spinner)findViewById(R.id.spinner_email);
+
+        pwll = (LinearLayout)findViewById(R.id.ll_pw);
+
 
         zipCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,15 +63,27 @@ public class JoinActivity extends AppCompatActivity {
                     String name = nameet.getText().toString();
                     String id = idet.getText().toString();
                     String pw = pwet.getText().toString();
-                    String email = emailet.getText().toString();
-                    String phone = phoneet.getText().toString();
+                    String email1 = emailet.getText().toString();
+                    String email2 = emails.getSelectedItem().toString();
 
-                    RegisterActivity task = new RegisterActivity();
+
+                    String email = email1 + "@" + email2;
+
+
+                    String phone1 = phoneet1.getText().toString();
+                    String phone2 = phoneet2.getText().toString();
+                    String phone3 = phoneet3.getText().toString();
+
+
+                    String phone = phone1 + phone2 + phone3;
 
                     String zip = zipcodetv.getText().toString();
-                    String adress = addresset.getText().toString();
+                    String adr1 = addresset1.getText().toString();
+                    String adr2 = addresset2.getText().toString();
 
-                    String address = zip + adress;
+                    String address = "(" + zip + ") " + adr1 + " " + adr2;
+
+                    RegisterActivity task = new RegisterActivity();
 
                     String result = task.execute(name, id, pw, email, phone, address).get();
 
@@ -97,9 +121,8 @@ public class JoinActivity extends AppCompatActivity {
                     String adr = data.substring(7);
 
                     if (data != null) {
-                        addresset.setText(data);
                         zipcodetv.setText(zipcode);
-                        addresset.setText(adr);
+                        addresset1.setText(adr);
                     }
                 }
                 break;
