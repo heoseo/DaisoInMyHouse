@@ -3,6 +3,7 @@ package com.example.daisoinmyhouse;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.squareup.picasso.Picasso;
 
 public class MyPageFragment extends Fragment {
 
+    private static final int MODE_PRIVATE = 0;
     ImageView imgViewProfile;
     ImageButton btnSetting;
     ImageButton btnArrow;
@@ -37,13 +39,14 @@ public class MyPageFragment extends Fragment {
     LinearLayout btnTransaction;
     TextView tvID;
     LinearLayout btnWishlist;
+    SharedPreferences preferences;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
-
+        preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
 
@@ -58,10 +61,20 @@ public class MyPageFragment extends Fragment {
         });
 
         imgViewProfile = rootView.findViewById(R.id.imageview_profile);
-        Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
-
         tvID = rootView.findViewById(R.id.tv_id);
-        tvID.setText(StaticUserInformation.nickName);
+
+        System.out.println("@@@@@@@@@@불러오기전shared.nickname : " + StaticUserInformation.nickName);
+
+        StaticUserInformation.nickName=preferences.getString("nickName", null);
+        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+       if (StaticUserInformation.nickName != null) {
+            System.out.println("@@@@@@@@@@shared.nickname : " + StaticUserInformation.nickName);
+            tvID.setText(StaticUserInformation.nickName);
+            Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
+
+        }
+
 
         // 수정하기, 공유하기 팝업띄우기
         ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
@@ -70,7 +83,7 @@ public class MyPageFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                builder.setTitle("리스트 추가 예제");
+                builder.setTitle("프로필");
 
                 builder.setItems(R.array.menu_profile_popup, new DialogInterface.OnClickListener(){
                     @Override
@@ -117,17 +130,17 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        // 로그아웃
         btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserManagement.getInstance()
-                        .requestLogout(new LogoutResponseCallback() {
-                            @Override
-                            public void onCompleteLogout() {
-                                Log.d("KAKAO_API", "로그아웃 되었습니다.");
-                            }
-                        });
+                SharedPreferences.Editor editor=preferences.edit();
+                editor.putString("nickName", "" +"임");
+                editor.apply();
+                System.out.println("preferences.nickname= " + preferences.getString("nickName", null));
+                StaticUserInformation.nickName=preferences.getString("nickName", null);
+                System.out.println("로그아웃!!!nickname :" + StaticUserInformation.nickName);
             }
         });
 
