@@ -1,6 +1,7 @@
 package com.example.daisoinmyhouse;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 public class ItemInformationActivity extends AppCompatActivity {
 
-    ImageView ivShare;
+    ImageView ivShare,ivWish;
 
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     String productID;
@@ -43,6 +44,29 @@ public class ItemInformationActivity extends AppCompatActivity {
                 kakaolink();
             }
         });
+
+        // 찜(아이콘) 누르면 찜되기
+        ivWish = (ImageView)findViewById(R.id.imageview_wish);
+        ivWish.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN: {
+                        //터치했을 때의 이미지 변경
+                        ivWish.setBackgroundResource(R.drawable.like);
+                        break;
+                    }
+                    //터치해제 되었을 때 이미지 변경
+                    case MotionEvent.ACTION_UP: {
+                        ivWish.setBackgroundResource(R.drawable.heart);
+                        break;
+                    }
+
+                }
+                return true;
+            }
+        });
+
 
     }
 

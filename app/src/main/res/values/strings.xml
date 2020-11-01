@@ -4,6 +4,7 @@
     <string-array name="menu_profile_popup">
         <item>"수정하기"</item>
         <item>"공유하기"</item>
+        <item>"로그아웃"</item>
     </string-array>
 </resources>
 

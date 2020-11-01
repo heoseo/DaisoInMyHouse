@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.kakao.usermgmt.UserManagement;
@@ -46,10 +47,11 @@ public class MyPageFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+//        ViewGroup rootView = null;
 
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
-
         preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
@@ -71,18 +73,12 @@ public class MyPageFragment extends Fragment {
         StaticUserInformation.nickName=preferences.getString("nickName", null);
         StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
 
-       if (StaticUserInformation.nickName != null) {
+        if(StaticUserInformation.nickName != null){
             tvID.setText(StaticUserInformation.nickName);
             Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
-
         }
-       else if(StaticUserInformation.nickName == null){
-           tvID.setText("로그인해주세요");
 
-           Resources res = getResources();
-           Drawable drawable = res.getDrawable(R.drawable.ic_baseline_person_24);
-           Picasso.get().load(String.valueOf(drawable)).into(imgViewProfile);
-       }
+
 
 
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
@@ -100,7 +96,6 @@ public class MyPageFragment extends Fragment {
                     {
                         String[] items = getResources().getStringArray(R.array.menu_profile_popup);
                         String str = items[pos];
-                        Toast.makeText(getActivity().getApplicationContext(),str,Toast.LENGTH_LONG).show();
 
                         switch (str){
                             case "수정하기":
@@ -109,6 +104,26 @@ public class MyPageFragment extends Fragment {
                                 break;
                             case "공유하기":
                                 break;
+                            case "로그아웃":
+
+                                MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+//                                fragmentTransaction.remove(MyPageFragment.this).commit();
+                                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
+
+
+                                SharedPreferences.Editor editor=preferences.edit();
+                                editor.putString("nickName", null);
+                                editor.putString("profileUrl", null);
+                                editor.apply();
+                                StaticUserInformation.nickName=preferences.getString("nickName", null);
+                                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+                                break;
+
                         }
                     }
                 });
@@ -129,29 +144,29 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        // 로그인 & 회원가입
-        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
-        btnLogin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+//        // 로그인 & 회원가입
+//        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
+//        btnLogin.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(getContext(), LoginActivity.class);
+//                getContext().startActivity(intent);
+//            }
+//        });
 
         // 로그아웃
         btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor=preferences.edit();
-                editor.putString("nickName", null);
-                editor.putString("profileUrl", null);
-                editor.apply();
-                StaticUserInformation.nickName=preferences.getString("nickName", null);
-                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
-
-                refresh();
+//                SharedPreferences.Editor editor=preferences.edit();
+//                editor.putString("nickName", null);
+//                editor.putString("profileUrl", null);
+//                editor.apply();
+//                StaticUserInformation.nickName=preferences.getString("nickName", null);
+//                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+//
+//                refresh();
 
             }
         });

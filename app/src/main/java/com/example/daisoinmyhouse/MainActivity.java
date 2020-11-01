@@ -1,9 +1,12 @@
 package com.example.daisoinmyhouse;
 
 
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -13,12 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private WriteNewItemFragment writeNewItemFragment = new WriteNewItemFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
     private MyPageFragment myPageFragment = new MyPageFragment();
+    private MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,16 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.mypageItem: {
-                        transaction.replace(R.id.frame_layout, myPageFragment).commitAllowingStateLoss();
+                        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                        StaticUserInformation.nickName=preferences.getString("nickName", null);
+                        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+                        if (StaticUserInformation.nickName != null) {
+                            transaction.replace(R.id.frame_layout, myPageFragment).commitAllowingStateLoss();
+                        }
+                        else if(StaticUserInformation.nickName == null){
+                            transaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
+                        }
                         break;
                     }
                 }
