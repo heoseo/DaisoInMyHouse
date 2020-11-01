@@ -29,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.Buffer;
+import java.sql.Date;
 
 public class HomeFragment extends Fragment {
     //홈화면 RecyclerView 설정
@@ -76,24 +77,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
                 Item item = (Item) adapter.getItem(position);
-                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
 
                 // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
                 Intent intent = new Intent(getContext(), ItemInformationActivity.class);
-                intent.putExtra("productID", item.getProductID());
+                Toast.makeText(getContext(), "선택된 제품ID : " + item.getNum(), Toast.LENGTH_LONG).show();
+                intent.putExtra("productID", item.getNum());
                 getContext().startActivity(intent);
             }
         });
     }
 
-    public void prepareData(){
-        adapter.addItem(new Item("상품명1", "두정동", "3시간", 10000, R.drawable.sample1, "1"));
-        adapter.addItem(new Item("상품명2", "천안시", "7시간", 20000, R.drawable.sample2,"2"));
-        adapter.addItem(new Item("상품명3", "서울특별시", "1일", 50000, R.drawable.sample3, "3"));
-        adapter.addItem(new Item("상품명4", "대전광역시", "7일", 30000, R.drawable.sample4, "4"));
-        adapter.addItem(new Item("상품명5", "부산광역시", "1달", 100000, R.drawable.sample5 , "5"));
-        adapter.addItem(new Item("상품명6", "인천광역시", "3일", 70000, R.drawable.sample6, "6"));
-    }
 
     public class ProductList extends AsyncTask<Void, Void, String> {
         private String url;
@@ -186,7 +180,14 @@ public class HomeFragment extends Fragment {
                             System.out.println(i + "번째 데이터 : " + json.getString("name"));
                             System.out.println("\n");
 
-                            adapter.addItem(new Item(json.getString("name"), "두정동", "3시간", json.getInt("price"), R.drawable.sample1, "1"));
+                            long now = System.currentTimeMillis();
+                            Date date = new Date(now);
+                            adapter.addItem(new Item(json.getString("name"), "두정동",
+                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+
+//                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
+//                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+//                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
                         }
                         // 가져온 데이터들 확인
                         // textView.setText(가공 데이터);

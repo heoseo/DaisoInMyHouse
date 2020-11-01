@@ -63,6 +63,11 @@ public class ItemInformationActivity extends AppCompatActivity {
                     }
 
                 }
+
+
+
+
+
                 return true;
             }
         });
