@@ -4,7 +4,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.LocusId;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInstaller;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.kakao.auth.ApiErrorCode;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -30,6 +39,7 @@ import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -55,7 +65,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -90,7 +102,23 @@ public class LoginActivity extends AppCompatActivity {
                     LoginAction loginAction = new LoginAction();
                     String result = loginAction.execute(user_id, user_pw).get();
 
-                    StaticUserInformation.nickName = result;
+                    if(result.equals("0")){    // 로그인성공
+                        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=preferences.edit();
+                        editor.putString("nickName", user_id);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
+                        StaticUserInformation.nickName = result;
+
+                        Uri uri = Uri.parse("android.resource://your.package.name/" + R.drawable.ic_baseline_person_24);
+                        editor.putString("profileUrl", uri.toString());
+                        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", uri.toString());
+                        editor.apply();
+
+
+//                        Picasso.get().load(StaticUserInformation.porfileUrl).into(ivProfile);
+                    }
+                    else if(result.equals("1")) { // 로그인 실패
+                        Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인하세요.", Toast.LENGTH_LONG).show();
+                    }
 
                     // String[][] parsedData = jsonParserList(result);
 
@@ -170,4 +198,38 @@ public class LoginActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    // 닉네임(ID)랑 profileURI firebase에 저장
+    void saveData(){
+        //EditText의 닉네임 가져오기 [전역변수에]
+
+        //Firebase storage에 이미지 저장하기 위해 파일명 만들기(날짜를 기반으로)
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyMMddhhmmss"); //20191024111224
+        String fileName= sdf.format(new Date())+".png";
+
+        //Firebase storage에 저장하기
+        FirebaseStorage firebaseStorage= FirebaseStorage.getInstance();
+        final StorageReference imgRef= firebaseStorage.getReference("profileImages/"+fileName);
+
+        //1. Firebase Database에 nickName, profileUrl을 저장
+        //firebase DB관리자 객체 소환
+        FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
+        //'profiles'라는 이름의 자식 노드 참조 객체 얻어오기
+        DatabaseReference profileRef= firebaseDatabase.getReference("profiles");
+
+        //닉네임을 key 식별자로 하고 프로필 이미지의 주소를 값으로 저장
+        profileRef.child(StaticUserInformation.nickName).setValue(StaticUserInformation.porfileUrl);
+//        Toast.makeText(this, StaticUserInformation.nickName + "님 프로필 저장 완료", Toast.LENGTH_SHORT).show();
+
+        //2. 내 phone에 nickName, profileUrl을 저장
+        SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+
+        editor.putString("nickName", StaticUserInformation.nickName);
+        editor.putString("profileUrl", StaticUserInformation.porfileUrl);
+
+//        editor.commit();
+        editor.apply();
+
+    }//saveData() ..
 }

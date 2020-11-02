@@ -1,6 +1,9 @@
 package com.example.daisoinmyhouse;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +31,7 @@ public class ItemInformationActivity extends AppCompatActivity {
 
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     String productID;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +44,35 @@ public class ItemInformationActivity extends AppCompatActivity {
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + productID, Toast.LENGTH_LONG).show();
-                kakaolink();
+                try {
+                    SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                    StaticUserInformation.nickName=preferences.getString("nickName", null);
+                    StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+                    String userID = StaticUserInformation.nickName; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
+
+                    AddWishListActivity task = new AddWishListActivity();
+//                    String result = task.execute(userID, productID);
+
+
+                } catch (Exception e) {
+                    Log.i("DBtest", ".....ERROR.....!");
+                }
             }
         });
 
         // 찜(아이콘) 누르면 찜되기
         ivWish = (ImageView)findViewById(R.id.imageview_wish);
+        ivWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + productID, Toast.LENGTH_LONG).show();
+                kakaolink();
+            }
+        });
+
         ivWish.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
@@ -62,6 +87,8 @@ public class ItemInformationActivity extends AppCompatActivity {
                         break;
                     }
 
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + event.getAction());
                 }
 
 
