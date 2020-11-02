@@ -1,26 +1,28 @@
 package com.example.daisoinmyhouse;
 
+import java.sql.Date;
+
 public class Item {
     String name;
     String location;
-    String time;
+    Date time;
     int price;
     int imageRes;
     //1028코드추가
-    String productID;
+    int num;
 
     public Item(){
 
     }
 
-    public Item(String name, String location, String time, int price, int imageRes, String productID){
+    public Item(String name, String location, Date time, int price, int imageRes, int num){
         this.name = name;
         this.location = location;
         this.time = time;
         this.price = price;
         this.imageRes = imageRes;
         //1028 코드추가
-        this.productID = productID;
+        this.num = num;
     }
 
     public String getName() {
@@ -39,11 +41,11 @@ public class Item {
         this.location = location;
     }
 
-    public String getTime(){
+    public Date getTime(){
         return time;
     }
 
-    public void setTime(String time){
+    public void setTime(Date time){
         this.time = time;
     }
 
@@ -64,11 +66,11 @@ public class Item {
     }
 
     // 1028코드추가
-    public String getProductID() {
-        return productID;
+    public int getNum() {
+        return num;
     }
 
-    public void setProductID(String productID) {
-        this.productID = productID;
+    public void setNum(int num) {
+        this.num = num;
     }
 }

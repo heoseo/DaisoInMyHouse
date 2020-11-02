@@ -3,6 +3,9 @@ package com.example.daisoinmyhouse;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -26,6 +31,7 @@ import com.squareup.picasso.Picasso;
 
 public class MyPageFragment extends Fragment {
 
+    private static final int MODE_PRIVATE = 0;
     ImageView imgViewProfile;
     ImageButton btnSetting;
     ImageButton btnArrow;
@@ -37,13 +43,16 @@ public class MyPageFragment extends Fragment {
     LinearLayout btnTransaction;
     TextView tvID;
     LinearLayout btnWishlist;
+    SharedPreferences preferences;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
+//        ViewGroup rootView = null;
 
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
+        preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
 
@@ -58,19 +67,28 @@ public class MyPageFragment extends Fragment {
         });
 
         imgViewProfile = rootView.findViewById(R.id.imageview_profile);
-        Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
-
         tvID = rootView.findViewById(R.id.tv_id);
-        tvID.setText(StaticUserInformation.nickName);
 
-        // 수정하기, 공유하기 팝업띄우기
+
+        StaticUserInformation.nickName=preferences.getString("nickName", null);
+        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+        if(StaticUserInformation.nickName != null){
+            tvID.setText(StaticUserInformation.nickName);
+            Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
+        }
+
+
+
+
+        // 로그아웃, 수정하기, 공유하기 팝업띄우기
         ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
         btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                builder.setTitle("리스트 추가 예제");
+                builder.setTitle("프로필");
 
                 builder.setItems(R.array.menu_profile_popup, new DialogInterface.OnClickListener(){
                     @Override
@@ -78,7 +96,6 @@ public class MyPageFragment extends Fragment {
                     {
                         String[] items = getResources().getStringArray(R.array.menu_profile_popup);
                         String str = items[pos];
-                        Toast.makeText(getActivity().getApplicationContext(),str,Toast.LENGTH_LONG).show();
 
                         switch (str){
                             case "수정하기":
@@ -87,6 +104,26 @@ public class MyPageFragment extends Fragment {
                                 break;
                             case "공유하기":
                                 break;
+                            case "로그아웃":
+
+                                MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+//                                fragmentTransaction.remove(MyPageFragment.this).commit();
+                                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
+
+
+                                SharedPreferences.Editor editor=preferences.edit();
+                                editor.putString("nickName", null);
+                                editor.putString("profileUrl", null);
+                                editor.apply();
+                                StaticUserInformation.nickName=preferences.getString("nickName", null);
+                                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+
+                                break;
+
                         }
                     }
                 });
@@ -107,27 +144,30 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        // 로그인 & 회원가입
-        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
-        btnLogin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
+//        // 로그인 & 회원가입
+//        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
+//        btnLogin.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(getContext(), LoginActivity.class);
+//                getContext().startActivity(intent);
+//            }
+//        });
 
+        // 로그아웃
         btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserManagement.getInstance()
-                        .requestLogout(new LogoutResponseCallback() {
-                            @Override
-                            public void onCompleteLogout() {
-                                Log.d("KAKAO_API", "로그아웃 되었습니다.");
-                            }
-                        });
+//                SharedPreferences.Editor editor=preferences.edit();
+//                editor.putString("nickName", null);
+//                editor.putString("profileUrl", null);
+//                editor.apply();
+//                StaticUserInformation.nickName=preferences.getString("nickName", null);
+//                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+//
+//                refresh();
+
             }
         });
 
@@ -154,5 +194,11 @@ public class MyPageFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
     }
 }

@@ -1,12 +1,17 @@
 package com.example.daisoinmyhouse;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +31,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
+import java.util.ArrayList;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 
@@ -40,6 +49,12 @@ public class WriteNewItemFragment extends Fragment {
     ImageView btn_photo;
     MainActivity activity;
     Spinner spinner;
+
+    private final int REQ_CODE_SELECT_IMAGE = 100;
+    private String img_path = new String();
+    private Bitmap image_bitmap_copy = null;
+    private Bitmap image_bitmap = null;
+    private String imageName = null;
 
 
     @Nullable
@@ -77,12 +92,37 @@ public class WriteNewItemFragment extends Fragment {
         btn_photo.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CameraActivity.class);
-                getContext().startActivity(intent);
+                StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                        .permitDiskReads()
+                        .permitDiskWrites()
+                        .permitNetwork().build());
+
+                //카메라 권한 허용
+                PermissionListener permissionListener = new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+                        Toast.makeText(getContext(), "권한이 허용됨",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                        Toast.makeText(getContext(), "권한이 거부됨",Toast.LENGTH_SHORT).show();
+                    }
+                };
+
+                // 권한 체크
+                TedPermission.with(getContext())
+                        .setPermissionListener(permissionListener)
+                        .setRationaleMessage("카메라 권한이 필요합니다.")
+                        .setDeniedMessage("거부하셨습니다.")
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                        .check();
 
 
-//                onActivityResult실행
-                startActivityForResult(intent, 100);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
             }
         });
 
@@ -136,7 +176,6 @@ public class WriteNewItemFragment extends Fragment {
         return rootView;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
     {
@@ -147,20 +186,6 @@ public class WriteNewItemFragment extends Fragment {
             return;
         }
 
-        switch(resultCode) {
-            //카메라 사진 촬영 받아온 uri
-            case 1:
-                Uri uri = Uri.parse(intent.getExtras().get("imageUri").toString());
-                btn_photo.setImageURI(uri);
-                break;
-
-            //갤러리 사진 받아온 bitmap
-            case 2:
-                byte[] decodedByteArray = Base64.decode(intent.getExtras().get("imageBitmap").toString(), Base64.NO_WRAP);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
-                btn_photo.setImageBitmap(bitmap);
-                break;
-        }
 
         if (requestCode == REQUEST_AREA) {
             String resultMsg = intent.getStringExtra("result_msg");
@@ -171,8 +196,47 @@ public class WriteNewItemFragment extends Fragment {
 //            Toast.makeText(MainActivity.this, "REQUEST_ACT가 아님", Toast.LENGTH_SHORT).show();
         }
 
+        if (requestCode == REQ_CODE_SELECT_IMAGE) {
+            try {
+                img_path = getImagePathToUri(intent.getData()); //이미지의 URI를 얻어 경로값으로 반환.
+                //       Toast.makeText(getBaseContext(), "img_path : " + img_path, Toast.LENGTH_SHORT).show();
+                //이미지를 비트맵형식으로 반환
+                image_bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), intent.getData());
 
+                //사용자 단말기의 width , height 값 반환
+                int reWidth = (int) (getActivity().getWindowManager().getDefaultDisplay().getWidth());
+                int reHeight = (int) (getActivity().getWindowManager().getDefaultDisplay().getHeight());
+
+                //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
+                image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 300, true);
+                // ImageView image = (ImageView) findViewById(R.id.imageView);  //이미지를 띄울 위젯 ID값
+                btn_photo.setImageBitmap(image_bitmap);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 
     }
+
+    public String getImagePathToUri(Uri data) {
+        //사용자가 선택한 이미지의 정보를 받아옴
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().managedQuery(data, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        //이미지의 경로 값
+        String imgPath = cursor.getString(column_index);
+        Log.d("test", imgPath);
+
+        //이미지의 이름 값
+        String imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
+        // Toast.makeText(CameraActivity.this, "이미지 이름 : " + imgName, Toast.LENGTH_SHORT).show();
+        this.imageName = imgName;
+
+        return imgPath;
+    }//end of getImagePathToUri()
+
 }

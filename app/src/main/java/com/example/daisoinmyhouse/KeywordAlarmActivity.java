@@ -1,5 +1,9 @@
 package com.example.daisoinmyhouse;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import org.w3c.dom.Text;
 
@@ -25,6 +30,11 @@ public class KeywordAlarmActivity extends AppCompatActivity {
     EditText et_keyword;
     ListView lv_keyword;
     String selected_item;
+
+    NotificationManager manager;
+    private static String CHANNEL_ID = "channel1";
+    private static String CHANNEL_NAME = "Channel1";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +73,26 @@ public class KeywordAlarmActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+    }
 
+    public void alarm(){
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = null;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            if(manager.getNotificationChannel(CHANNEL_ID) == null){
+                manager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT));
+
+                builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+            }
+        }else{
+            builder = new NotificationCompat.Builder(this);
+        }
+        builder.setContentTitle("키워드 알림");
+        builder.setContentText("이(가) 새로 등록되었습니다.");
+        builder.setSmallIcon(android.R.drawable.ic_menu_view);
+        Notification noti = builder.build();
+
+        manager.notify(1, noti);
 
 
     }

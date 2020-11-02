@@ -42,7 +42,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="이름"
                 android:textStyle="bold"
@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:padding="10dp"
-                android:background="@drawable/black_et"/>
+                android:background="@drawable/black_et"
+                android:padding="10dp" />
 
         </LinearLayout>
 
@@ -67,7 +67,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="닉네임"
                 android:textStyle="bold"
@@ -80,8 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:padding="10dp"
-                android:background="@drawable/black_et"/>
+                android:background="@drawable/black_et"
+                android:padding="10dp" />
 
         </LinearLayout>
 
@@ -92,7 +92,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="아이디"
                 android:textStyle="bold"
@@ -105,8 +105,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
-                android:padding="10dp"
-                android:background="@drawable/black_et"/>
+                android:background="@drawable/black_et"
+                android:padding="10dp" />
+
+
 
         </LinearLayout>
 
@@ -117,7 +119,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="비밀번호"
                 android:textStyle="bold"
@@ -143,7 +145,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold"
@@ -170,7 +172,7 @@
             android:visibility="gone" >
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textStyle="bold"
@@ -200,7 +202,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="이메일"
                     android:textStyle="bold"
@@ -251,7 +253,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="전화번호"
                     android:textStyle="bold"
@@ -316,7 +318,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="주소"
                     android:textStyle="bold"
@@ -355,7 +357,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="이름"
                 android:textStyle="bold"
@@ -382,7 +384,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="이름"
                 android:textStyle="bold"
@@ -409,7 +411,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="생년월일"
                 android:textStyle="bold"
@@ -434,8 +436,11 @@
         android:id="@+id/activity_join_join_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
         android:text="회원가입"
-        android:background="@drawable/btn_join"
-        android:layout_alignParentBottom="true"/>
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

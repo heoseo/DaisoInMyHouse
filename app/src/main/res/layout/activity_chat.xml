@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="send"
-            android:backgroundTint="#ff8800"
+            android:backgroundTint="#FFFEFD"
             android:layout_marginLeft="8dp"
             android:onClick="clickSend"/>
     </LinearLayout>

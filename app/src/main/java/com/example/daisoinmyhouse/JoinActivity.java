@@ -89,19 +89,25 @@ public class JoinActivity extends AppCompatActivity {
 
 
 
-                    // 빈칸이 있는지 검사
-                    if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
+                    //패스워드 일치 검사
+                    if(pwet.getText().toString().equals(pwet_confirm.getText().toString())){
+                        // 빈칸이 있는지 검사
+                        pwll.setVisibility(View.INVISIBLE);
+                        if(name.getBytes().length <=0 || id.getBytes().length <=0 || pw.getBytes().length <=0 || email.getBytes().length <=0 || phone.getBytes().length <=0 || address.getBytes().length <=0){
+                            Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }else{
+                        pwll.setVisibility(View.VISIBLE);
+                    }
+                    /*if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
                         Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         finish();
-                    }
-                    if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
-                        Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                        finish();
-                    }
+                    }*/
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
