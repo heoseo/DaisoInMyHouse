@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -50,11 +51,17 @@ public class WriteNewItemFragment extends Fragment {
     MainActivity activity;
     Spinner spinner;
 
+    LinearLayout btn_otherwrite;
+
     private final int REQ_CODE_SELECT_IMAGE = 100;
     private String img_path = new String();
     private Bitmap image_bitmap_copy = null;
     private Bitmap image_bitmap = null;
     private String imageName = null;
+
+    public static WriteNewItemFragment newInstance(){
+        return new WriteNewItemFragment();
+    }
 
 
     @Nullable
@@ -64,7 +71,7 @@ public class WriteNewItemFragment extends Fragment {
         activity = (MainActivity) getActivity();
 
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_new_item, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_rent_item, container, false);
 
         product_Resister =rootView.findViewById(R.id.et_register);
         cattegory = rootView.findViewById(R.id.et_category);
@@ -126,6 +133,15 @@ public class WriteNewItemFragment extends Fragment {
             }
         });
 
+        //대여 원하는 글 작성화면 전환
+        btn_otherwrite = rootView.findViewById(R.id.ll_want);
+        btn_otherwrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).replaceFragment1(WriteWantItemFragment.newInstance());
+            }
+        });
+
 
 
         // 지역설정
@@ -157,7 +173,7 @@ public class WriteNewItemFragment extends Fragment {
 
                     String result = task.execute(name, category, price, content).get();
                     // 빈칸이 있는지 검사사
-                    if(name.getBytes().length <=0 && category.getBytes().length <=0 && price.getBytes().length <=0 && tag.getBytes().length <=0 &&content.getBytes().length <=0 ){
+                    if(name.getBytes().length <=0 || category.getBytes().length <=0 || price.getBytes().length <=0 || tag.getBytes().length <=0 || content.getBytes().length <=0 ){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();

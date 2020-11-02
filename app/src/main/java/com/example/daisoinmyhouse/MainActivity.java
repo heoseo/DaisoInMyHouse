@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     // 4개의 메뉴에 들어갈 Fragment들
     private HomeFragment homeFragment = new HomeFragment();
     private WriteNewItemFragment writeNewItemFragment = new WriteNewItemFragment();
+    public WriteWantItemFragment writeWantItemFragment = new WriteWantItemFragment();
     private ChattingFragment chattingFragment = new ChattingFragment();
     private MyPageFragment myPageFragment = new MyPageFragment();
     private MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
@@ -101,6 +102,18 @@ public class MainActivity extends AppCompatActivity {
         }else if(fragmentNum == 4) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, myPageFragment).commit();
         }
+    }
+
+    public void replaceFragment1(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, writeWantItemFragment).commit();
+    }
+
+    public void replaceFragment2(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, writeNewItemFragment).commit();
     }
 
     private void getHashKey(){
