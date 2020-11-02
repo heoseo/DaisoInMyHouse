@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+<<<<<<< HEAD
     tools:context=".ChattingActivity">
+=======
+    tools:context=".ChatActivity">
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
@@ -35,7 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="send"
+<<<<<<< HEAD
             android:backgroundTint="#FFFEFD"
+=======
+            android:backgroundTint="#ff8800"
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
             android:layout_marginLeft="8dp"
             android:onClick="clickSend"/>
     </LinearLayout>

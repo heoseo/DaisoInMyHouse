@@ -19,10 +19,14 @@ public class JoinActivity extends AppCompatActivity {
     private static final int SEARCH_ADDRESS_ACTIVITY = 10000;
 
     Button joinBtn, zipCodeBtn;
+<<<<<<< HEAD
     EditText nameet, idet, pwet, pwet_confirm, emailet, phoneet1, phoneet2, phoneet3, addresset1, addresset2;
     TextView zipcodetv;
     Spinner emails;
     LinearLayout pwll;
+=======
+    EditText nameet, idet, pwet, pwet_confirm, emailet, phoneet, addresset;
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,10 @@ public class JoinActivity extends AppCompatActivity {
 
         joinBtn = (Button)findViewById(R.id.activity_join_join_btn);
         zipCodeBtn = (Button)findViewById(R.id.btn_zip_code);
+<<<<<<< HEAD
         zipcodetv = (TextView)findViewById(R.id.tv_zip_code);
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
         nameet = (EditText)findViewById(R.id.et_name);
         idet = (EditText)findViewById(R.id.et_id);
@@ -57,12 +64,21 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        zipCodeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FindAddressActivity.class);
+                startActivityForResult(intent, SEARCH_ADDRESS_ACTIVITY);
+            }
+        });
+
         joinBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
                     String name = nameet.getText().toString();
                     String id = idet.getText().toString();
                     String pw = pwet.getText().toString();
+<<<<<<< HEAD
                     String email1 = emailet.getText().toString();
                     String email2 = emails.getSelectedItem().toString();
 
@@ -103,11 +119,25 @@ public class JoinActivity extends AppCompatActivity {
                         pwll.setVisibility(View.VISIBLE);
                     }
                     /*if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
+=======
+                    String email = emailet.getText().toString();
+                    String phone = phoneet.getText().toString();
+                    String address = addresset.getText().toString();
+                    RegisterActivity task = new RegisterActivity();
+
+                    String result = task.execute(name, id, pw, email, phone, address).get();
+                    // 빈칸이 있는지 검사사
+                    if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
                         Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                         finish();
+<<<<<<< HEAD
                     }*/
+=======
+                    }
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
@@ -122,6 +152,7 @@ public class JoinActivity extends AppCompatActivity {
             case SEARCH_ADDRESS_ACTIVITY:
                 if (resultCode == RESULT_OK) {
                     String data = intent.getExtras().getString("data");
+<<<<<<< HEAD
 
                     String zipcode = data.substring(0, 5);
                     String adr = data.substring(7);
@@ -129,6 +160,10 @@ public class JoinActivity extends AppCompatActivity {
                     if (data != null) {
                         zipcodetv.setText(zipcode);
                         addresset1.setText(adr);
+=======
+                    if (data != null) {
+                        addresset.setText(data);
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
                     }
                 }
                 break;

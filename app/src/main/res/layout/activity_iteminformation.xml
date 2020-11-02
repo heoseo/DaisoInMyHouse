@@ -58,6 +58,7 @@
                     android:id="@+id/imageview_share"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+<<<<<<< HEAD
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="14dp"
                     android:paddingTop="10dp"
@@ -73,6 +74,13 @@
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:src="@drawable/heart" />
+=======
+                    android:src="@drawable/btn"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="10dp"
+                    android:paddingRight="20dp" />
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
             </RelativeLayout>
 
@@ -114,6 +122,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_gravity="center_vertical"/>
 
+<<<<<<< HEAD
                 <Button
                     android:id="@+id/chat_Btn"
                     android:layout_width="117dp"
@@ -123,6 +132,8 @@
                     android:background="@drawable/round"
                     android:text="채팅하기" />
 
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
             </LinearLayout>
 
             <View

@@ -15,8 +15,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+<<<<<<< HEAD
 import android.widget.PopupMenu;
 import android.widget.TextView;
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.squareup.picasso.Picasso;
+
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 public class MyPageFragment extends Fragment {
 
@@ -41,9 +47,12 @@ public class MyPageFragment extends Fragment {
     Button btnLogin;
     Button btnLogout;
     LinearLayout btnTransaction;
+<<<<<<< HEAD
     TextView tvID;
     LinearLayout btnWishlist;
     SharedPreferences preferences;
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
     @Nullable
     @Override
@@ -181,7 +190,29 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserManagement.getInstance()
+                        .requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                Log.d("KAKAO_API", "로그아웃 되었습니다.");
+                            }
+                        });
+            }
+        });
 
+        // 거래내역
+        btnTransaction = rootView.findViewById(R.id.ll_transaction_details);
+        btnTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), RentActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         //찜한 목록 띄우기
         btnWishlist = rootView.findViewById((R.id.ll_heart));

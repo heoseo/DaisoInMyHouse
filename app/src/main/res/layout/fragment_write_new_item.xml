@@ -44,6 +44,7 @@
                 app:srcCompat="@drawable/camera" />
 
 
+<<<<<<< HEAD
 
 
             <EditText
@@ -52,12 +53,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:hint="상품명 등록" />
+=======
+
+        <EditText
+            android:id="@+id/et_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="상품명 등록" />
+
+        <EditText
+            android:id="@+id/writeCate"
+            android:text="카테고리 선택"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            />
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+<<<<<<< HEAD
                 <TextView
                     android:id="@+id/tv_category"
                     android:layout_width="wrap_content"
@@ -65,6 +84,19 @@
                     android:layout_marginTop="15dp"
                     android:hint=" 카테고리 선택"
                     android:textSize="18dp" />
+=======
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/product"></Spinner>
+
+        <TextView
+            android:id="@+id/et_category"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:text="드롭다운 결과"/>
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
                 <LinearLayout
                     android:layout_marginTop="15dp"
@@ -72,6 +104,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+<<<<<<< HEAD
+=======
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:hint="가격입력" />
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
 
                     <TextView
@@ -81,12 +122,17 @@
                         android:layout_height="wrap_content"
                         android:text="드롭다운 결과"/>
 
+<<<<<<< HEAD
                     <Spinner
                         android:id="@+id/spinner"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:entries="@array/product"/>
+=======
+        </LinearLayout>
+\
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
                 </LinearLayout>
 

@@ -18,6 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+<<<<<<< HEAD
+=======
+import com.kakao.auth.*;
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 import com.kakao.auth.ApiErrorCode;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -38,6 +42,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+<<<<<<< HEAD
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
@@ -45,6 +50,9 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+=======
+import org.apache.http.message.BasicNameValuePair;
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -72,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+<<<<<<< HEAD
         id_et = (EditText)findViewById(R.id.et_login_id);
         pw_et = (EditText)findViewById(R.id.et_login_password);
 
@@ -105,6 +114,19 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("DB", "에러");
                 }
                 //session.open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+=======
+        id_et = (EditText)findViewById(R.id.et_id);
+        pw_et = (EditText)findViewById(R.id.et_pw);
+
+        btnLogin = (Button)findViewById(R.id.activity_login_login_btn);
+
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                session.open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
             }
         });
 
@@ -118,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+<<<<<<< HEAD
 
     protected void onDestroy() {
         super.onDestroy();
@@ -135,8 +158,17 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+=======
 
+    protected void onDestroy() {
+        super.onDestroy();
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
+        // 세션 콜백 삭제
+        Session.getCurrentSession().removeCallback(sessionCallback);
+    }
+
+<<<<<<< HEAD
     public String[][] jsonParserList(String pRecvServerPage) {
         Log.i("서버에서 받은 전체 내용 : ", pRecvServerPage);
 
@@ -169,5 +201,15 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+=======
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 카카오톡|스토리 간편로그인 실행 결과를 받아서 SDK로 전달
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
     }
 }

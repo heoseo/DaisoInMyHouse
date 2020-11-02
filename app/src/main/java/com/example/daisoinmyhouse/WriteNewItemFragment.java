@@ -10,9 +10,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,15 +34,19 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+<<<<<<< HEAD
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
 import java.util.Objects;
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 import static android.app.Activity.RESULT_OK;
 
 public class WriteNewItemFragment extends Fragment {
 
+<<<<<<< HEAD
     private static final int REQUEST_AREA = 50;
     EditText product_Resister,pricce,conttent,taag;
     TextView cattegory;
@@ -55,6 +62,15 @@ public class WriteNewItemFragment extends Fragment {
     private Bitmap image_bitmap_copy = null;
     private Bitmap image_bitmap = null;
     private String imageName = null;
+=======
+    EditText product_Resister,pricce,conttent,taag;
+    TextView cattegory;
+    Button writeBtn;
+    ImageButton btn_back;
+    ImageView btn_photo;
+    MainActivity activity;
+    Spinner spinner;
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
 
     @Nullable
@@ -63,9 +79,13 @@ public class WriteNewItemFragment extends Fragment {
 
         activity = (MainActivity) getActivity();
 
-
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_new_item, container, false);
 
+<<<<<<< HEAD
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_new_item, container, false);
+
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
         product_Resister =rootView.findViewById(R.id.et_register);
         cattegory = rootView.findViewById(R.id.et_category);
         pricce = rootView.findViewById(R.id.et_price);
@@ -74,6 +94,7 @@ public class WriteNewItemFragment extends Fragment {
 
         spinner = rootView.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+<<<<<<< HEAD
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cattegory.setText(parent.getItemAtPosition(position).toString());
                 cattegory.setVisibility(View.INVISIBLE);
@@ -81,13 +102,55 @@ public class WriteNewItemFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+=======
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cattegory.setText(parent.getItemAtPosition(position).toString());
+                cattegory.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
             }
         });
 
 
 
+<<<<<<< HEAD
 
         //사진 이미지 누르면 사진선택화면
+=======
+        //글쓰기 등록시 db연결
+        writeBtn = rootView.findViewById(R.id.btn_register);
+        writeBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                try {
+                    String name = product_Resister.getText().toString();
+                    String category = cattegory.getText().toString();
+                    String price = pricce.getText().toString();
+                    String tag = taag.getText().toString();
+                    String content = conttent.getText().toString();
+                    Write_RegisterActivity task =new Write_RegisterActivity();
+
+                    String result = task.execute(name, category, price, content).get();
+                    // 빈칸이 있는지 검사사
+                    if(name.getBytes().length <=0 && category.getBytes().length <=0 && price.getBytes().length <=0 && tag.getBytes().length <=0 &&content.getBytes().length <=0 ){
+                        Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                        activity.finish();
+                    }
+                } catch (Exception e) {
+                    Log.i("DBtest", ".....ERROR.....!");
+                }
+            }
+        });
+
+
+        //사진 이미지 누르면 다음화면
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
         btn_photo = rootView.findViewById(R.id.imageView_photo);
         btn_photo.setOnClickListener( new View.OnClickListener(){
             @Override
@@ -169,6 +232,7 @@ public class WriteNewItemFragment extends Fragment {
             }
         });
 
+<<<<<<< HEAD
 
 
 
@@ -238,5 +302,10 @@ public class WriteNewItemFragment extends Fragment {
 
         return imgPath;
     }//end of getImagePathToUri()
+=======
+        return rootView;
+    }
+
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
 }

@@ -18,7 +18,15 @@
             android:text="←"
             android:textSize="30dp" />
 
+<<<<<<< HEAD
 
+=======
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
         <TextView
             android:layout_width="330dp"
@@ -30,11 +38,22 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
+<<<<<<< HEAD
         <View
             android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp" />
+=======
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:text="X"
+            android:textSize="30sp" />
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
     </LinearLayout>
 

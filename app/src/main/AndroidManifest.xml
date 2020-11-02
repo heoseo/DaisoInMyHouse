@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+<<<<<<< HEAD
         <activity android:name=".ProfileEditActivity"></activity>
         <activity android:name=".ChattingListActivity" />
         <activity android:name=".ChattingMainActivity" />
@@ -33,6 +34,19 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
+=======
+        <activity android:name=".MainChatActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
+<!--        <activity-->
+<!--            android:name=".ChatActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,8 +58,15 @@
         <activity android:name=".AlarmSettingActivity" />
         <activity android:name=".CategoryInWriteActivity" />
         <activity android:name=".SettingMyAreaActivity" />
+<<<<<<< HEAD
         <activity android:name=".RentActivity" />
         <activity android:name=".LeaseActivity" />
+=======
+        <activity android:name=".ProfileMenuActivity" />
+        <activity android:name=".RentActivity" />
+        <activity android:name=".LeaseActivity" />
+        <activity android:name=".CameraActivity" />
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
         <activity android:name=".KeywordAlarmActivity" />
         <activity android:name=".FirtstSettingAreaActivity" />
         <activity android:name=".LoginActivity" />
@@ -63,8 +84,11 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".LoginTest"/>
         <activity android:name=".WishlistActivity"/>
+=======
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

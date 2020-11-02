@@ -8,6 +8,7 @@
         <item >도서</item>
         <item >기타</item>
     </string-array>
+<<<<<<< HEAD
 
     <string-array name="email">
         <item>선택하세요</item>
@@ -18,3 +19,6 @@
         <item>nate.com</item>
     </string-array>
 </resources>
+=======
+</resources>
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501

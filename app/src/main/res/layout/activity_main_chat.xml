@@ -29,8 +29,12 @@
         android:layout_marginBottom="16dp"
         android:src="@mipmap/ic_launcher"
         android:clickable="true"
+<<<<<<< HEAD
         android:onClick="clickImage"
         tools:ignore="OnClick" />
+=======
+        android:onClick="clickImage"/>
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 
     <Button
         android:layout_width="wrap_content"
@@ -39,6 +43,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
+<<<<<<< HEAD
         android:onClick="clickBtn"
         tools:ignore="OnClick" />
+=======
+        android:onClick="clickBtn"/>
+>>>>>>> 9d009ef1be94ec94d31efe8b2564bb0d5d29d501
 </RelativeLayout>
