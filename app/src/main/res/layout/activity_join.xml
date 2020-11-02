@@ -54,9 +54,9 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="150dp"
-                android:padding="10dp"
-                android:background="@drawable/black_et"/>
+                android:layout_marginRight="40dp"
+                android:background="@drawable/black_et"
+                android:padding="10dp" />
 
         </LinearLayout>
 
@@ -79,9 +79,9 @@
                 android:id="@+id/et_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="150dp"
-                android:padding="10dp"
-                android:background="@drawable/black_et"/>
+                android:layout_marginRight="40dp"
+                android:background="@drawable/black_et"
+                android:padding="10dp" />
 
         </LinearLayout>
 
@@ -104,9 +104,11 @@
                 android:id="@+id/et_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="150dp"
-                android:padding="10dp"
-                android:background="@drawable/black_et"/>
+                android:layout_marginRight="40dp"
+                android:background="@drawable/black_et"
+                android:padding="10dp" />
+
+
 
         </LinearLayout>
 
@@ -434,8 +436,11 @@
         android:id="@+id/activity_join_join_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
         android:text="회원가입"
-        android:background="@drawable/btn_join"
-        android:layout_alignParentBottom="true"/>
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold" />햐
 
 </RelativeLayout>
