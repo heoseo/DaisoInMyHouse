@@ -33,11 +33,10 @@ public class MyPageLogOutFragment extends Fragment {
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
     LinearLayout btnKeyword;
-    Button btnLogin;
+    LinearLayout btnLogin;
     Button btnLogout;
     LinearLayout btnTransaction;
     TextView tvID;
-    LinearLayout btnWishlist;
     SharedPreferences preferences;
 
     @Nullable
@@ -71,12 +70,13 @@ public class MyPageLogOutFragment extends Fragment {
 
 
 //        // 로그인 & 회원가입
-        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
+        btnLogin = rootView.findViewById(R.id.ll_login);
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 getContext().startActivity(intent);
+//                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
             }
         });
 

@@ -154,22 +154,6 @@ public class MyPageFragment extends Fragment {
 //            }
 //        });
 
-        // 로그아웃
-        btnLogout = rootView.findViewById(R.id.fragment_mypage_logout_btn);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                SharedPreferences.Editor editor=preferences.edit();
-//                editor.putString("nickName", null);
-//                editor.putString("profileUrl", null);
-//                editor.apply();
-//                StaticUserInformation.nickName=preferences.getString("nickName", null);
-//                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
-//
-//                refresh();
-
-            }
-        });
 
         // 거래내역
         btnTransaction = rootView.findViewById(R.id.ll_transaction_details);

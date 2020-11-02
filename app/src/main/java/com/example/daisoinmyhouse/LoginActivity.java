@@ -103,17 +103,21 @@ public class LoginActivity extends AppCompatActivity {
                     String result = loginAction.execute(user_id, user_pw).get();
 
                     if(result.equals("0")){    // 로그인성공
+
                         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                         SharedPreferences.Editor editor=preferences.edit();
                         editor.putString("nickName", user_id);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
-                        StaticUserInformation.nickName = result;
+                        StaticUserInformation.nickName = user_id;
 
-                        Uri uri = Uri.parse("android.resource://your.package.name/" + R.drawable.ic_baseline_person_24);
+                        Uri uri = Uri.parse("android.resource://your.package.name/" + R.drawable.ic_baseline_person_24);    // 기본이미지로 설정
                         editor.putString("profileUrl", uri.toString());
                         StaticUserInformation.porfileUrl=preferences.getString("profileUrl", uri.toString());
                         editor.apply();
 
+                        saveData();
 
+                        Toast.makeText(getApplicationContext(), StaticUserInformation.nickName+"님 로그인되었습니다.", Toast.LENGTH_LONG).show();
+                        finish();
 //                        Picasso.get().load(StaticUserInformation.porfileUrl).into(ivProfile);
                     }
                     else if(result.equals("1")) { // 로그인 실패

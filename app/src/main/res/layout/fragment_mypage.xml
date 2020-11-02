@@ -53,6 +53,8 @@
             android:layout_centerInParent="true"
             android:layout_above="@id/et_name"
             android:layout_margin="10dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#000000"
             android:src="@drawable/profile"/>
 
 
@@ -218,21 +220,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-<!--        <Button-->
-<!--            android:id="@+id/fragment_mypage_login_btn"-->
-<!--            android:text="로그인"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
-
-        <Button
-            android:id="@+id/fragment_mypage_logout_btn"
-            android:text="로그아웃"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
 </LinearLayout>
