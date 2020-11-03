@@ -255,4 +255,39 @@ public class WriteNewItemFragment extends Fragment {
         return imgPath;
     }//end of getImagePathToUri()
 
+
+    /* image폴더에 있는 이미지 띄우기
+        btn_photo = rootView.findViewById(R.id.imageView_photo);
+        Thread uThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    //서버에 올려둔 이미지 URL
+                    URL url = new URL("http://daisoinmyhouse.cafe24.com/images/%EC%9E%AC%ED%95%99%EC%A6%9D%EB%AA%85%EC%84%9C_%EC%B2%9C%EA%B3%A0%EB%A7%88%EB%B9%84_%EA%B9%80%ED%98%9C%EB%AF%BC.jpg");
+                    //Web에서 이미지 가져온 후 ImageView에 지정할 Bitmap 만들기
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
+                    conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+                    InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+                    bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        uThread.start(); // 작업 Thread 실행
+        try {
+            //메인 Thread는 별도의 작업을 완료할 때까지 대기한다!
+            //join() 호출하여 별도의 작업 Thread가 종료될 때까지 메인 Thread가 기다림
+            //join() 메서드는 InterruptedException을 발생시킨다.
+            uThread.join();
+            //작업 Thread에서 이미지를 불러오는 작업을 완료한 뒤
+            //UI 작업을 할 수 있는 메인 Thread에서 ImageView에 이미지 지정
+            btn_photo.setImageBitmap(bitmap);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
 }

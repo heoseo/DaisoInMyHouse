@@ -3,53 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageview_setting_map"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/setting_map" />
-
-    <TextView
-        android:id="@+id/tv_Information"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="25dp"
-        android:text="우리동네를 저장한 후 이웃들과 거래를 시작하세요"
-        android:textSize="19sp"
-        android:textStyle="bold" />
-
     <LinearLayout
-        android:id="@+id/ll_Search"
+        android:id="@+id/layout_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/imageview_Search"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/search" />
-
-        <EditText
-            android:id="@+id/et_Search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:ems="10"
-            android:hint="동을 입력하세요" />
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MapsActivity" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_Save"
+    <TextView
+        android:id="@+id/tv_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="#EC0B0B"
+        android:text=""
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:gravity="center"/>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ndroid:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
         android:text="저장"
         android:textColor="#F1EAEA"
         android:textSize="20sp"

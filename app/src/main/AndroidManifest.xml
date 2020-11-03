@@ -51,6 +51,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".FindAddressActivity" />
+        <activity android:name=".FindLocationActivity" />
         <activity android:name=".ItemInformationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -69,6 +70,13 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBEXUzUNIXvdqrYmjqFgGOLhwAO6S6aaVg" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

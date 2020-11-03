@@ -17,10 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 public class JoinActivity extends AppCompatActivity {
 
     private static final int SEARCH_ADDRESS_ACTIVITY = 10000;
+    private static final int SEARCH_LOCATION_ACTIVITY = 1000;
 
-    Button joinBtn, zipCodeBtn;
-    EditText nameet, idet, pwet, pwet_confirm, emailet, phoneet1, phoneet2, phoneet3, addresset1, addresset2;
-    TextView zipcodetv;
+    Button joinBtn, zipCodeBtn, locationBtn;
+    EditText nameet, nicknameet, idet, pwet, pwet_confirm, emailet, phoneet1, phoneet2, phoneet3, addresset1, addresset2, birthet;
+    TextView zipcodetv, locationtv;
     Spinner emails;
     LinearLayout pwll;
 
@@ -31,10 +32,13 @@ public class JoinActivity extends AppCompatActivity {
 
         joinBtn = (Button)findViewById(R.id.activity_join_join_btn);
         zipCodeBtn = (Button)findViewById(R.id.btn_zip_code);
+        locationBtn = (Button)findViewById(R.id.btn_find_location);
         zipcodetv = (TextView)findViewById(R.id.tv_zip_code);
 
+        locationtv = (TextView)findViewById(R.id.tv_region);
         nameet = (EditText)findViewById(R.id.et_name);
         idet = (EditText)findViewById(R.id.et_id);
+        nicknameet = (EditText)findViewById(R.id.et_nickname);
         pwet = (EditText)findViewById(R.id.et_pw);
         pwet_confirm = (EditText)findViewById(R.id.et_pw_confirm);
         emailet = (EditText)findViewById(R.id.et_email);
@@ -44,10 +48,18 @@ public class JoinActivity extends AppCompatActivity {
         addresset1 = (EditText)findViewById(R.id.et_address1);
         addresset2 = (EditText)findViewById(R.id.et_address2);
 
+        birthet = (EditText)findViewById(R.id.et_birth);
         emails = (Spinner)findViewById(R.id.spinner_email);
 
         pwll = (LinearLayout)findViewById(R.id.ll_pw);
 
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FindLocationActivity.class);
+                startActivityForResult(intent, SEARCH_LOCATION_ACTIVITY);
+            }
+        });
 
         zipCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +75,9 @@ public class JoinActivity extends AppCompatActivity {
                     String name = nameet.getText().toString();
                     String id = idet.getText().toString();
                     String pw = pwet.getText().toString();
+
+                    String nickname = nicknameet.getText().toString();
+
                     String email1 = emailet.getText().toString();
                     String email2 = emails.getSelectedItem().toString();
 
@@ -83,6 +98,7 @@ public class JoinActivity extends AppCompatActivity {
 
                     String address = "(" + zip + ") " + adr1 + " " + adr2;
 
+                    String birth = birthet.getText().toString();
                     RegisterActivity task = new RegisterActivity();
 
                     String result = task.execute(name, id, pw, email, phone, address).get();
@@ -102,12 +118,7 @@ public class JoinActivity extends AppCompatActivity {
                     }else{
                         pwll.setVisibility(View.VISIBLE);
                     }
-                    /*if(name.getBytes().length <=0 && id.getBytes().length <=0 && pw.getBytes().length <=0 && email.getBytes().length <=0 && phone.getBytes().length <=0 && address.getBytes().length <=0){
-                        Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                        finish();
-                    }*/
+
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
@@ -129,6 +140,15 @@ public class JoinActivity extends AppCompatActivity {
                     if (data != null) {
                         zipcodetv.setText(zipcode);
                         addresset1.setText(adr);
+                    }
+                }
+                break;
+            case SEARCH_LOCATION_ACTIVITY:
+                if (requestCode == RESULT_OK){
+                    String data = intent.getStringExtra("location");
+
+                    if(data != null){
+                        locationtv.setText(data);
                     }
                 }
                 break;
