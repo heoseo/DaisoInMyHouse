@@ -41,7 +41,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class WriteNewItemFragment extends Fragment {
 
-    private static final int REQUEST_AREA = 50;
     EditText product_Resister,pricce,conttent,taag;
     TextView cattegory;
     Button writeBtn;
@@ -53,6 +52,7 @@ public class WriteNewItemFragment extends Fragment {
 
     LinearLayout btn_otherwrite;
 
+    private final int REQ_CODE_LOCAION = 50;
     private final int REQ_CODE_SELECT_IMAGE = 100;
     private String img_path = new String();
     private Bitmap image_bitmap_copy = null;
@@ -152,7 +152,7 @@ public class WriteNewItemFragment extends Fragment {
         btnSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getContext(), SettingMyAreaActivity.class) ,0);
+                startActivityForResult(new Intent(getContext(), SettingMyAreaActivity.class) ,REQ_CODE_LOCAION);
 
             }
         });
@@ -203,7 +203,7 @@ public class WriteNewItemFragment extends Fragment {
         }
 
 
-        if (requestCode == REQUEST_AREA) {
+        if (requestCode == REQ_CODE_LOCAION) {
             String resultMsg = intent.getStringExtra("result_msg");
             btnSetLocation.setText(resultMsg);
 

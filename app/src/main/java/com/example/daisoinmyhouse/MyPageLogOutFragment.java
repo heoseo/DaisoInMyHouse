@@ -24,9 +24,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.squareup.picasso.Picasso;
 
+import static android.app.Activity.RESULT_OK;
+
 public class MyPageLogOutFragment extends Fragment {
 
     private static final int MODE_PRIVATE = 0;
+    private static final int REQ_COD_LOGIN = 33;
     ImageView imgViewProfile;
     ImageButton btnSetting;
     ImageButton btnArrow;
@@ -75,7 +78,8 @@ public class MyPageLogOutFragment extends Fragment {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getContext(), LoginActivity.class);
-                getContext().startActivity(intent);
+                startActivityForResult(intent ,REQ_COD_LOGIN);
+//                getContext().startActivity(intent);
 //                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
             }
         });
@@ -85,7 +89,34 @@ public class MyPageLogOutFragment extends Fragment {
 
 
 
+
+
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (resultCode != RESULT_OK) {
+//            Toast.makeText(getContext(), "결과가 성공이 아님.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if (requestCode == REQ_COD_LOGIN) {
+            String resultMsg = intent.getStringExtra("result_msg");
+            if(!resultMsg.equals("1")){  // 로그인성공
+                MyPageFragment myPageFragment = new MyPageFragment();
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.frame_layout, myPageFragment).commitAllowingStateLoss();
+            }
+
+//            Toast.makeText(MainActivity.this, "결과 : " + resultMsg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void refresh(){

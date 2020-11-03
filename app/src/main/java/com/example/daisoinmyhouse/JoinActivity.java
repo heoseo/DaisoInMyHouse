@@ -69,14 +69,23 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        // 뒤로가기 버튼
+        TextView btnBack = (TextView) findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         joinBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
-                    String name = nameet.getText().toString();
-                    String id = idet.getText().toString();
-                    String pw = pwet.getText().toString();
 
+                    String user_name = nameet.getText().toString();
                     String nickname = nicknameet.getText().toString();
+                    String user_id = idet.getText().toString();
+                    String user_password = pwet.getText().toString();
 
                     String email1 = emailet.getText().toString();
                     String email2 = emails.getSelectedItem().toString();
@@ -99,9 +108,9 @@ public class JoinActivity extends AppCompatActivity {
                     String address = "(" + zip + ") " + adr1 + " " + adr2;
 
                     String birth = birthet.getText().toString();
+                    String location = locationtv.getText().toString();
                     RegisterActivity task = new RegisterActivity();
 
-                    String result = task.execute(name, id, pw, email, phone, address).get();
 
 
 
@@ -109,9 +118,11 @@ public class JoinActivity extends AppCompatActivity {
                     if(pwet.getText().toString().equals(pwet_confirm.getText().toString())){
                         // 빈칸이 있는지 검사
                         pwll.setVisibility(View.INVISIBLE);
-                        if(name.getBytes().length <=0 || id.getBytes().length <=0 || pw.getBytes().length <=0 || email.getBytes().length <=0 || phone.getBytes().length <=0 || address.getBytes().length <=0){
+                        if(user_name.getBytes().length <=0 || user_id.getBytes().length <=0 || user_password.getBytes().length <=0
+                                || email.getBytes().length <=0 || phone.getBytes().length <=0 || address.getBytes().length <=0){
                             Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                         }else{
+                            String result = task.execute(user_name, nickname, user_id, user_password, email, phone, address, birth, "군포시 당동").get();
                             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                             finish();
                         }

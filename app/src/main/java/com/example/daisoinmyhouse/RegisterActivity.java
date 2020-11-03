@@ -19,14 +19,14 @@ public class RegisterActivity extends AsyncTask<String, Void, String> {
         try {
             String str;
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://daisoinmyhouse.cafe24.com/joinAction.jsp");
+            URL url = new URL("http://daisoinmyhouse.cafe24.com/joinAction2.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "name=" + strings[0] +"&id=" + strings[1] + "&pw=" + strings[2]
-                    + "&email=" + strings[3] + "&phone=" + strings[4] + "&address=" + strings[5];
+            sendMsg = "user_name=" + strings[0] + "&nickname=" + strings[1] +"&user_id=" + strings[2] + "&user_password=" + strings[3]
+                    + "&email=" + strings[4] + "&phone=" + strings[5] + "&address=" + strings[6] + "&birth=" + strings[7] + "&location=" + strings[8];
             osw.write(sendMsg);
             osw.flush();
             //jsp와 통신 성공 시 수행

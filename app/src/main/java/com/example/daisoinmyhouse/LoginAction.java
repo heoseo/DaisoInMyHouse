@@ -24,7 +24,7 @@ public class LoginAction extends AsyncTask<String, Void, String> {
             conn.setRequestMethod("POST");
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "id=" + strings[0] + "&pw=" + strings[1];
+            sendMsg = "user_id=" + strings[0] + "&user_password=" + strings[1];
             osw.write(sendMsg);
             osw.flush();
             //jsp와 통신 성공 시 수행
@@ -35,6 +35,7 @@ public class LoginAction extends AsyncTask<String, Void, String> {
                 // jsp에서 보낸 값을 받는 부분
                 while ((str = reader.readLine()) != null) {
                     buffer.append(str);
+                    System.out.println("LoginAction : " + str);
                 }
                 receiveMsg = buffer.toString();
                 Log.i("테스트", receiveMsg);

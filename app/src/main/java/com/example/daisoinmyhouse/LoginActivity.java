@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -96,18 +97,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try{
+
                     user_id = id_et.getText().toString();
                     user_pw = pw_et.getText().toString();
 
                     LoginAction loginAction = new LoginAction();
-                    String result = loginAction.execute(user_id, user_pw).get();
+                    String result = loginAction.execute(user_id, user_pw).get();    // 성공하면 닉네임 반환
+                    System.out.println("@@@@@result:" + result);
 
-                    if(result.equals("0")){    // 로그인성공
+                    if(!result.equals("1")){    // 로그인성공
+
 
                         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                         SharedPreferences.Editor editor=preferences.edit();
-                        editor.putString("nickName", user_id);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
-                        StaticUserInformation.nickName = user_id;
+                        editor.putString("nickName", result);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
+                        editor.putString("userID", user_id);
+                        StaticUserInformation.nickName = result;
+                        StaticUserInformation.userID = user_id;
 
                         Uri uri = Uri.parse("android.resource://your.package.name/" + R.drawable.ic_baseline_person_24);    // 기본이미지로 설정
                         editor.putString("profileUrl", uri.toString());
@@ -117,10 +123,14 @@ public class LoginActivity extends AppCompatActivity {
                         saveData();
 
                         Toast.makeText(getApplicationContext(), StaticUserInformation.nickName+"님 로그인되었습니다.", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent();
+                        intent.putExtra("result_msg", result);
+                        setResult(RESULT_OK, intent);
                         finish();
-//                        Picasso.get().load(StaticUserInformation.porfileUrl).into(ivProfile);
+
                     }
-                    else if(result.equals("1")) { // 로그인 실패
+                    else if(!result.equals("1")) { // 로그인 실패
                         Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인하세요.", Toast.LENGTH_LONG).show();
                     }
 
@@ -149,6 +159,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 뒤로가기 버튼
+        TextView btnBack = (TextView) findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     protected void onDestroy() {
@@ -157,6 +176,9 @@ public class LoginActivity extends AppCompatActivity {
         // 세션 콜백 삭제
         Session.getCurrentSession().removeCallback(sessionCallback);
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

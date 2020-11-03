@@ -64,7 +64,6 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginTest"/>
         <activity android:name=".WishlistActivity"/>
 
         <meta-data
