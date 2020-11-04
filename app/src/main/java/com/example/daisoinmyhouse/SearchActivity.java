@@ -5,108 +5,69 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.sql.Date;
 
-public class HomeFragment extends Fragment {
-    //홈화면 RecyclerView 설정
+public class SearchActivity extends AppCompatActivity {
+
     RecyclerView recyclerView;
-    ItemAdapter adapter = new ItemAdapter();
+    SearchAdapter adapter = new SearchAdapter();
     GridLayoutManager layoutManager;
-    ImageButton btn_wishlist, btn_search;
-    EditText et_search;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    TextView btn_back, tv_search;
 
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_list);
 
-        //홈화면 RecyclerView 설정
-        recyclerView = (RecyclerView) v.findViewById(R.id.rv_product);
-        layoutManager = new GridLayoutManager(getActivity(), 2);
+        Intent intent = getIntent();
+        String searchItem = intent.getStringExtra("search");
+
+        tv_search = (TextView)findViewById(R.id.tv_search_item);
+        tv_search.setText(searchItem);
+
+        recyclerView = (RecyclerView) findViewById(R.id.rv_searchList);
+
+        layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
 
-        //위시리스트 띄우기
-        btn_wishlist = v.findViewById(R.id.img_btn_heart);
-        btn_wishlist.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), WishlistActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
-
-        et_search = v.findViewById(R.id.et_search_item);
-        final String search = et_search.getText().toString();
-        //검색
-        btn_search = v.findViewById(R.id.img_btn_search);
-        btn_search.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                intent.putExtra("search", search);
-
-                SearchAction searchAction = new SearchAction();
-                searchAction.execute(search);
-
-                getContext().startActivity(intent);
-            }
-        });
-
-
-        return v;
-    }
-
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        //prepareData();
-
-        ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/recyclerviewList.jsp", null);
+        ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/searchList.jsp", null);
         networkTask.execute();
 
-        adapter.setOnItemClickListener(new OnProductItemClickListener() {
+        adapter.setOnSearchItemClickListener(new SearchItemClickListener() {
             @Override
-            public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
-                Item item = (Item) adapter.getItem(position);
-//                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
+            public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+                Search item = (Search) adapter.getItem(position);
+                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getItem_name(), Toast.LENGTH_LONG).show();
 
-                // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
-                Intent intent = new Intent(getContext(), ItemInformationActivity.class);
-                Toast.makeText(getContext(), "선택된 제품ID : " + item.getNum(), Toast.LENGTH_LONG).show();
-                intent.putExtra("productID", item.getNum());
-                getContext().startActivity(intent);
+                //(ItemInformationActivity에 상품 ID 전달)
+                Intent intent = new Intent(getApplicationContext(), ItemInformationActivity.class);
+                intent.putExtra("productID", item.getProductID());
+                startActivity(intent);
             }
         });
     }
-
 
     public class ProductList extends AsyncTask<Void, Void, String> {
         private String url;
@@ -189,17 +150,18 @@ public class HomeFragment extends Fragment {
                     try {
                         // JSP에서 보낸 JSON 받아오자  JSONObject = siteDataMain
                         JSONObject json = new JSONObject(page);
-                        JSONArray jArr = json.getJSONArray("PRODUCT_LIST");
+                        JSONArray jArr = json.getJSONArray("SEARCH_LIST");
 
                         // JSON이 가진 크기만큼 데이터를 받아옴
                         for (int i = 0; i < jArr.length(); i++) {
                             json = jArr.getJSONObject(i);
 
-
                             long now = System.currentTimeMillis();
                             Date date = new Date(now);
-                            adapter.addItem(new Item(json.getString("name"), "두정동",
-                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+
+                            Log.i("테스트", json.getString("name"));
+
+                            adapter.addItem(new Search(json.getString("name"), "두정동", "3시간", json.getInt("price"), R.drawable.sample1, "1"));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
@@ -221,9 +183,4 @@ public class HomeFragment extends Fragment {
             return null;
         }
     }
-
-
-
-
-
 }

@@ -49,10 +49,12 @@ public class ItemInformationActivity extends AppCompatActivity {
                     StaticUserInformation.nickName=preferences.getString("nickName", null);
                     StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
 
-                    String userID = StaticUserInformation.nickName; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
+                    String userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
 
                     AddWishListActivity task = new AddWishListActivity();
-//                    String result = task.execute(userID, productID);
+                    String result = task.execute(userID, productID).get();
+
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
 
                 } catch (Exception e) {
@@ -90,10 +92,6 @@ public class ItemInformationActivity extends AppCompatActivity {
                     default:
                         throw new IllegalStateException("Unexpected value: " + event.getAction());
                 }
-
-
-
-
 
                 return true;
             }
