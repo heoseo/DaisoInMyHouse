@@ -4,20 +4,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,14 +20,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyPageFragment extends Fragment {
 
     private static final int MODE_PRIVATE = 0;
-    ImageView imgViewProfile;
+    CircleImageView imgViewProfile;
     ImageButton btnSetting;
     ImageButton btnArrow;
     LinearLayout btnSettingMyArea;
@@ -41,7 +36,7 @@ public class MyPageFragment extends Fragment {
     Button btnLogin;
     Button btnLogout;
     LinearLayout btnTransaction;
-    TextView tvID;
+    TextView tvNickName;
     LinearLayout btnWishlist;
     SharedPreferences preferences;
 
@@ -67,15 +62,14 @@ public class MyPageFragment extends Fragment {
         });
 
         imgViewProfile = rootView.findViewById(R.id.imageview_profile);
-        tvID = rootView.findViewById(R.id.tv_id);
+        tvNickName = rootView.findViewById(R.id.tv_nickname);
 
-
-        StaticUserInformation.nickName=preferences.getString("nickName", null);
-        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+        SharedPreferences preferences=getActivity().getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.loadData(preferences);
 
         if(StaticUserInformation.nickName != null){
-            tvID.setText(StaticUserInformation.nickName);
-            Picasso.get().load(StaticUserInformation.porfileUrl).into(imgViewProfile);
+            tvNickName.setText(StaticUserInformation.nickName);
+            Picasso.get().load( StaticUserInformation.porfileUrl).into(imgViewProfile);
         }
 
 
@@ -115,12 +109,14 @@ public class MyPageFragment extends Fragment {
                                 fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
 
 
+                                SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
                                 SharedPreferences.Editor editor=preferences.edit();
                                 editor.putString("nickName", null);
                                 editor.putString("profileUrl", null);
                                 editor.apply();
+                                editor.commit();
                                 StaticUserInformation.nickName=preferences.getString("nickName", null);
-                                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+                                StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
 
                                 break;
 
@@ -143,16 +139,6 @@ public class MyPageFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
-
-//        // 로그인 & 회원가입
-//        btnLogin = rootView.findViewById(R.id.fragment_mypage_login_btn);
-//        btnLogin.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                Intent intent = new Intent(getContext(), LoginActivity.class);
-//                getContext().startActivity(intent);
-//            }
-//        });
 
 
         // 거래내역
@@ -180,9 +166,4 @@ public class MyPageFragment extends Fragment {
         return rootView;
     }
 
-    private void refresh(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(this).attach(this).commit();
-
-    }
 }

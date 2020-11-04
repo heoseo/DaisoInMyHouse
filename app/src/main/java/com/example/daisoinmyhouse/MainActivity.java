@@ -5,25 +5,18 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.squareup.picasso.Picasso;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -74,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.mypageItem: {
                         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                         StaticUserInformation.nickName=preferences.getString("nickName", null);
-                        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+                        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
 
                         if (StaticUserInformation.nickName != null) {
                             transaction.replace(R.id.frame_layout, myPageFragment).commitAllowingStateLoss();

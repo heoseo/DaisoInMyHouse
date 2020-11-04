@@ -1,11 +1,7 @@
 package com.example.daisoinmyhouse;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,7 +42,7 @@ public class MyPageLogOutFragment extends Fragment {
         preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
         StaticUserInformation.nickName=preferences.getString("nickName", null);
-        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage_logout, container, false);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
@@ -64,11 +58,11 @@ public class MyPageLogOutFragment extends Fragment {
         });
 
         imgViewProfile = rootView.findViewById(R.id.imageview_profile);
-        tvID = rootView.findViewById(R.id.tv_id);
+        tvID = rootView.findViewById(R.id.tv_nickname);
 
 
         StaticUserInformation.nickName=preferences.getString("nickName", null);
-        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
 
 
 

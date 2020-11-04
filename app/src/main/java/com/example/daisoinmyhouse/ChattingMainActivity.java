@@ -46,8 +46,7 @@ public class ChattingMainActivity extends AppCompatActivity {
         loadData();
         if (StaticUserInformation.nickName != null) {
             etName.setText(StaticUserInformation.nickName);
-            Picasso.get().load(StaticUserInformation.porfileUrl).into(ivProfile);
-
+            Picasso.get().load( StaticUserInformation.porfileUrl).into(ivProfile);
             //처음이 아니다, 즉, 이미 접속한 적이 있다.
             isFirst = false;
 
@@ -156,7 +155,7 @@ public class ChattingMainActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         //파라미터로 firebase의 저장소에 저장되어 있는
                         //이미지에 대한 다운로드 주소(URL)을 문자열로 얻어오기
-                        StaticUserInformation.porfileUrl= uri.toString();
+                        StaticUserInformation.porfileUrl = uri.toString();
 
                         //1. Firebase Database에 nickName, profileUrl을 저장
                         //firebase DB관리자 객체 소환
@@ -188,7 +187,7 @@ public class ChattingMainActivity extends AppCompatActivity {
     void loadData(){
         SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
         StaticUserInformation.nickName=preferences.getString("nickName", null);
-        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
 
 
     }

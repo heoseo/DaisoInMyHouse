@@ -40,12 +40,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageview_item_image_profile"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
-            android:src="@drawable/profile" />
+            app:civ_border_color="#000000"
+            android:src="@drawable/profile"/>
 
         <LinearLayout
             android:layout_width="100dp"
@@ -54,7 +55,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_id"
+                android:id="@+id/tv_nickname"
                 android:layout_width="166dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

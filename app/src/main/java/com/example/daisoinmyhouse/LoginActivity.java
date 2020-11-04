@@ -1,75 +1,31 @@
 package com.example.daisoinmyhouse;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.LocusId;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInstaller;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.kakao.auth.ApiErrorCode;
-import com.kakao.auth.AuthType;
-import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
-import com.kakao.network.ErrorResult;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.MeV2ResponseCallback;
-import com.kakao.usermgmt.response.MeV2Response;
-import com.kakao.usermgmt.response.model.Profile;
-import com.kakao.usermgmt.response.model.UserAccount;
-import com.kakao.util.OptionalBoolean;
-import com.kakao.util.exception.KakaoException;
-import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -102,36 +58,26 @@ public class LoginActivity extends AppCompatActivity {
                     user_pw = pw_et.getText().toString();
 
                     LoginAction loginAction = new LoginAction();
-                    String result = loginAction.execute(user_id, user_pw).get();    // 성공하면 닉네임 반환
-                    System.out.println("@@@@@result:" + result);
+                    String resultNickname = loginAction.execute(user_id, user_pw).get();    // 성공하면 닉네임 반환
+                    System.out.println("@@@@@result:" + resultNickname);
 
-                    if(!result.equals("1")){    // 로그인성공
+                    if(!resultNickname.equals("1")){    // 로그인성공
 
-                        Uri uri = Uri.parse("android.resource://com.example.daisoinmyhouse/" + R.drawable.ic_baseline_person_24);    // 기본이미지로 설정
+                        Uri uri = Uri.parse("android.resource://com.example.daisoinmyhouse/" + R.drawable.profile);    // 기본이미지로 설정
 
-                        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
-                        SharedPreferences.Editor editor=preferences.edit();
 
-                        editor.putString("nickName", result);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
-                        editor.putString("userID", user_id);
-                        StaticUserInformation.nickName = result;
-                        StaticUserInformation.userID = user_id;
 
-                        editor.putString("profileUrl", uri.toString());
-                        StaticUserInformation.porfileUrl=preferences.getString("profileUrl", uri.toString());
-                        editor.apply();
-
-                        saveData();
+                        saveData(resultNickname, user_id, uri);
 
                         Toast.makeText(getApplicationContext(), StaticUserInformation.nickName+"님 로그인되었습니다.", Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent();
-                        intent.putExtra("result_msg", result);
+                        intent.putExtra("result_msg", resultNickname);
                         setResult(RESULT_OK, intent);
                         finish();
 
                     }
-                    else if(!result.equals("1")) { // 로그인 실패
+                    else if(!resultNickname.equals("1")||resultNickname == null) { // 로그인 실패
                         Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인하세요.", Toast.LENGTH_LONG).show();
                     }
 
@@ -227,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // 닉네임(ID)랑 profileURI firebase에 저장
-    void saveData(){
+    void saveData(String resultNickname, String user_id, Uri uri){
         //EditText의 닉네임 가져오기 [전역변수에]
 
         //Firebase storage에 이미지 저장하기 위해 파일명 만들기(날짜를 기반으로)
@@ -244,19 +190,22 @@ public class LoginActivity extends AppCompatActivity {
         //'profiles'라는 이름의 자식 노드 참조 객체 얻어오기
         DatabaseReference profileRef= firebaseDatabase.getReference("profiles");
 
+
+        //2. 내 phone에 nickName, profileUrl을 저장
+        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+
+        editor.putString("nickName", resultNickname);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
+        editor.putString("userID", user_id);
+        editor.putString("profileUrl", uri.toString());
+        editor.apply();
+
+        StaticUserInformation.nickName = preferences.getString("nickName", uri.toString());
+        StaticUserInformation.userID = preferences.getString("userID", uri.toString());
+        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", uri.toString());
+
         //닉네임을 key 식별자로 하고 프로필 이미지의 주소를 값으로 저장
         profileRef.child(StaticUserInformation.nickName).setValue(StaticUserInformation.porfileUrl);
 //        Toast.makeText(this, StaticUserInformation.nickName + "님 프로필 저장 완료", Toast.LENGTH_SHORT).show();
-
-        //2. 내 phone에 nickName, profileUrl을 저장
-        SharedPreferences preferences= getSharedPreferences("account",MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferences.edit();
-
-        editor.putString("nickName", StaticUserInformation.nickName);
-        editor.putString("profileUrl", StaticUserInformation.porfileUrl);
-
-//        editor.commit();
-        editor.apply();
-
     }//saveData() ..
 }

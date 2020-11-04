@@ -47,7 +47,7 @@ public class ItemInformationActivity extends AppCompatActivity {
                 try {
                     SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                     StaticUserInformation.nickName=preferences.getString("nickName", null);
-                    StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+                    StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
 
                     String userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
 
