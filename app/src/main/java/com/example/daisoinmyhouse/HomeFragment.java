@@ -37,8 +37,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
-    ImageButton btn_wishlist, btn_search;
-    EditText et_search;
+    ImageButton btn_wishlist;
 
     @Nullable
     @Override
@@ -64,22 +63,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        et_search = v.findViewById(R.id.et_search_item);
-        final String search = et_search.getText().toString();
-        //검색
-        btn_search = v.findViewById(R.id.img_btn_search);
-        btn_search.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                intent.putExtra("search", search);
 
-                SearchAction searchAction = new SearchAction();
-                searchAction.execute(search);
 
-                getContext().startActivity(intent);
-            }
-        });
 
 
         return v;
