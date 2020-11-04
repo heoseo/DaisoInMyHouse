@@ -107,15 +107,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(!result.equals("1")){    // 로그인성공
 
+                        Uri uri = Uri.parse("android.resource://com.example.daisoinmyhouse/" + R.drawable.ic_baseline_person_24);    // 기본이미지로 설정
 
                         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                         SharedPreferences.Editor editor=preferences.edit();
+
                         editor.putString("nickName", result);      // !!!!!<- 회원가입 수정되면 nickname으로 고치기. 우선 id사용
                         editor.putString("userID", user_id);
                         StaticUserInformation.nickName = result;
                         StaticUserInformation.userID = user_id;
 
-                        Uri uri = Uri.parse("android.resource://your.package.name/" + R.drawable.ic_baseline_person_24);    // 기본이미지로 설정
                         editor.putString("profileUrl", uri.toString());
                         StaticUserInformation.porfileUrl=preferences.getString("profileUrl", uri.toString());
                         editor.apply();

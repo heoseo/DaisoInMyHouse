@@ -72,6 +72,7 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
+            android:onClick="clickImage"
             android:src="@drawable/arrow" />
 
     </LinearLayout>
