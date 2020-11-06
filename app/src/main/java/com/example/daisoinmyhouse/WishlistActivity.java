@@ -1,5 +1,6 @@
 package com.example.daisoinmyhouse;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -24,11 +25,13 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.sql.Date;
 
+
 public class WishlistActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     WishlistAdapter adapter = new WishlistAdapter();
     GridLayoutManager layoutManager;
+    public static Context CONTEXT;
 
     TextView btn_back;
 
@@ -38,8 +41,6 @@ public class WishlistActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_wishlist);
 
-        layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
 
         SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
         StaticUserInformation.userID = preferences.getString("userID", null);
@@ -49,6 +50,8 @@ public class WishlistActivity extends AppCompatActivity {
         WishlistList wishlist = new WishlistList();
         wishlist.execute(user_id);
 
+        layoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         adapter.setOnWishlistClickListener(new WishlistClickListener() {
@@ -71,6 +74,10 @@ public class WishlistActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        CONTEXT = this;
+        ((WishlistActivity)WishlistActivity.CONTEXT).onResume();
+
     }
 
     public class WishlistList extends AsyncTask<String, Void, String> {
@@ -112,15 +119,26 @@ public class WishlistActivity extends AppCompatActivity {
 
                         long now = System.currentTimeMillis();
                         Date date = new Date(now);
-                        adapter.addItem(new Wishlist(json.getString("name"), "두정동",
-                                "3시간", json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+
+                        adapter.addItem(new Wishlist(json.getString("product_name"),
+                                "두정동",
+                                "3시간",
+                                json.getInt("product_price"),
+                                R.drawable.sample1,
+                                json.getInt("product_no")));
+//                        adapter.addItem(new Wishlist("test", "두정동", "3시간", 30000,  R.drawable.sample1, 3));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
-
                         receiveMsg = buffer.toString();
+                        Log.i("테스트", json.getString("product_name"));
+                        Log.i("테스트", "두정동");
+                        Log.i("테스트", "3시간");
+                        Log.i("테스트", String.valueOf(json.getInt("product_price")));
+                        Log.i("테스트", String.valueOf(json.getInt("product_no")));
                         Log.i("테스트", receiveMsg);
+                        Log.i("테스트2",json.getString("product_name") + "두정동" +"3시간" +json.getInt("product_price") +json.getInt("num")) ;
                     }
                 } else{
                     //통신실패
@@ -135,4 +153,9 @@ public class WishlistActivity extends AppCompatActivity {
             return receiveMsg;
         }
     }
+
+    @Override public void onResume() {
+        super.onResume();
+    }
+
 }

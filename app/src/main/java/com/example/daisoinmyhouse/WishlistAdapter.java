@@ -16,17 +16,19 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     ArrayList<Wishlist> items = new ArrayList<Wishlist>();
     WishlistClickListener listener;
 
+
+
     @NonNull
     @Override
-    public WishlistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.fragment_home_item, parent, false);
 
-        return new WishlistAdapter.ViewHolder(itemView, this);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WishlistAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Wishlist wishlist = items.get(position);
         holder.setItem(wishlist);
     }
@@ -64,20 +66,20 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView tv1;
-        TextView tv2;
-        TextView tv3;
-        TextView tv4;
+        TextView tvName;
+        TextView tvPrice;
+        TextView tvLocation;
+        TextView tvTime;
 
         ImageView imageView1;
 
         public ViewHolder(View WishlistView, final WishlistClickListener listener){
             super(WishlistView);
 
-            tv1 = WishlistView.findViewById(R.id.tv_item_name);
-            tv2 = WishlistView.findViewById(R.id.tv_item_price);
-            tv3 = WishlistView.findViewById(R.id.tv_item_location);
-            tv4 = WishlistView.findViewById(R.id.tv_item_time);
+            tvName = WishlistView.findViewById(R.id.tv_item_name);
+            tvPrice = WishlistView.findViewById(R.id.tv_item_price);
+            tvLocation = WishlistView.findViewById(R.id.tv_item_location);
+            tvTime = WishlistView.findViewById(R.id.tv_item_time);
 
             imageView1 = WishlistView.findViewById(R.id.imageView_item);
 
@@ -88,17 +90,17 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                     int position = getAdapterPosition();
 
                     if(listener != null){
-                        listener.onItemClick(WishlistAdapter.ViewHolder.this, view, position);
+                        listener.onItemClick(ViewHolder.this, view, position);
                     }
                 }
             });
         }
 
         public void setItem(Wishlist wishlist){
-            tv1.setText(wishlist.getItem_name());
-            tv2.setText(String.valueOf(wishlist.getPrice()));
-            tv3.setText(wishlist.getLocation());
-            tv4.setText(wishlist.getTime());
+            tvName.setText(wishlist.getItem_name());
+            tvPrice.setText(String.valueOf(wishlist.getPrice()));
+            tvLocation.setText(wishlist.getLocation());
+            tvTime.setText(wishlist.getTime());
 
             imageView1.setImageResource(wishlist.getImageRes());
         }
