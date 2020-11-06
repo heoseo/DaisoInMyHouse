@@ -34,31 +34,22 @@ public class ItemInformationActivity extends AppCompatActivity {
     int imageIndex;
 
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
-    String productID;
+    String product_no;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iteminformation);
 
-        productID = getIntent().getExtras().get("productID").toString();
+        product_no = getIntent().getExtras().get("product_no").toString();
 
         // 찜(아이콘) 누르면 찜되기
-        imageIndex = 0;
-        ivNoWish = (ImageView) findViewById(R.id.imageview_nowish);
-        ivWish = (ImageView) findViewById(R.id.imageview_wish);
-        ivWish.setVisibility(View.INVISIBLE);
-        btn_wish = (FrameLayout) findViewById(R.id.fl_wish);
-        btn_wish.setOnClickListener(new View.OnClickListener() {
+        ivWish = (ImageView)findViewById(R.id.imageview_wish);
+        ivWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-
-                    changeImage();
-
-                } catch (Exception e) {
-                    Log.i("DBtest", ".....ERROR.....!");
-                }
+                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + product_no, Toast.LENGTH_LONG).show();
+                kakaolink();
             }
         });
 
@@ -67,8 +58,19 @@ public class ItemInformationActivity extends AppCompatActivity {
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + productID, Toast.LENGTH_LONG).show();
-                kakaolink();
+                try {
+                    SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                    StaticUserInformation.nickName=preferences.getString("nickName", null);
+                    StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
+                    String userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
+
+                    AddWishListActivity task = new AddWishListActivity();
+                    String result = task.execute(userID, product_no).get();
+
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Log.i("DBtest", ".....ERROR.....!");
+                }
             }
         });
 
@@ -111,34 +113,4 @@ public class ItemInformationActivity extends AppCompatActivity {
         });
     }
 
-    public void changeImage(){
-        if(imageIndex == 0){
-            ivNoWish.setVisibility(View.INVISIBLE);
-            ivWish.setVisibility(View.VISIBLE);
-
-            imageIndex = 1;
-            try {
-                SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
-                StaticUserInformation.nickName=preferences.getString("nickName", null);
-                StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
-
-                String userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
-
-                AddWishListActivity task = new AddWishListActivity();
-                String result = task.execute(userID, productID).get();
-
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
-
-            } catch (Exception e) {
-                Log.i("DBtest", ".....ERROR.....!");
-            }
-
-        }else if(imageIndex == 1){
-            ivNoWish.setVisibility(View.VISIBLE);
-            ivWish.setVisibility(View.INVISIBLE);
-
-            imageIndex = 0;
-        }
-    }
 }

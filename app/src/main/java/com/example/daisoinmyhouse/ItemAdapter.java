@@ -96,8 +96,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
         }
 
         public void setItem(Item item){
-            tv1.setText(item.getName());
-            tv2.setText(String.valueOf(item.getPrice()));
+            tv1.setText(item.getProduct_name());
+            tv2.setText(String.valueOf(item.getProduct_price()));
             tv3.setText(item.getLocation());
 
 //            // 현재시간을 msec 으로 구한다.
@@ -113,7 +113,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
 //
 //            tv4.setText(formatDate);
 
-            tv4.setText(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(item.getTime()));
+            tv4.setText(item.getTime());
 
 
             imageView1.setImageResource(item.getImageRes());

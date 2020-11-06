@@ -90,7 +90,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
 
             <ImageView
@@ -106,11 +108,13 @@
 
 
             <EditText
-                android:id="@+id/et_register"
+                android:id="@+id/et_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="상품명 등록" />
+                android:paddingBottom="20dp"
+                android:hint="상품명"
+                android:paddingLeft="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,30 +126,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:hint=" 카테고리 선택"
+                    android:text=" 카테고리"
                     android:textSize="18dp" />
 
                 <LinearLayout
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="20dp">
 
 
 
                     <TextView
-                        android:id="@+id/et_category"
+                        android:id="@+id/tv_product_cate"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="드롭다운 결과"/>
+                        android:text=""/>
 
                     <Spinner
-                        android:id="@+id/spinner"
+                        android:id="@+id/spinner_product_cate"
                         android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/product"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:entries="@array/product"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -160,33 +166,29 @@
                 android:background="#999999" />
 
             <EditText
-                android:id="@+id/et_price"
+                android:id="@+id/et_product_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="가격입력" />
+                android:hint="가격"
+                android:paddingLeft="10dp"
+                android:paddingBottom="20dp"/>
 
             <TextView
                 android:id="@+id/tv_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint=" 위치설정"
-                android:textSize="18dp"
+                android:text=" 위치설정"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 tools:ignore="DuplicateIds" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:background="#999999" />
-
-            <EditText
-                android:id="@+id/et_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="태그입력" />
-
 
 
             <ScrollView
@@ -199,13 +201,15 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/et_explain"
+                        android:id="@+id/et_content"
                         android:layout_width="match_parent"
-                        android:layout_height="210dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:gravity="center"
                         android:hint="게시글 내용을 작성해주세요"
-                        android:textSize="18dp" />
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="20dp" />
+
+
 
                 </LinearLayout>
             </ScrollView>

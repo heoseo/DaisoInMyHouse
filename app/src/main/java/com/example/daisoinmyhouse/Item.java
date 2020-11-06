@@ -3,34 +3,46 @@ package com.example.daisoinmyhouse;
 import java.sql.Date;
 
 public class Item {
-    String name;
+    String product_name;
+    String user_id;
     String location;
-    Date time;
-    int price;
+    String time;
+    int product_price;
     int imageRes;
     //1028코드추가
-    int num;
+    int product_no;
+    String product_content;
 
     public Item(){
 
     }
 
-    public Item(String name, String location, Date time, int price, int imageRes, int num){
-        this.name = name;
+    public Item(String user_id, String product_content, String location, int product_price, String time, int product_no,  String product_name, int imageRes){
+        this.product_name = product_name;
+        this.user_id = user_id;
         this.location = location;
         this.time = time;
-        this.price = price;
+        this.product_price = product_price;
         this.imageRes = imageRes;
         //1028 코드추가
-        this.num = num;
+        this.product_no = product_no;
+        this.product_content = product_content;
     }
 
-    public String getName() {
-        return name;
+    public String getProduct_name() {
+        return product_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public String getUser_id(){
+        return user_id;
+    }
+
+    public void setUser_id(String user_id){
+        this.user_id = user_id;
     }
 
     public String getLocation() {
@@ -41,20 +53,20 @@ public class Item {
         this.location = location;
     }
 
-    public Date getTime(){
+    public String getTime(){
         return time;
     }
 
-    public void setTime(Date time){
+    public void setTime(String time){
         this.time = time;
     }
 
-    public int getPrice() {
-        return price;
+    public int getProduct_price() {
+        return product_price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setProduct_price(int product_price) {
+        this.product_price = product_price;
     }
 
     public int getImageRes() {
@@ -66,11 +78,19 @@ public class Item {
     }
 
     // 1028코드추가
-    public int getNum() {
-        return num;
+    public int getProduct_no() {
+        return product_no;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setProduct_no(int product_no) {
+        this.product_no = product_no;
+    }
+
+    public String getProduct_content(){
+        return product_content;
+    }
+
+    public void setProduct_content(String product_content){
+        this.product_content = product_content;
     }
 }

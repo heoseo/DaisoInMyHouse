@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,20 +39,20 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 public class WriteNewItemFragment extends Fragment {
 
-    EditText product_Resister,pricce,conttent,taag;
-    TextView cattegory;
-    Button writeBtn;
-    TextView btnSetLocation;
+    EditText product_name_et, product_price_et, product_content_et;
+    Button writeProductBtn;
+    TextView btnSetLocation, cate_tv;
     TextView btn_back;
     ImageView btn_photo;
     MainActivity activity;
-    Spinner spinner;
-
+    Spinner spinner_cate;
     LinearLayout btn_otherwrite;
 
+    private static final int SEARCH_LOCATION_ACTIVITY = 1000;
     private final int REQ_CODE_LOCAION = 50;
     private final int REQ_CODE_SELECT_IMAGE = 100;
     private String img_path = new String();
@@ -69,27 +70,24 @@ public class WriteNewItemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         activity = (MainActivity) getActivity();
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_rent_item, container, false);
 
+        product_name_et =rootView.findViewById(R.id.et_product_name);
+        product_price_et = rootView.findViewById(R.id.et_product_price);
+        product_content_et = rootView.findViewById(R.id.et_content);
+        cate_tv = rootView.findViewById(R.id.tv_product_cate);
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_rent_item, container, false);
-
-        product_Resister =rootView.findViewById(R.id.et_register);
-        cattegory = rootView.findViewById(R.id.et_category);
-        pricce = rootView.findViewById(R.id.et_price);
-        taag=rootView.findViewById(R.id.et_tag);
-        conttent = rootView.findViewById(R.id.et_explain);
-
-        spinner = rootView.findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_cate = rootView.findViewById(R.id.spinner_product_cate);
+        /*spinner_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cattegory.setText(parent.getItemAtPosition(position).toString());
-                cattegory.setVisibility(View.INVISIBLE);
+                cate_tv.setText(parent.getItemAtPosition(position).toString());
+                cate_tv.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });
+        });*/
 
 
 
@@ -152,7 +150,8 @@ public class WriteNewItemFragment extends Fragment {
         btnSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getContext(), SettingMyAreaActivity.class) ,REQ_CODE_LOCAION);
+                Intent intent = new Intent(getContext(), FindLocationActivity.class);
+                startActivityForResult(intent, SEARCH_LOCATION_ACTIVITY);
 
             }
         });
@@ -160,34 +159,36 @@ public class WriteNewItemFragment extends Fragment {
 
 
         //글쓰기 등록시 db연결
-        writeBtn = rootView.findViewById(R.id.btn_register);
-        writeBtn.setOnClickListener(new View.OnClickListener() {
+        writeProductBtn = rootView.findViewById(R.id.btn_register);
+        writeProductBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
-                    String name = product_Resister.getText().toString();
-                    String category = cattegory.getText().toString();
-                    String price = pricce.getText().toString();
-                    String tag = taag.getText().toString();
-                    String content = conttent.getText().toString();
-                    Write_RegisterActivity task =new Write_RegisterActivity();
+                    SharedPreferences preferences = getContext().getSharedPreferences("account", MODE_PRIVATE);
+                    StaticUserInformation.userID = preferences.getString("userID", null);
 
-                    String result = task.execute(name, category, price, content).get();
-                    // 빈칸이 있는지 검사사
-                    if(name.getBytes().length <=0 || category.getBytes().length <=0 || price.getBytes().length <=0 || tag.getBytes().length <=0 || content.getBytes().length <=0 ){
-                        Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
+                    String user_id = StaticUserInformation.userID;
+
+                    String product_cate = spinner_cate.getSelectedItem().toString();
+                    String product_name = product_name_et.getText().toString();
+                    String product_price = product_price_et.getText().toString();
+                    String product_content = product_content_et.getText().toString();
+                    String location = btnSetLocation.getText().toString();
+
+                    Log.i("location", location);
+
+                    Write_RegisterActivity write = new Write_RegisterActivity();
+
+                    if(product_name.getBytes().length <= 0 || product_content.getBytes().length <= 0 || product_price.getBytes().length <=  0){
+                        Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                     }else{
+                        String result = write.execute(user_id, product_cate, product_name, product_price, product_content, location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                        activity.finish();
                     }
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
             }
         });
-
-
-
-
 
         return rootView;
     }
@@ -230,6 +231,16 @@ public class WriteNewItemFragment extends Fragment {
 
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+
+        if(requestCode == SEARCH_LOCATION_ACTIVITY) {
+            if (resultCode == RESULT_OK){
+                String data = intent.getStringExtra("location");
+
+                if(data != null){
+                    btnSetLocation.setText(data);
+                }
             }
         }
 

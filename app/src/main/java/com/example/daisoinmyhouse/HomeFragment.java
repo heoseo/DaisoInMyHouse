@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //prepareData();
 
-        ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/recyclerviewList.jsp", null);
+        ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/productList.jsp", null);
         networkTask.execute();
 
         adapter.setOnItemClickListener(new OnProductItemClickListener() {
@@ -85,8 +85,10 @@ public class HomeFragment extends Fragment {
 
                 // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
                 Intent intent = new Intent(getContext(), ItemInformationActivity.class);
-                Toast.makeText(getContext(), "선택된 제품ID : " + item.getNum(), Toast.LENGTH_LONG).show();
-                intent.putExtra("productID", item.getNum());
+                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
+                intent.putExtra("product_no", item.getProduct_no());
+                intent.putExtra("user_id", item.getUser_id());
                 getContext().startActivity(intent);
             }
         });
@@ -183,8 +185,9 @@ public class HomeFragment extends Fragment {
 
                             long now = System.currentTimeMillis();
                             Date date = new Date(now);
-                            adapter.addItem(new Item(json.getString("name"), "두정동",
-                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+
+                            adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
+                                    json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
