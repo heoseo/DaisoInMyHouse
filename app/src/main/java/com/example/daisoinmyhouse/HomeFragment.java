@@ -64,6 +64,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        
+
 
         //카테고리별 품목 띄우기
         btn_clothes = (ImageButton) v.findViewById(R.id.img_btn_clothes);

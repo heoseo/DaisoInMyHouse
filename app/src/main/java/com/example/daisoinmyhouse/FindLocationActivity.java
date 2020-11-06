@@ -111,7 +111,6 @@ public class FindLocationActivity extends AppCompatActivity
                 Intent intent = new Intent();
                 String data = location_tv.getText().toString();
                 intent.putExtra("location", data);
-                Log.i("텍스트뷰 : ", data);
                 setResult(RESULT_OK, intent);
                 finish();
             }

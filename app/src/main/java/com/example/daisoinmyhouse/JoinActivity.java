@@ -117,14 +117,22 @@ public class JoinActivity extends AppCompatActivity {
                     //패스워드 일치 검사
                     if(pwet.getText().toString().equals(pwet_confirm.getText().toString())){
                         // 빈칸이 있는지 검사
-                        pwll.setVisibility(View.INVISIBLE);
+                        pwll.setVisibility(View.GONE);
                         if(user_name.getBytes().length <=0 || user_id.getBytes().length <=0 || user_password.getBytes().length <=0
                                 || email.getBytes().length <=0 || phone.getBytes().length <=0 || address.getBytes().length <=0){
-                            Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                         }else{
-                            String result = task.execute(user_name, nickname, user_id, user_password, email, phone, address, birth, "군포시 당동").get();
-                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                            finish();
+                            String result = task.execute(user_name, nickname, user_id, user_password, email, phone, address, birth, location).get();
+                            if(result.equals("0")){
+                                Toast.makeText(getApplicationContext(), "이미 존재하는 닉네임입니다", Toast.LENGTH_LONG).show();
+                                nicknameet.requestFocus();
+                            }else if(result.equals("1")){
+                                Toast.makeText(getApplicationContext(), "이미 존재하는 아이디입니다", Toast.LENGTH_LONG).show();
+                                idet.requestFocus();
+                            }else{
+                                Toast.makeText(getApplicationContext(), user_name + "님 회원가입이 완료되었습니다", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
                         }
                     }else{
                         pwll.setVisibility(View.VISIBLE);
