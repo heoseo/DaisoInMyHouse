@@ -208,7 +208,69 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /*//CategoryList categorylist = new CategoryList();
+    //categorylist.execute(카테고리버튼 스트링타입);
+    //ex)의류, 생활용품, 주방용품, 디지털, 도서, 기타
+    public class CategoryList extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
+                URL url = new URL("http://daisoinmyhouse.cafe24.com/categoryList.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                // 전송할 데이터. GET 방식으로 작성
+                sendMsg = "product_cate=" + strings[0];
+                osw.write(sendMsg);
+                osw.flush();
+                //jsp와 통신 성공 시 수행
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    String page = "";
+                    // jsp에서 보낸 값을 받는 부분
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                        page += str;
+                    }
+                    // JSP에서 보낸 JSON 받아오자  JSONObject = siteDataMain
+                    JSONObject json = new JSONObject(page);
+                    JSONArray jArr = json.getJSONArray("CATEGORY_LIST");
+                    // JSON이 가진 크기만큼 데이터를 받아옴
+                    for (int i = 0; i < jArr.length(); i++) {
+                        json = jArr.getJSONObject(i);
+                        long now = System.currentTimeMillis();
+                        Date date = new Date(now);
 
+                        //카테고리 adapter따로 만들거나 해야될듯?
+                        adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
+                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
+//                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
+//                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+//                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
+
+                        receiveMsg = buffer.toString();
+                        Log.i("테스트", receiveMsg);
+                    }
+                } else{
+                    //통신실패
+                }
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return receiveMsg;
+        }
+    }
+     */
 
 }
