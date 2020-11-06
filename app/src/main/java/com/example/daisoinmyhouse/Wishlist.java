@@ -2,32 +2,46 @@ package com.example.daisoinmyhouse;
 
 public class Wishlist {
 
-    String item_name;
+    String product_name;
+    String user_id;
     String location;
     String time;
-    int price;
+    int product_price;
     int imageRes;
-    int productID;
+    //1028코드추가
+    int product_no;
+    String product_content;
 
     public Wishlist(){
 
     }
 
-    public Wishlist(String item_name, String location, String time, int price, int imageRes, int productID) {
-        this.item_name = item_name;
+    public Wishlist(String user_id, String product_content, String location, int product_price, String time, int product_no,  String product_name, int imageRes){
+        this.product_name = product_name;
+        this.user_id = user_id;
         this.location = location;
         this.time = time;
-        this.price = price;
+        this.product_price = product_price;
         this.imageRes = imageRes;
-        this.productID = productID;
+        //1028 코드추가
+        this.product_no = product_no;
+        this.product_content = product_content;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getProduct_name() {
+        return product_name;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public String getUser_id(){
+        return user_id;
+    }
+
+    public void setUser_id(String user_id){
+        this.user_id = user_id;
     }
 
     public String getLocation() {
@@ -38,20 +52,20 @@ public class Wishlist {
         this.location = location;
     }
 
-    public String getTime() {
+    public String getTime(){
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(String time){
         this.time = time;
     }
 
-    public int getPrice() {
-        return price;
+    public int getProduct_price() {
+        return product_price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setProduct_price(int product_price) {
+        this.product_price = product_price;
     }
 
     public int getImageRes() {
@@ -62,11 +76,20 @@ public class Wishlist {
         this.imageRes = imageRes;
     }
 
-    public int getProductID(){
-        return productID;
+    // 1028코드추가
+    public int getProduct_no() {
+        return product_no;
     }
 
-    public void setProductID(int productID){
-        this.productID = productID;
+    public void setProduct_no(int product_no) {
+        this.product_no = product_no;
+    }
+
+    public String getProduct_content(){
+        return product_content;
+    }
+
+    public void setProduct_content(String product_content){
+        this.product_content = product_content;
     }
 }

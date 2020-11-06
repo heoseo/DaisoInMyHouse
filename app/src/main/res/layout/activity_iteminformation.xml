@@ -129,7 +129,7 @@
                     android:layout_gravity="center_vertical"/>
 
                 <Button
-                    android:id="@+id/chat_Btn"
+                    android:id="@+id/btn_chat"
                     android:layout_width="117dp"
                     android:layout_height="57dp"
                     android:layout_marginLeft="130dp"

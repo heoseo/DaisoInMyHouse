@@ -1,13 +1,16 @@
 package com.example.daisoinmyhouse;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +27,7 @@ import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ItemInformationActivity extends AppCompatActivity {
@@ -35,6 +39,7 @@ public class ItemInformationActivity extends AppCompatActivity {
 
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     String product_no;
+    String yourName;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class ItemInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_iteminformation);
 
         product_no = getIntent().getExtras().get("product_no").toString();
+        yourName = getIntent().getExtras().get("your_name").toString();
 
         // 찜(아이콘) 누르면 찜되기
         ivWish = (ImageView)findViewById(R.id.imageview_wish);
@@ -73,6 +79,34 @@ public class ItemInformationActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button btnChatting = (Button)findViewById(R.id.btn_chat);
+        btnChatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                String getNewRoomName;
+                SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
+                StaticUserInformation.nickName=preferences.getString("nickName", null);
+
+                if(StaticUserInformation.roomSet.contains(StaticUserInformation.nickName +">"+ yourName))
+                    getNewRoomName = StaticUserInformation.nickName +">"+ yourName;
+                else if(StaticUserInformation.roomSet.contains(yourName +">"+StaticUserInformation.nickName))
+                    getNewRoomName = yourName +">"+StaticUserInformation.nickName;
+                else{       // 저장된 채팅이름없음.
+
+                }
+
+
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+//                System.out.println("@@@@@@@@@@@@@@@"+ getNewRoomName);
+                intent.putExtra("your_name", ((TextView) view).getText().toString());
+//                intent.putExtra("room_name", getNewRoomName);
+                startActivity(intent);
+            }
+        });
+
 
 
 
