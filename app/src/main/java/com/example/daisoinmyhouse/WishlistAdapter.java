@@ -95,8 +95,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         }
 
         public void setItem(Wishlist wishlist){
-            tv1.setText(wishlist.getItem_name());
-            tv2.setText(String.valueOf(wishlist.getPrice()));
+            tv1.setText(wishlist.getProduct_name());
+            tv2.setText(String.valueOf(wishlist.getProduct_price()));
             tv3.setText(wishlist.getLocation());
             tv4.setText(wishlist.getTime());
 

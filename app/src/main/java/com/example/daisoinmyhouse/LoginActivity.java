@@ -46,9 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = (Button)findViewById(R.id.activity_login_login_btn);
 
-//        session = Session.getCurrentSession();
-//        session.addCallback(sessionCallback);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

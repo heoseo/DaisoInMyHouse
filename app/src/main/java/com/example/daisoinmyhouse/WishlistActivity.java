@@ -46,20 +46,20 @@ public class WishlistActivity extends AppCompatActivity {
 
         String user_id = StaticUserInformation.userID;
 
-        WishlistList wishlist = new WishlistList();
-        wishlist.execute(user_id);
+        WishlistList task = new WishlistList();
+        task.execute(user_id);
 
         recyclerView.setAdapter(adapter);
 
         adapter.setOnWishlistClickListener(new WishlistClickListener() {
             @Override
             public void onItemClick(WishlistAdapter.ViewHolder holder, View view, int position) {
-                Wishlist item = (Wishlist) adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getItem_name(), Toast.LENGTH_LONG).show();
+                Wishlist wishlist = (Wishlist) adapter.getItem(position);
+                Toast.makeText(getApplicationContext(), "선택된 제품 : " + wishlist.getProduct_name(), Toast.LENGTH_LONG).show();
 
                 //(ItemInformationActivity에 상품 ID 전달)
                 Intent intent = new Intent(getApplicationContext(), ItemInformationActivity.class);
-                intent.putExtra("productID", item.getProductID());
+                intent.putExtra("product_no", wishlist.getProduct_no());
                 startActivity(intent);
             }
         });
@@ -110,10 +110,8 @@ public class WishlistActivity extends AppCompatActivity {
                     for (int i = 0; i < jArr.length(); i++) {
                         json = jArr.getJSONObject(i);
 
-                        long now = System.currentTimeMillis();
-                        Date date = new Date(now);
-                        adapter.addItem(new Wishlist(json.getString("name"), "두정동",
-                                "3시간", json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+                        adapter.addItem(new Wishlist(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
+                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));

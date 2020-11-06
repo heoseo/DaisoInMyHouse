@@ -153,7 +153,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
                 Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
                 intent.putExtra("product_no", item.getProduct_no());
-                intent.putExtra("user_id", item.getUser_id());
+                intent.putExtra("your_name", item.getUser_id());  // nickname으로 바꾸기!!!!!!!!
                 getContext().startActivity(intent);
             }
         });
