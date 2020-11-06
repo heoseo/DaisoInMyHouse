@@ -6,19 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
+public abstract class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 
     Context context;
-    ArrayList<String> unFilteredlist;
-    ArrayList<String> filteredList;
+    ArrayList<Item> unFilteredlist;
+    ArrayList<Item> filteredList;
+    OnProductItemClickListener listener;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> list) {
+    public RecyclerViewAdapter(Context context, ArrayList<Item> list) {
         super();
         this.context = context;
         this.unFilteredlist = list;
@@ -31,13 +33,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_row, parent, false);
-        return new MyViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.from(context).inflate(R.layout.fragment_home_item, parent, false);
+        return new MyViewHolder(view, this);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.textView.setText(filteredList.get(position));
+        Item item = filteredList.get(position);
+        holder.setItem(item);
+        //holder.textView.setText(filteredList.get(position));
     }
 
     @Override
@@ -45,13 +50,50 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return filteredList.size();
     }
 
+    public void addItem(Item item) { filteredList.add(item);}
+    public void setItems(ArrayList<Item> filteredList){ this.filteredList = filteredList;}
+
+    public void setOnItemClickListener(OnProductItemClickListener listener){
+        this.listener = listener;
+    }
+    public Item getItem(int position){
+        return filteredList.get(position);
+    }
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        TextView tv1;
+        TextView tv2;
+        TextView tv3;
+        TextView tv4;
 
-        public MyViewHolder(View itemView) {
+        ImageView imageView1;
+
+        public MyViewHolder(View itemView, RecyclerViewAdapter recyclerViewAdapter) {
             super(itemView);
-            textView = (TextView)itemView.findViewById(R.id.textview);
+
+            tv1 = itemView.findViewById(R.id.tv_item_name);
+            tv2 = itemView.findViewById(R.id.tv_item_price);
+            tv3 = itemView.findViewById(R.id.tv_item_location);
+            tv4 = itemView.findViewById(R.id.tv_item_time);
+
+            imageView1 = itemView.findViewById(R.id.imageView_item);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if(listener != null){
+                        listener.onItemClick(MyViewHolder.this, view, position);
+                    }
+                }
+            });
+        }
+
+        public void setItem(Item item) {
         }
     }
 
@@ -64,11 +106,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if(charString.isEmpty()) {
                     filteredList = unFilteredlist;
                 } else {
-                    ArrayList<String> filteringList = new ArrayList<>();
-                    for(String name : unFilteredlist) {
-                        if(name.toLowerCase().contains(charString.toLowerCase())) {
-                            filteringList.add(name);
-                        }
+                    ArrayList<Item> filteringList = new ArrayList<>();
+                    for(Item name : unFilteredlist) {
+                        //if(name.toLowerCase().contains(charString.toLowerCase())) {
+                        //    filteringList.add(name);
+                        //}
                     }
                     filteredList = filteringList;
                 }
@@ -79,7 +121,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (ArrayList<String>)results.values;
+                filteredList = (ArrayList<Item>)results.values;
                 notifyDataSetChanged();
             }
         };
