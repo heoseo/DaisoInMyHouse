@@ -65,6 +65,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WishlistActivity"/>
+        <activity android:name=".CategoryItemActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

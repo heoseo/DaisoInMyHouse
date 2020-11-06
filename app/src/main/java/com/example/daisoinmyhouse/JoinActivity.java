@@ -155,7 +155,7 @@ public class JoinActivity extends AppCompatActivity {
                 }
                 break;
             case SEARCH_LOCATION_ACTIVITY:
-                if (requestCode == RESULT_OK){
+                if (resultCode == RESULT_OK){
                     String data = intent.getStringExtra("location");
 
                     if(data != null){

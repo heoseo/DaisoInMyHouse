@@ -38,6 +38,7 @@ public class HomeFragment extends Fragment {
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
     ImageButton btn_wishlist;
+    ImageButton btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;
 
     @Nullable
     @Override
@@ -63,6 +64,68 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        //카테고리별 품목 띄우기
+        btn_clothes = (ImageButton) v.findViewById(R.id.img_btn_clothes);
+        btn_clean = (ImageButton) v.findViewById(R.id.img_btn_clean);
+        btn_kitchen = (ImageButton) v.findViewById(R.id.img_btn_kitchen);
+        btn_digital = (ImageButton) v.findViewById(R.id.img_btn_digital);
+        btn_book = (ImageButton) v.findViewById(R.id.img_btn_book);
+        btn_etc = (ImageButton) v.findViewById(R.id.img_btn_etc);
+
+        btn_clothes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
+                intent.putExtra("categoryNum", 1);
+                getContext().startActivity(intent);
+            }
+        });
+
+        btn_clean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
+                intent.putExtra("categoryNum", 2);
+                getContext().startActivity(intent);
+            }
+        });
+
+        btn_kitchen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
+                intent.putExtra("categoryNum", 3);
+                getContext().startActivity(intent);
+            }
+        });
+
+        btn_digital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
+                intent.putExtra("categoryNum", 4);
+                getContext().startActivity(intent);
+            }
+        });
+
+        btn_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
+                intent.putExtra("categoryNum", 5);
+                getContext().startActivity(intent);
+            }
+        });
+
+        btn_etc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
+                intent.putExtra("categoryNum", 6);
+                getContext().startActivity(intent);
+            }
+        });
 
 
 
