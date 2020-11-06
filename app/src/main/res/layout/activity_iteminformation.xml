@@ -64,15 +64,29 @@
                     android:paddingRight="20dp"
                     android:src="@drawable/btn" />
 
-                <ImageView
-                    android:id="@+id/imageview_wish"
+                <FrameLayout
+                    android:id="@+id/fl_wish"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="65dp"
                     android:paddingTop="10dp"
-                    android:paddingRight="20dp"
-                    android:src="@drawable/heart" />
+                    android:paddingRight="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageview_nowish"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="false"
+                        android:src="@drawable/heart" />
+
+                    <ImageView
+                        android:id="@+id/imageview_wish"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="false"
+                        app:srcCompat="@drawable/like" />
+                </FrameLayout>
 
             </RelativeLayout>
 

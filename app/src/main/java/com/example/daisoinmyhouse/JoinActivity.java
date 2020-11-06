@@ -142,7 +142,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case SEARCH_ADDRESS_ACTIVITY:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK){
                     String data = intent.getExtras().getString("data");
 
                     String zipcode = data.substring(0, 5);
