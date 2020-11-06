@@ -150,10 +150,13 @@ public class HomeFragment extends Fragment {
 
                 // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
                 Intent intent = new Intent(getContext(), ItemInformationActivity.class);
-                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
                 intent.putExtra("product_no", item.getProduct_no());
-                intent.putExtra("your_name", item.getUser_id());  // nickname으로 바꾸기!!!!!!!!
+                intent.putExtra("user_id", item.getUser_id());
+                intent.putExtra("product_name", item.getProduct_name());
+                intent.putExtra("product_price", item.getProduct_price());
+                intent.putExtra("product_content", item.getProduct_content());
                 getContext().startActivity(intent);
             }
         });

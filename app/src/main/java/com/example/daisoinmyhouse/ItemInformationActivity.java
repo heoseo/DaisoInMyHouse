@@ -33,17 +33,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import org.w3c.dom.Text;
 
 public class ItemInformationActivity extends AppCompatActivity {
 
     ImageView ivShare, ivNoWish, ivWish;
     FrameLayout btn_wish;
+    TextView tvProduct_name, tvProduct_price, tvProduct_content, tvNickname;
 
-    int imageIndex;
+    String product_no, nickname;
 
-    // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
-    String product_no;
     String yourName;
+    // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,30 @@ public class ItemInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_iteminformation);
 
         product_no = getIntent().getExtras().get("product_no").toString();
-        yourName = getIntent().getExtras().get("your_name").toString();
+        String product_name = getIntent().getExtras().get("product_name").toString();
+        String product_price = getIntent().getExtras().get("product_name").toString();
+        String product_content = getIntent().getExtras().get("product_content").toString();
+        String user_id = getIntent().getExtras().get("user_id").toString();
+
+        tvProduct_name = (TextView)findViewById(R.id.tv_item_name);
+        tvProduct_price = (TextView)findViewById(R.id.tv_item_price);
+        tvProduct_content = (TextView)findViewById(R.id.tv_item_detail);
+        tvNickname = (TextView)findViewById(R.id.tv_nickname);
+
+        GetNickname getNickname = new GetNickname();
+        try {
+            nickname = getNickname.execute(user_id).get();
+            Log.i("닉네임", nickname);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        tvProduct_name.setText(product_name);
+        tvProduct_price.setText(product_price);
+        tvProduct_content.setText(product_content);
+        tvNickname.setText(nickname);
 
         // 찜(아이콘) 누르면 찜되기 & 찜해제
         ivWish = (ImageView)findViewById(R.id.imageview_wish);
