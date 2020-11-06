@@ -7,13 +7,13 @@ public class Wishlist {
     String time;
     int price;
     int imageRes;
-    String productID;
+    int productID;
 
     public Wishlist(){
 
     }
 
-    public Wishlist(String item_name, String location, String time, int price, int imageRes, String productID) {
+    public Wishlist(String item_name, String location, String time, int price, int imageRes, int productID) {
         this.item_name = item_name;
         this.location = location;
         this.time = time;
@@ -62,11 +62,11 @@ public class Wishlist {
         this.imageRes = imageRes;
     }
 
-    public String getProductID(){
+    public int getProductID(){
         return productID;
     }
 
-    public void setProductID(String productID){
+    public void setProductID(int productID){
         this.productID = productID;
     }
 }
