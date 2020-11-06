@@ -3,6 +3,9 @@ package com.example.daisoinmyhouse;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -29,6 +32,7 @@ import com.kakao.util.helper.log.Logger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class ItemInformationActivity extends AppCompatActivity {
 
@@ -49,34 +53,59 @@ public class ItemInformationActivity extends AppCompatActivity {
         product_no = getIntent().getExtras().get("product_no").toString();
         yourName = getIntent().getExtras().get("your_name").toString();
 
-        // 찜(아이콘) 누르면 찜되기
+        // 찜(아이콘) 누르면 찜되기 & 찜해제
         ivWish = (ImageView)findViewById(R.id.imageview_wish);
         ivWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + product_no, Toast.LENGTH_LONG).show();
-                kakaolink();
+
+                String userID = "";
+                SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                StaticUserInformation.userID=preferences.getString("userID", null);
+                userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
+
+                Drawable tempImg = ivWish.getDrawable();
+                Drawable tempRes = ItemInformationActivity.this.getResources().getDrawable(R.drawable.unlike);
+                Bitmap tmpBitmap = ((BitmapDrawable)tempImg).getBitmap();
+                Bitmap tmpBitmapRes = ((BitmapDrawable)tempRes).getBitmap();
+
+                // unlike면 like로 바꿈.
+                if(tmpBitmap.equals(tmpBitmapRes)) {
+                    ivWish.setImageResource(R.drawable.like);
+                    Toast.makeText(getApplicationContext(), "찜!!", Toast.LENGTH_LONG).show();
+                    //로직 수행
+                    AddWishListActivity task = new AddWishListActivity();
+                    String result = null;     // 찜등록 execute?
+                    try {
+                        result = task.execute(userID, product_no).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                }
+                // like면 unlike로 바꿈.
+                else{
+                    ivWish.setImageResource(R.drawable.unlike);
+                    Toast.makeText(getApplicationContext(), "찜해제.. ", Toast.LENGTH_LONG).show();
+                    //로직 수행
+                    RemoveWishListActivity task = new RemoveWishListActivity();
+                }
+
+
             }
         });
+
 
         // 공유하기 이미지뷰(아이콘) 누르면 카톡공유.
         ivShare = (ImageView)findViewById(R.id.imageview_share);
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
-                    StaticUserInformation.nickName=preferences.getString("nickName", null);
-                    StaticUserInformation.porfileUrl=preferences.getString("profileUrl", null);
-                    String userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
-
-                    AddWishListActivity task = new AddWishListActivity();
-                    String result = task.execute(userID, product_no).get();
-
-                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Log.i("DBtest", ".....ERROR.....!");
-                }
+                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + product_no, Toast.LENGTH_LONG).show();
+                kakaolink();
             }
         });
 

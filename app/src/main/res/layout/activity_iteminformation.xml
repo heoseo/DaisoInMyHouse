@@ -54,39 +54,22 @@
 
                 </LinearLayout>
 
+
                 <ImageView
                     android:id="@+id/imageview_share"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="14dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp"
+                    android:layout_marginRight="13dp"
                     android:src="@drawable/btn" />
 
-                <FrameLayout
-                    android:id="@+id/fl_wish"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                <ImageView
+                    android:id="@+id/imageview_wish"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="65dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp">
-
-                    <ImageView
-                        android:id="@+id/imageview_nowish"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="false"
-                        android:src="@drawable/heart" />
-
-                    <ImageView
-                        android:id="@+id/imageview_wish"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="false"
-                        app:srcCompat="@drawable/like" />
-                </FrameLayout>
+                    android:layout_marginRight="70dp"
+                    app:srcCompat="@drawable/unlike" />
 
             </RelativeLayout>
 
@@ -113,27 +96,35 @@
                 android:orientation="horizontal"
                 android:padding="10dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageview_profile"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:src="@drawable/pf" />
-
-                <TextView
-                    android:id="@+id/tv_nickname"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="판매자"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center_vertical"/>
+                    android:orientation="horizontal">
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageview_profile"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:src="@drawable/pf" />
+
+                    <TextView
+                        android:id="@+id/tv_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="판매자"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"/>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_chat"
-                    android:layout_width="117dp"
+                    android:layout_width="100dp"
                     android:layout_height="57dp"
-                    android:layout_marginLeft="130dp"
-                    android:textSize="20dp"
+                    android:layout_marginRight="10dp"
+                    android:textSize="15dp"
                     android:background="@drawable/round"
                     android:text="채팅하기" />
 

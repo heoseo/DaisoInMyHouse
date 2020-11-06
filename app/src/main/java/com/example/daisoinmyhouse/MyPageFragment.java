@@ -74,7 +74,6 @@ public class MyPageFragment extends Fragment {
 
 
 
-
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
         ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
         btnPopUp.setOnClickListener(new View.OnClickListener() {
