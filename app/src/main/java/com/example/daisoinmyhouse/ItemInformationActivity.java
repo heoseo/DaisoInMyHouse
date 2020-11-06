@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -40,7 +39,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import org.w3c.dom.Text;
 
 public class ItemInformationActivity extends AppCompatActivity {
 
@@ -48,7 +46,8 @@ public class ItemInformationActivity extends AppCompatActivity {
     FrameLayout btn_wish;
     TextView tvProduct_name, tvProduct_price, tvProduct_content, tvNickname;
 
-    String product_no, nickname;
+    String product_no, nickname, user_id, product_name;
+    String userID = "";
     String yourName;
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     @SuppressLint("ClickableViewAccessibility")
@@ -58,10 +57,10 @@ public class ItemInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_iteminformation);
 
         product_no = getIntent().getExtras().get("product_no").toString();
-        String product_name = getIntent().getExtras().get("product_name").toString();
+        product_name = getIntent().getExtras().get("product_name").toString();
         String product_price = getIntent().getExtras().get("product_name").toString();
         String product_content = getIntent().getExtras().get("product_content").toString();
-        String user_id = getIntent().getExtras().get("user_id").toString();
+        user_id = getIntent().getExtras().get("user_id").toString();
 
         tvProduct_name = (TextView)findViewById(R.id.tv_item_name);
         tvProduct_price = (TextView)findViewById(R.id.tv_item_price);
@@ -71,7 +70,6 @@ public class ItemInformationActivity extends AppCompatActivity {
         GetNickname getNickname = new GetNickname();
         try {
             nickname = getNickname.execute(user_id).get();
-            Log.i("닉네임", nickname);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -83,16 +81,31 @@ public class ItemInformationActivity extends AppCompatActivity {
         tvProduct_content.setText(product_content);
         tvNickname.setText(nickname);
 
-        // 찜(아이콘) 누르면 찜되기 & 찜해제
+
+        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.userID=preferences.getString("userID", null);
+        userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
+
         ivWish = (ImageView)findViewById(R.id.imageview_wish);
+
+        WishListFlag flag = new WishListFlag();
+        try {
+            String flag_result = flag.execute(userID, product_no).get();
+            if(flag_result.equals("0")) { //이미 위시리스트에 있음
+                ivWish.setImageResource(R.drawable.like);
+            }else{
+                ivWish.setImageResource(R.drawable.unlike);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // 찜(아이콘) 누르면 찜되기 & 찜해제
         ivWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String userID = "";
-                SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
-                StaticUserInformation.userID=preferences.getString("userID", null);
-                userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
 
                 Drawable tempImg = ivWish.getDrawable();
                 Drawable tempRes = ItemInformationActivity.this.getResources().getDrawable(R.drawable.unlike);
@@ -102,26 +115,31 @@ public class ItemInformationActivity extends AppCompatActivity {
                 // unlike면 like로 바꿈.
                 if(tmpBitmap.equals(tmpBitmapRes)) {
                     ivWish.setImageResource(R.drawable.like);
-                    Toast.makeText(getApplicationContext(), "찜!!", Toast.LENGTH_LONG).show();
                     //로직 수행
-                    AddWishListActivity task = new AddWishListActivity();
-                    String result = null;     // 찜등록 execute?
+                    WishListAddActivity task = new WishListAddActivity();
                     try {
-                        result = task.execute(userID, product_no).get();
+                        String result = task.execute(userID, product_no).get();
+                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                 }
                 // like면 unlike로 바꿈.
                 else{
                     ivWish.setImageResource(R.drawable.unlike);
-                    Toast.makeText(getApplicationContext(), "찜해제.. ", Toast.LENGTH_LONG).show();
                     //로직 수행
-                    RemoveWishListActivity task = new RemoveWishListActivity();
+                    WishListRemoveActivity task = new WishListRemoveActivity();
+                    try {
+                        String result = task.execute(userID, product_no).get();
+                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -139,6 +157,8 @@ public class ItemInformationActivity extends AppCompatActivity {
             }
         });
 
+
+        // 채팅하기 버튼
         Button btnChatting = (Button)findViewById(R.id.btn_chat);
         btnChatting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +205,7 @@ public class ItemInformationActivity extends AppCompatActivity {
                                 else if(StaticUserInformation.nickName.equals(lastName))
                                     findRoomName = nickname +">"+StaticUserInformation.nickName;
                                 else{       // 저장된 채팅이름없음.=> 디비에 저장
-                                    Log.d("테스트", "저장된채팅방이 없으므로 디비 저장");
+                                    Log.i("테스트", "저장된채팅방이 없으므로 디비 저장");
                                     Map<String, Object> map = new HashMap<String, Object>();
                                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
 
@@ -223,14 +243,11 @@ public class ItemInformationActivity extends AppCompatActivity {
     // 카카오톡 공유
     public void kakaolink() {
         FeedTemplate params = FeedTemplate
-                .newBuilder(ContentObject.newBuilder("디저트 사진",
+                .newBuilder(ContentObject.newBuilder(product_name,
                         "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
                         LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                 .setMobileWebUrl("https://developers.kakao.com").build())
-                        .setDescrption("아메리카노, 빵, 케익")
                         .build())
-                .setSocial(SocialObject.newBuilder().setLikeCount(10).setCommentCount(20)
-                        .setSharedCount(30).setViewCount(40).build())
                 .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
                         .setWebUrl("'https://developers.kakao.com")
                         .setMobileWebUrl("'https://developers.kakao.com")

@@ -10,14 +10,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AddWishListActivity extends AsyncTask<String, Void, String>  {
+public class WishListFlag extends AsyncTask<String, Void, String>  {
     String sendMsg, receiveMsg;
 
     @Override
     protected String doInBackground(String... strings) {
         try {
             String str;
-            URL url = new URL("http://daisoinmyhouse.cafe24.com/wishlistAddAction.jsp");
+            URL url = new URL("http://daisoinmyhouse.cafe24.com/wishlistFlag.jsp");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");

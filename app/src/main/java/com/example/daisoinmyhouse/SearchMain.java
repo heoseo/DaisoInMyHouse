@@ -52,23 +52,23 @@ public class SearchMain extends AppCompatActivity implements TextWatcher{
         networkTask.execute();
 
 
-        });
+
         //adapter = new RecyclerViewAdapter(getApplicationContext(), items);
-        adapter.setOnItemClickListener(new OnProductItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerViewAdapter.MyViewHolder holder, View view, int position) {
-                Item item = (Item) adapter.getItem(position);
-//                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
-
-                // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
-                Intent intent = new Intent(getApplicationContext(),ItemInformationActivity.class);
-                //Intent intent = new Intent(getContext(), ItemInformationActivity.class);
-                Toast.makeText(getApplicationContext(), "선택된 제품ID : " + item.getNum(), Toast.LENGTH_LONG).show();
-                intent.putExtra("productID", item.getNum());
-                getApplicationContext().startActivity(intent);
-            }
-
-        }
+//        adapter.setOnItemClickListener(new OnProductItemClickListener() {
+//            @Override
+//            public void onItemClick(RecyclerViewAdapter.MyViewHolder holder, View view, int position) {
+//                Item item = (Item) adapter.getItem(position);
+////                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
+//
+//                // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
+//                Intent intent = new Intent(getApplicationContext(),ItemInformationActivity.class);
+//                //Intent intent = new Intent(getContext(), ItemInformationActivity.class);
+//                Toast.makeText(getApplicationContext(), "선택된 제품ID : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
+//                intent.putExtra("productID", item.getProduct_no());
+//                getApplicationContext().startActivity(intent);
+//            }
+//
+//        });
 
 
 }
@@ -163,8 +163,8 @@ public class SearchMain extends AppCompatActivity implements TextWatcher{
 
                             long now = System.currentTimeMillis();
                             Date date = new Date(now);
-                            adapter.addItem(new Item(json.getString("name"), "두정동",
-                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
+//                            adapter.addItem(new Item(json.getString("name"), "두정동",
+//                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
 
                            // adapter.addItem(new Item(json.getString("name"), json.getString("address"),
                                     //date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));

@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ProfileEditActivity"></activity>
-        <activity android:name=".ChattingListActivity" />
+        <activity android:name=".ChattingFragment" />
         <activity android:name=".ChattingMainActivity" />
         <activity android:name=".ChattingActivity" /> <!-- <activity -->
         <!-- android:name=".ChatActivity" -->
@@ -64,7 +64,7 @@
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".WishlistActivity"/>
+        <activity android:name=".WishListActivity"/>
         <activity android:name=".CategoryItemActivity"/>
 
         <meta-data

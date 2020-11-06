@@ -87,7 +87,7 @@ public abstract class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     int position = getAdapterPosition();
 
                     if(listener != null){
-                        listener.onItemClick(MyViewHolder.this, view, position);
+//                        listener.onItemClick(MyViewHolder.this, view, position);
                     }
                 }
             });

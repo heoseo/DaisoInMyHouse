@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -157,7 +156,7 @@ public class MyPageFragment extends Fragment {
         btnWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), WishlistActivity.class);
+                Intent intent = new Intent(getContext(), WishListActivity.class);
                 getContext().startActivity(intent);
             }
         });

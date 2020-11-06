@@ -1,6 +1,6 @@
 package com.example.daisoinmyhouse;
 
-public class Wishlist {
+public class WIshList {
 
     String product_name;
     String user_id;
@@ -12,11 +12,11 @@ public class Wishlist {
     int product_no;
     String product_content;
 
-    public Wishlist(){
+    public WIshList(){
 
     }
 
-    public Wishlist(String user_id, String product_content, String location, int product_price, String time, int product_no,  String product_name, int imageRes){
+    public WIshList(String user_id, String product_content, String location, int product_price, String time, int product_no, String product_name, int imageRes){
         this.product_name = product_name;
         this.user_id = user_id;
         this.location = location;

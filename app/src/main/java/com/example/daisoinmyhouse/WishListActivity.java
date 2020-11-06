@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,13 +22,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.sql.Date;
 
 
-public class WishlistActivity extends AppCompatActivity {
+public class WishListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    WishlistAdapter adapter = new WishlistAdapter();
+    WishListAdapter adapter = new WishListAdapter();
     GridLayoutManager layoutManager;
     public static Context CONTEXT;
 
@@ -54,10 +52,10 @@ public class WishlistActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnWishlistClickListener(new WishlistClickListener() {
+        adapter.setOnWishlistClickListener(new WishListClickListener() {
             @Override
-            public void onItemClick(WishlistAdapter.ViewHolder holder, View view, int position) {
-                Wishlist wishlist = (Wishlist) adapter.getItem(position);
+            public void onItemClick(WishListAdapter.ViewHolder holder, View view, int position) {
+                WIshList wishlist = (WIshList) adapter.getItem(position);
                 Toast.makeText(getApplicationContext(), "선택된 제품 : " + wishlist.getProduct_name(), Toast.LENGTH_LONG).show();
 
                 //(ItemInformationActivity에 상품 ID 전달)
@@ -76,7 +74,7 @@ public class WishlistActivity extends AppCompatActivity {
         });
 
         CONTEXT = this;
-        ((WishlistActivity)WishlistActivity.CONTEXT).onResume();
+        ((WishListActivity) WishListActivity.CONTEXT).onResume();
 
     }
 
@@ -118,7 +116,7 @@ public class WishlistActivity extends AppCompatActivity {
                         json = jArr.getJSONObject(i);
 
 
-                        adapter.addItem(new Wishlist(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
+                        adapter.addItem(new WIshList(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
                                 json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),

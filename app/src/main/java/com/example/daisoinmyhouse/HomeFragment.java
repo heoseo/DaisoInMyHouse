@@ -4,13 +4,10 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,11 +22,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
 import java.sql.Date;
 
 public class HomeFragment extends Fragment {
@@ -59,7 +54,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), WishlistActivity.class);
+                Intent intent = new Intent(getContext(), WishListActivity.class);
                 getContext().startActivity(intent);
             }
         });

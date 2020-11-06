@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> implements  WishlistClickListener {
+public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHolder> implements WishListClickListener {
 
-    ArrayList<Wishlist> items = new ArrayList<Wishlist>();
-    WishlistClickListener listener;
+    ArrayList<WIshList> items = new ArrayList<WIshList>();
+    WishListClickListener listener;
 
 
 
@@ -29,7 +29,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Wishlist wishlist = items.get(position);
+        WIshList wishlist = items.get(position);
         holder.setItem(wishlist);
     }
 
@@ -38,28 +38,28 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         return items.size();
     }
 
-    public void addItem(Wishlist wishlist){
+    public void addItem(WIshList wishlist){
         items.add(wishlist);
     }
 
-    public void setItems(ArrayList<Wishlist> items){
+    public void setItems(ArrayList<WIshList> items){
         this.items = items;
     }
 
-    public Wishlist getItem(int position){
+    public WIshList getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, Wishlist wishlist){
+    public void setItem(int position, WIshList wishlist){
         items.set(position, wishlist);
     }
 
-    public void setOnWishlistClickListener(WishlistClickListener listener){
+    public void setOnWishlistClickListener(WishListClickListener listener){
         this.listener = listener;
     }
 
     @Override
-    public void onItemClick(WishlistAdapter.ViewHolder holder, View view, int position) {
+    public void onItemClick(WishListAdapter.ViewHolder holder, View view, int position) {
         if(listener != null){
             listener.onItemClick(holder, view, position);
         }
@@ -73,7 +73,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
         ImageView imageView1;
 
-        public ViewHolder(View WishlistView, final WishlistClickListener listener){
+        public ViewHolder(View WishlistView, final WishListClickListener listener){
             super(WishlistView);
 
             tvName = WishlistView.findViewById(R.id.tv_item_name);
@@ -96,7 +96,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             });
         }
 
-        public void setItem(Wishlist wishlist){
+        public void setItem(WIshList wishlist){
 
             tvName.setText(wishlist.getProduct_name());
             tvPrice.setText(String.valueOf(wishlist.getProduct_price()));
