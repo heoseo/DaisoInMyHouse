@@ -18,6 +18,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
 import com.kakao.message.template.ButtonObject;
@@ -30,8 +35,10 @@ import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import org.w3c.dom.Text;
 
@@ -42,7 +49,6 @@ public class ItemInformationActivity extends AppCompatActivity {
     TextView tvProduct_name, tvProduct_price, tvProduct_content, tvNickname;
 
     String product_no, nickname;
-
     String yourName;
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     @SuppressLint("ClickableViewAccessibility")
@@ -143,19 +149,67 @@ public class ItemInformationActivity extends AppCompatActivity {
                 SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
                 StaticUserInformation.nickName=preferences.getString("nickName", null);
 
-                if(StaticUserInformation.roomSet.contains(StaticUserInformation.nickName +">"+ yourName))
-                    getNewRoomName = StaticUserInformation.nickName +">"+ yourName;
-                else if(StaticUserInformation.roomSet.contains(yourName +">"+StaticUserInformation.nickName))
-                    getNewRoomName = yourName +">"+StaticUserInformation.nickName;
-                else{       // 저장된 채팅이름없음.
 
-                }
+
+                // 특정 경로의 전체 내용에 대한 변경 사항을 읽고 수신 대기함
+                // onDataChange는 Database가 변경되었을때 호출되고
+                // onCancelled는 취소됬을때 호출됩니다
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        System.out.println(3);
+
+                        Set<String> set = new HashSet<String>();
+                        Iterator i = dataSnapshot.getChildren().iterator();
+
+                        while (i.hasNext()) {
+//                    set.add(((DataSnapshot) i.next()).getKey());
+                            String findRoomName = ((DataSnapshot) i.next()).getKey();
+
+                            // >를 기준으로 문자열을 추출할 것이다.
+                            // 먼저 >의 인덱스를 찾는다.
+                            int idx = findRoomName.indexOf(">");
+
+                            // > 앞부분을 추출
+                            // substring은 첫번째 지정한 인덱스는 포함하지 않는다.
+                            String firstName = findRoomName.substring(0, idx);
+
+                            // 뒷부분을 추출
+                            // 아래 substring은 @ 바로 뒷부분인 n부터 추출된다.
+                            String lastName = findRoomName.substring(idx+1);
+
+                            try{
+                                if(StaticUserInformation.nickName.equals(firstName))
+                                    findRoomName = StaticUserInformation.nickName +">"+ nickname;
+                                else if(StaticUserInformation.nickName.equals(lastName))
+                                    findRoomName = nickname +">"+StaticUserInformation.nickName;
+                                else{       // 저장된 채팅이름없음.=> 디비에 저장
+                                    Log.d("테스트", "저장된채팅방이 없으므로 디비 저장");
+                                    Map<String, Object> map = new HashMap<String, Object>();
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
+
+                                    map.put(StaticUserInformation.nickName + ">" + nickname, StaticUserInformation.nickName + ">" + nickname);
+                                    reference.updateChildren(map);
+                                    findRoomName=StaticUserInformation.nickName + ">" + nickname;
+                                }
+
+                                StaticUserInformation.roomSet.add(findRoomName);
+                            }
+                            catch(Exception e){
+                                System.out.println("예외발생함");
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    @Override public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
 
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
 //                System.out.println("@@@@@@@@@@@@@@@"+ getNewRoomName);
-                intent.putExtra("your_name", ((TextView) view).getText().toString());
-//                intent.putExtra("room_name", getNewRoomName);
+                intent.putExtra("your_name", nickname);
                 startActivity(intent);
             }
         });

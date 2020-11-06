@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AlertDialog;
 //import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,9 +60,7 @@ public class ChattingListActivity extends AppCompatActivity {
         // 채팅방 리스트를 보여줍니다
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arr_roomList);
 
-        System.out.println(1);
         listView.setAdapter(arrayAdapter);
-        System.out.println(2);
 
         // 다이얼로그에서 채팅방 이름을 적어서 채팅방을 생성합니다
         btn_create = (Button) findViewById(R.id.btn_create);
@@ -93,6 +92,7 @@ public class ChattingListActivity extends AppCompatActivity {
         // 특정 경로의 전체 내용에 대한 변경 사항을 읽고 수신 대기함
         // onDataChange는 Database가 변경되었을때 호출되고
         // onCancelled는 취소됬을때 호출됩니다
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -163,5 +163,14 @@ public class ChattingListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+    }
+    void loadData(){
+        SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.nickName=preferences.getString("nickName", null);
+        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
+
+
     }
 }

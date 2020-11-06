@@ -125,13 +125,6 @@ public class WishlistActivity extends AppCompatActivity {
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
                         receiveMsg = buffer.toString();
-                        Log.i("테스트", json.getString("product_name"));
-                        Log.i("테스트", "두정동");
-                        Log.i("테스트", "3시간");
-                        Log.i("테스트", String.valueOf(json.getInt("product_price")));
-                        Log.i("테스트", String.valueOf(json.getInt("product_no")));
-                        Log.i("테스트", receiveMsg);
-                        Log.i("테스트2",json.getString("product_name") + "두정동" +"3시간" +json.getInt("product_price") +json.getInt("num")) ;
                     }
                 } else{
                     //통신실패
