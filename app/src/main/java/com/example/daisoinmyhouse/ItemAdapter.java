@@ -1,5 +1,6 @@
 package com.example.daisoinmyhouse;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +31,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Item item = items.get(position);
-        viewHolder.setItem(item);
+        try {
+            viewHolder.setItem(item);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -95,28 +101,54 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
             });
         }
 
-        public void setItem(Item item){
+        public void setItem(Item item) throws ParseException {
             tv1.setText(item.getProduct_name());
             tv2.setText(String.valueOf(item.getProduct_price()));
             tv3.setText(item.getLocation());
 
-//            // 현재시간을 msec 으로 구한다.
-//            long getTime = item.getTime();
-//            long now = System.currentTimeMillis();
-//
-//            // 현재시간을 date 변수에 저장한다.
-//            Date date = new Date(now);
-//            // 시간을 나타냇 포맷을 정한다 ( yyyy/MM/dd 같은 형태로 변형 가능 )
-//            SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//            // nowDate 변수에 값을 저장한다.
-//            String formatDate = sdfNow.format(date);
-//
-//            tv4.setText(formatDate);
-
-            tv4.setText(item.getTime());
+            tv4.setText(getGap(item.getTime()));
 
 
             imageView1.setImageResource(item.getImageRes());
+        }
+
+        public String getGap(String productTime) throws ParseException{
+
+            String strGap="";
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date productTimeDate = dateFormat.parse(productTime);
+            long productTimeLong = productTimeDate.getTime();
+
+            Date curTime = new Date();
+            curTime = dateFormat.parse(dateFormat.format(curTime));
+            long curTimeLong = curTime.getTime();
+
+
+            //분으로 표현
+            long gap = (curTimeLong - productTimeLong) / 60000;
+            strGap = gap+"분";
+            if(gap > 60)// 60분 넘으면
+            {
+                gap = gap / 60;	// 시간으로
+                strGap = gap+"시간";
+                if(gap > 24)	// 24시간 넘으면
+                {
+                    long calDate = curTime.getTime() - productTimeDate.getTime();
+
+                    // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
+                    // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
+                    long calDateDays = calDate / ( 24*60*60*1000);
+
+                    gap = Math.abs(calDateDays);	// 일로.
+                    strGap = gap+"일";
+                }
+
+
+            }
+            Log.i("timeTest", strGap);
+
+            return strGap;
         }
     }
 }
