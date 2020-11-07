@@ -74,8 +74,7 @@ public class WriteNewItemFragment extends Fragment {
 
         product_name_et =rootView.findViewById(R.id.et_product_name);
         product_price_et = rootView.findViewById(R.id.et_product_price);
-        product_content_et = rootView.findViewById(R.id.et_content);
-        cate_tv = rootView.findViewById(R.id.tv_product_cate);
+        product_content_et = rootView.findViewById(R.id.et_product_content);
 
         spinner_cate = rootView.findViewById(R.id.spinner_product_cate);
         /*spinner_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

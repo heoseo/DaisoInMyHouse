@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment;
 
 public class WriteWantItemFragment extends Fragment {
 
-    EditText product_Resister,conttent,taag;
+    EditText product_name,conttent,taag;
     TextView cattegory;
     Button writeBtn;
     TextView btnSetLocation;
@@ -49,22 +49,19 @@ public class WriteWantItemFragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_write_want_item, container, false);
 
-        product_Resister =rootView.findViewById(R.id.et_register);
-        cattegory = rootView.findViewById(R.id.et_category);
-        taag=rootView.findViewById(R.id.et_tag);
-        conttent = rootView.findViewById(R.id.et_explain);
+        product_name =rootView.findViewById(R.id.et_product_name);
+        conttent = rootView.findViewById(R.id.et_product_content);
 
-        spinner = rootView.findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner = rootView.findViewById(R.id.spinner_product_cate);
+/*        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                cattegory.setText(parent.getItemAtPosition(position).toString());
-                cattegory.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });
+        });*/
 
 
 
@@ -99,7 +96,7 @@ public class WriteWantItemFragment extends Fragment {
         writeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
-                    String name = product_Resister.getText().toString();
+                    String name = product_name.getText().toString();
                     String category = cattegory.getText().toString();
                     String tag = taag.getText().toString();
                     String content = conttent.getText().toString();

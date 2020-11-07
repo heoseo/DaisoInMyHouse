@@ -6,27 +6,35 @@
     android:orientation="vertical"
     tools:ignore="MissingDefaultResource">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_back"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingVertical="10dp"
-            android:text="글쓰기"
+            android:text="상품 등록"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -40,15 +48,12 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:gravity="center"
                 android:text="대여 해주는 글쓰기"
                 android:textSize="16sp" />
 
-            <View
-                android:id="@+id/view8"
-                android:layout_width="match_parent"
-                android:layout_height="2dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,17 +67,15 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:gravity="center"
                 android:text="대여 원하는 글쓰기"
-                android:textColor="#FF0000"
-                android:textSize="16sp" />
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <View
-                android:id="@+id/view9"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#FF0000" />
         </LinearLayout>
 
     </LinearLayout>
@@ -90,61 +93,57 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
 
             <EditText
-                android:id="@+id/et_register"
+                android:id="@+id/et_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="상품명 등록" />
+                android:paddingBottom="20dp"
+                android:hint="상품명"
+                android:paddingLeft="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="15dp">
 
                 <TextView
                     android:id="@+id/tv_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:hint=" 카테고리 선택"
-                    android:textSize="18dp" />
+                    android:text=" 카테고리"
+                    android:textSize="17dp"
+                    android:paddingLeft="5dp"/>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-
-
-                    <TextView
-                        android:id="@+id/et_category"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="드롭다운 결과"/>
+                    android:layout_height="wrap_content">
 
                     <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/product"/>
+                        android:id="@+id/spinner_product_cate"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:entries="@array/product"
+                        android:gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"/>
 
-                </LinearLayout>
-
+                </RelativeLayout>
 
             </LinearLayout>
-
-
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:background="#999999" />
 
             <TextView
@@ -152,49 +151,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint=" 위치설정"
-                android:textSize="18dp"
-                tools:ignore="DuplicateIds" />
+                android:text=" 위치설정"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                tools:ignore="DuplicateIds"
+                android:textSize="17dp"
+                android:paddingLeft="5dp"/>
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:background="#999999" />
 
             <EditText
-                android:id="@+id/et_tag"
+                android:id="@+id/et_product_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="태그입력" />
-
-
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/et_explain"
-                        android:layout_width="match_parent"
-                        android:layout_height="210dp"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center"
-                        android:hint="게시글 내용을 작성해주세요"
-                        android:textSize="18dp" />
-
-                </LinearLayout>
-            </ScrollView>
+                android:paddingBottom="20dp"
+                android:hint="내용을 작성해주세요"
+                android:paddingLeft="10dp"/>
 
         </LinearLayout>
 
-
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -202,13 +185,12 @@
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/red"
-            android:paddingVertical="10dp"
-            android:text="등록하기"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="등록"
             android:textColor="@color/white"
-            android:backgroundTint="#9C27B0"
-            android:textSize="30dp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
