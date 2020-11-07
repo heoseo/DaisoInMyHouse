@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,7 +34,8 @@ public class HomeFragment extends Fragment {
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
     ImageButton btn_wishlist;
-    ImageButton btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;
+    RelativeLayout btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;
+
 
     @Nullable
     @Override
@@ -49,7 +51,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         //위시리스트 띄우기
-        btn_wishlist = v.findViewById(R.id.img_btn_heart);
+        btn_wishlist = v.findViewById(R.id.img_btn_wishlist);
         btn_wishlist.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -63,12 +65,12 @@ public class HomeFragment extends Fragment {
 
 
         //카테고리별 품목 띄우기
-        btn_clothes = (ImageButton) v.findViewById(R.id.img_btn_clothes);
-        btn_clean = (ImageButton) v.findViewById(R.id.img_btn_clean);
-        btn_kitchen = (ImageButton) v.findViewById(R.id.img_btn_kitchen);
-        btn_digital = (ImageButton) v.findViewById(R.id.img_btn_digital);
-        btn_book = (ImageButton) v.findViewById(R.id.img_btn_book);
-        btn_etc = (ImageButton) v.findViewById(R.id.img_btn_etc);
+        btn_clothes = (RelativeLayout) v.findViewById(R.id.img_btn_clothes);
+        btn_clean = (RelativeLayout) v.findViewById(R.id.img_btn_clean);
+        btn_kitchen = (RelativeLayout) v.findViewById(R.id.img_btn_kitchen);
+        btn_digital = (RelativeLayout) v.findViewById(R.id.img_btn_digital);
+        btn_book = (RelativeLayout) v.findViewById(R.id.img_btn_book);
+        btn_etc = (RelativeLayout) v.findViewById(R.id.img_btn_etc);
 
         btn_clothes.setOnClickListener(new View.OnClickListener() {
             @Override

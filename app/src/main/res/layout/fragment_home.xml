@@ -6,255 +6,321 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
+        android:layout_height="50dp">
 
         <EditText
             android:id="@+id/et_search_item"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="13" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="13dp"
+            android:layout_toLeftOf="@+id/img_btn_search"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/img_btn_search"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/btn_search"
+            android:layout_margin="13dp"
+            android:layout_toLeftOf="@+id/img_btn_wishlist"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"/>
 
-            <ImageButton
-                android:id="@+id/img_btn_search"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/search" />
+        <ImageButton
+            android:id="@+id/img_btn_wishlist"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_wishlist"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_toLeftOf="@+id/img_btn_alarm"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"/>
 
-            <ImageButton
-                android:id="@+id/img_btn_heart"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/heart" />
+        <ImageButton
+            android:id="@+id/img_btn_alarm"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_bell"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"/>
 
-            <ImageButton
-                android:id="@+id/img_btn_alarm"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/bell" />
-        </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
-        android:layout_marginVertical="10dp"
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="6px" />
+        android:layout_height="3px"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimaryDark" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/img_btn_clothes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_btn_clothes"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/img_clothes"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:paddingHorizontal="10dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/clothing" />
+                android:src="@drawable/img_clothes"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="의류"
-                android:textColor="#000000" />
-        </LinearLayout>
+                android:textColor="#424141"
+                android:layout_below="@id/img_clothes"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/img_btn_clean"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_btn_clean"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/img_clean"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:paddingHorizontal="10dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/clean" />
+                android:src="@drawable/img_clean"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="생활용품"
-                android:textColor="#000000" />
-        </LinearLayout>
+                android:textColor="#424141"
+                android:layout_below="@id/img_clean"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/img_btn_kitchen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_btn_kitchen"
-                android:paddingHorizontal="10dp"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/img_kitchen"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/kitchen" />
+                android:src="@drawable/img_kitchen"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="#000000"
-                android:text = "주방용품" />
-        </LinearLayout>
+                android:text="주방용품"
+                android:textColor="#424141"
+                android:layout_below="@id/img_kitchen"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
 
-        <LinearLayout
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/img_btn_digital"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_btn_digital"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/img_digital"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:paddingHorizontal="10dp"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/digital" />
+                android:src="@drawable/img_digital"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
 
-            <TextView
+
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="디지털"
-                android:textColor="#000000" />
-        </LinearLayout>
+                android:textColor="#424141"
+                android:layout_below="@id/img_digital"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
 
-        <LinearLayout
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/img_btn_book"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_btn_book"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/img_book"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:paddingHorizontal="10dp"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/book" />
+                android:src="@drawable/img_book"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="도서"
-                android:textColor="#000000" />
-        </LinearLayout>
+                android:textColor="#424141"
+                android:layout_below="@id/img_book"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/img_btn_etc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin = "5dp"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_btn_etc"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <ImageView
+                android:id="@+id/img_etc"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:paddingHorizontal="10dp"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/etc" />
+                android:src="@drawable/img_etc"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="기타"
-                android:textColor="#000000" />
-        </LinearLayout>
+                android:textColor="#424141"
+                android:layout_below="@id/img_etc"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="대여" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft = "15dp"
-            android:text="판매" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight = "1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:text = "최신순" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_product"
+        <LinearLayout
+            android:id="@+id/ll_rent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="빌려드려요"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_want"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:gravity="center"
+                android:text="빌려요"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </FrameLayout>
 
 
 </LinearLayout>
