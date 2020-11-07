@@ -1,4 +1,5 @@
 package com.example.daisoinmyhouse;
+import java.util.Date;
 
 public class CategoryItem {
     String user_id;
@@ -10,6 +11,8 @@ public class CategoryItem {
     int imageRes;
     int productID;
 
+
+
     public CategoryItem(){
 
     }
@@ -17,10 +20,10 @@ public class CategoryItem {
     public CategoryItem(String user_id, String product_content, String location, int price, String time, int productID, String item_name, int imageRes){
         this.user_id = user_id;
         this.product_content = product_content;
-        this.item_name = item_name;
         this.location = location;
-        this.time = time;
         this.price = price;
+        this.time = time;
+        this.item_name = item_name;
         this.imageRes = imageRes;
         this.productID = productID;
     }

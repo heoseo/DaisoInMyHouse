@@ -30,6 +30,7 @@ public class KeywordAlarmActivity extends AppCompatActivity {
     EditText et_keyword;
     ListView lv_keyword;
     String selected_item;
+    TextView btn_back;
 
     NotificationManager manager;
     private static String CHANNEL_ID = "channel1";
@@ -44,6 +45,8 @@ public class KeywordAlarmActivity extends AppCompatActivity {
         btn_register = (Button)findViewById(R.id.btn_keyword_register);
         et_keyword = (EditText)findViewById(R.id.et_keyword_register);
         lv_keyword = (ListView)findViewById(R.id.lv_keyword);
+        btn_back = (TextView) findViewById(R.id.btn_back);
+
         final ArrayList<String> keyword = new ArrayList<String>();
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, keyword);
 
@@ -71,6 +74,13 @@ public class KeywordAlarmActivity extends AppCompatActivity {
                 selected_item = (String)adapterView.getItemAtPosition(i);
                 keyword.remove(selected_item);
                 arrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

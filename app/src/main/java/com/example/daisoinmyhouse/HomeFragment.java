@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.widget.RelativeLayout;
@@ -27,14 +29,20 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Date;
+import android.util.Log;
 
 public class HomeFragment extends Fragment {
     //홈화면 RecyclerView 설정
     RecyclerView recyclerView;
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
-    ImageButton btn_wishlist;
+    ImageButton btn_wishlist, btn_search;
     RelativeLayout btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;
+
+    private FragmentManager fragmentManager;
+    private HomeRentItemFragment fragmentRent;
+    private HomeWantItemFragment fragmentWant;
+    private FragmentTransaction transaction;
 
 
     @Nullable
@@ -42,6 +50,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+//        fragmentManager = getActivity().getSupportFragmentManager();
+//
+//        fragmentRent = new HomeRentItemFragment();
+//        fragmentWant = new HomeWantItemFragment();
+//
+//        transaction = fragmentManager.beginTransaction();
+//        transaction.replace(R.id.frameLayout, fragmentRent).commitAllowingStateLoss();
+
+
+
 
         //홈화면 RecyclerView 설정
         recyclerView = (RecyclerView) v.findViewById(R.id.rv_product);
@@ -57,6 +76,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), WishListActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        //검색버튼
+        btn_search=v.findViewById(R.id.img_btn_search);
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SearchMain.class);
                 getContext().startActivity(intent);
             }
         });
@@ -131,6 +160,27 @@ public class HomeFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+
+//    public void clickHandler(View view)
+//    {
+//        transaction = fragmentManager.beginTransaction();
+//
+//        switch(view.getId())
+//        {
+//            case R.id.ll_rent:
+//                transaction.replace(R.id.frameLayout, fragmentRent).commitAllowingStateLoss();
+//                break;
+//            case R.id.ll_want:
+//                transaction.replace(R.id.frameLayout, fragmentWant).commitAllowingStateLoss();
+//                break;
+//        }
+//    }
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -257,6 +307,8 @@ public class HomeFragment extends Fragment {
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
+
+                            Log.i("테스트", "ok");
                         }
                         // 가져온 데이터들 확인
                         // textView.setText(가공 데이터);

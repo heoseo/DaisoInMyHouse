@@ -46,31 +46,34 @@ public class SearchMain extends AppCompatActivity implements TextWatcher{
         editText.addTextChangedListener(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
 
         SearchMain.ProductList networkTask = new SearchMain.ProductList("http://daisoinmyhouse.cafe24.com/recyclerviewList.jsp", null);
         networkTask.execute();
 
+        recyclerView.setAdapter(adapter);
 
 
-//        adapter = new RecyclerViewAdapter(getApplicationContext(), items);
-//        adapter.setOnItemClickListener(new OnProductItemClickListener() {
-//            @Override
-//            public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
-//                Item item = (Item) adapter.getItem(position);
+        adapter = new RecyclerViewAdapter(/*getApplicationContext(), items*/);
+        adapter.setOnItemClickListener(new SearchItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerViewAdapter.MyViewHolder holder, View view, int position) {
+                Item item = (Item) adapter.getItem(position);
 ////                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
-//
-//                // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
-//                Intent intent = new Intent(this,ItemInformationActivity.class);
-//                Toast.makeText(getApplicationContext(), "선택된 제품ID : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
-//                intent.putExtra("productID", item.getProduct_no());
-//                startActivity(intent);
-//            }
-//
-//        });
 
 
-}
+                // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
+                Intent intent = new Intent(getApplicationContext(),ItemInformationActivity.class);
+                //Intent intent = new Intent(getContext(), ItemInformationActivity.class);
+                Toast.makeText(getApplicationContext(), "선택된 제품ID : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
+                intent.putExtra("productID", item.getProduct_no());
+                getApplicationContext().startActivity(intent);
+            }
+
+        });
+
+
+
+    }
 
     public class ProductList extends AsyncTask<Void, Void, String> {
         private String url;

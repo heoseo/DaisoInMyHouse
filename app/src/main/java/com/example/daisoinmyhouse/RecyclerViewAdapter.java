@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable, SearchItemClickListener {
 
     Context context;
     ArrayList<Item> unFilteredlist;
     ArrayList<Item> filteredList;
-    OnProductItemClickListener listener;
+    SearchItemClickListener listener;
 
     public RecyclerViewAdapter(Context context, ArrayList<Item> list) {
         super();
@@ -46,6 +46,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
+    public void onItemClick(RecyclerViewAdapter.MyViewHolder holder, View view, int position) {
+        if(listener != null){
+            listener.onItemClick(holder, view, position);
+        }
+    }
+
+    @Override
     public int getItemCount() {
         return filteredList.size();
     }
@@ -53,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void addItem(Item item) { filteredList.add(item);}
     public void setItems(ArrayList<Item> filteredList){ this.filteredList = filteredList;}
 
-    public void setOnItemClickListener(OnProductItemClickListener listener){
+    public void setOnItemClickListener(SearchItemClickListener listener){
         this.listener = listener;
     }
     public Item getItem(int position){
