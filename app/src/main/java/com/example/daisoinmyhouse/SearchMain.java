@@ -53,19 +53,18 @@ public class SearchMain extends AppCompatActivity implements TextWatcher{
 
 
 
-        //adapter = new RecyclerViewAdapter(getApplicationContext(), items);
+//        adapter = new RecyclerViewAdapter(getApplicationContext(), items);
 //        adapter.setOnItemClickListener(new OnProductItemClickListener() {
 //            @Override
-//            public void onItemClick(RecyclerViewAdapter.MyViewHolder holder, View view, int position) {
+//            public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
 //                Item item = (Item) adapter.getItem(position);
 ////                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
 //
 //                // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
-//                Intent intent = new Intent(getApplicationContext(),ItemInformationActivity.class);
-//                //Intent intent = new Intent(getContext(), ItemInformationActivity.class);
+//                Intent intent = new Intent(this,ItemInformationActivity.class);
 //                Toast.makeText(getApplicationContext(), "선택된 제품ID : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
 //                intent.putExtra("productID", item.getProduct_no());
-//                getApplicationContext().startActivity(intent);
+//                startActivity(intent);
 //            }
 //
 //        });

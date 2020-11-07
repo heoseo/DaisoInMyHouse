@@ -62,7 +62,22 @@ public class ChattingAdapter extends BaseAdapter {
 
         tvName.setText(item.getName());
         tvMsg.setText(item.getMessage());
-        tvTime.setText(item.getTime());
+
+        String[] split = item.getTime().split(":");
+        String time12;  // 12시간단위
+        int hour = Integer.parseInt(split[0]);
+        int minute = Integer.parseInt(split[1]);
+
+        if(hour == 12)
+            time12 = "오후 " + hour + "시 " + minute + "분";
+        else if(hour == 24)
+            time12 = "오전 0시 " + minute + "분";
+        if(hour > 12)
+            time12 = "오후 " + (hour-12) + "시 " + minute + "분";
+        else
+            time12 = "오전 " + hour + "시 " + minute + "분";
+
+        tvTime.setText(time12);
 
 
         return itemView;

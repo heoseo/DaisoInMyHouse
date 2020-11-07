@@ -73,8 +73,8 @@ public class HomeFragment extends Fragment {
         btn_clothes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
-                intent.putExtra("categoryNum", 1);
+                Intent intent = new Intent(getContext(), CategoryClothesItemActivity.class);
+                intent.putExtra("category", "의류");
                 getContext().startActivity(intent);
             }
         });
@@ -82,8 +82,8 @@ public class HomeFragment extends Fragment {
         btn_clean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
-                intent.putExtra("categoryNum", 2);
+                Intent intent = new Intent(getContext(), CategoryCleanItemActivity.class);
+                intent.putExtra("category", "생활용품");
                 getContext().startActivity(intent);
             }
         });
@@ -91,8 +91,8 @@ public class HomeFragment extends Fragment {
         btn_kitchen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
-                intent.putExtra("categoryNum", 3);
+                Intent intent = new Intent(getContext(), CategoryKitchenItemActivity.class);
+                intent.putExtra("category", "주방용품");
                 getContext().startActivity(intent);
             }
         });
@@ -100,8 +100,8 @@ public class HomeFragment extends Fragment {
         btn_digital.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
-                intent.putExtra("categoryNum", 4);
+                Intent intent = new Intent(getContext(), CategoryDigitalItemActivity.class);
+                intent.putExtra("category", "디지털");
                 getContext().startActivity(intent);
             }
         });
@@ -109,8 +109,8 @@ public class HomeFragment extends Fragment {
         btn_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
-                intent.putExtra("categoryNum", 5);
+                Intent intent = new Intent(getContext(), CategoryBookItemActivity.class);
+                intent.putExtra("category", "도서");
                 getContext().startActivity(intent);
             }
         });
@@ -118,8 +118,8 @@ public class HomeFragment extends Fragment {
         btn_etc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), CategoryItemActivity.class);
-                intent.putExtra("categoryNum", 6);
+                Intent intent = new Intent(getContext(), CategoryEtcItemActivity.class);
+                intent.putExtra("category", "기타");
                 getContext().startActivity(intent);
             }
         });

@@ -65,8 +65,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".WishListActivity"/>
-        <activity android:name=".CategoryItemActivity"/>
-
+<!--        <activity android:name=".CategoryItemActivity"/>-->
+        <activity android:name=".CategoryClothesItemActivity"/>
+        <activity android:name=".CategoryBookItemActivity"/>
+        <activity android:name=".CategoryCleanItemActivity"/>
+        <activity android:name=".CategoryDigitalItemActivity"/>
+        <activity android:name=".CategoryEtcItemActivity"/>
+        <activity android:name=".CategoryKitchenItemActivity"/>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />

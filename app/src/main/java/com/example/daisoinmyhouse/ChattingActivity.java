@@ -143,15 +143,7 @@ public class ChattingActivity extends AppCompatActivity {
         int date = calendar.get(Calendar.DATE);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-        int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
 
-        String hourStr="";
-        if(hour >= 12)
-            hourStr = "오후 " + (hour-12) + "시";
-        else
-            hourStr = "오전 " + hour + "시";
 
         String korDayOfWeek = "";
         switch (dayOfWeek) {

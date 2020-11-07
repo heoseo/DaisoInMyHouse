@@ -12,6 +12,8 @@ public class ChattingMessageItem {
         this.message = message;
         this.time = time;
         this.pofileUrl = pofileUrl;
+
+
     }
 
     //firebase DB에 객체로 값을 읽어올 때..
@@ -51,5 +53,8 @@ public class ChattingMessageItem {
     public void setPofileUrl(String pofileUrl) {
         this.pofileUrl = pofileUrl;
     }
+
+
+
 }
 
