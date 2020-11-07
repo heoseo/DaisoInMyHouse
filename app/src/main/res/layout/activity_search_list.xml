@@ -25,13 +25,16 @@
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/back" />
-        </LinearLayout>
 
-        <EditText
-            android:id="@+id/et_search_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="17" />
+
+            <EditText
+                android:id="@+id/et_search_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="10dp"
+                android:ems="17" />
+        </LinearLayout>
 
     </LinearLayout>
 

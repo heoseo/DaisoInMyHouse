@@ -36,7 +36,7 @@ public class MyPageFragment extends Fragment {
     Button btnLogin;
     Button btnLogout;
     RelativeLayout btnTransaction;
-    TextView tvNickName;
+    TextView tvNickName, tvWishlist;
     RelativeLayout btnWishlist;
     SharedPreferences preferences;
 
@@ -72,6 +72,9 @@ public class MyPageFragment extends Fragment {
             Picasso.get().load( StaticUserInformation.porfileUrl).into(imgViewProfile);
         }
 
+        tvWishlist = rootView.findViewById(R.id.tv_wishlist);
+        StaticUserInformation.cntWishList = Integer.parseInt(preferences.getString("cntWishList", null));
+        tvWishlist.setText(Integer.toString(StaticUserInformation.cntWishList));
 
 
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
