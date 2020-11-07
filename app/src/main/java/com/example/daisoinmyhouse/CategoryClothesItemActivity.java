@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ public class CategoryClothesItemActivity extends AppCompatActivity {
     CategoryItemAdapter adapter = new CategoryItemAdapter();
     GridLayoutManager layoutManager;
 
-    TextView btn_back;
+    ImageButton btn_back;
     TextView tv_category;
 
     String category;
@@ -67,7 +68,7 @@ public class CategoryClothesItemActivity extends AppCompatActivity {
             }
         });
 
-        btn_back = (TextView) findViewById(R.id.btn_back);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 finish();

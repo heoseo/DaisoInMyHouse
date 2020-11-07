@@ -65,7 +65,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WishListActivity"/>
-<!--        <activity android:name=".CategoryItemActivity"/>-->
+        <activity android:name=".SearchActivity"/>
         <activity android:name=".CategoryClothesItemActivity"/>
         <activity android:name=".CategoryBookItemActivity"/>
         <activity android:name=".CategoryCleanItemActivity"/>

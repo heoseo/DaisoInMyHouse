@@ -33,6 +33,7 @@ import java.net.URL;
 import java.sql.Date;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.EditText;
 
 public class HomeFragment extends Fragment implements View.OnClickListener{
     //홈화면 RecyclerView 설정
@@ -43,6 +44,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     RelativeLayout btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;
     LinearLayout ll_want, ll_rent;
     TextView tv_want, tv_rent;
+    EditText et_search;
+
 
     private FragmentManager fragmentManager;
     private HomeRentItemFragment fragmentRent;
@@ -95,11 +98,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
 
         //검색버튼
+        et_search = v.findViewById(R.id.et_search_item);
         btn_search=v.findViewById(R.id.img_btn_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SearchMain.class);
+                String search = et_search.getText().toString();
+                et_search.setText(null);
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                intent.putExtra("search", search);
                 getContext().startActivity(intent);
             }
         });
