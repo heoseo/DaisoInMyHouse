@@ -1,12 +1,14 @@
 package com.example.daisoinmyhouse;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,74 +26,82 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.sql.Date;
 
-public class CategoryKitchenItemActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    CategoryItemAdapter adapter = new CategoryItemAdapter();
+    SearchAdapter adapter = new SearchAdapter();
     GridLayoutManager layoutManager;
-
     ImageButton btn_back;
-    TextView tv_category;
+    public static Context CONTEXT;
+    String search;
+    EditText et_search;
 
-    String category;
-
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_item);
+        setContentView(R.layout.activity_search_list);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_category_item);
+        search = getIntent().getExtras().getString("search");
+        et_search = (EditText) findViewById(R.id.et_search_item);
+        et_search.setText(search);
+
+        recyclerView = (RecyclerView) findViewById(R.id.search_list);
+
+        SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.userID = preferences.getString("userID", null);
+
+        String user_id = StaticUserInformation.userID;
+
+        Log.i("user_id", user_id);
+
+        SearchList task = new SearchList();
+        task.execute(search);
 
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
-
-        tv_category = (TextView) findViewById(R.id.tv_category);
-        category = getIntent().getExtras().getString("category");
-
-        CategoryList categorylist = new CategoryList();
-
-        tv_category.setText(category);
-        categorylist.execute(category);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnCategoryItemClickListener(new CategoryItemClickListener() {
+        adapter.setOnSearchClickListener(new SearchItemClickListener() {
             @Override
-            public void onItemClick(CategoryItemAdapter.ViewHolder holder, View view, int position) {
-                CategoryItem item = (CategoryItem) adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getItem_name(), Toast.LENGTH_LONG).show();
+            public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+                Item item = (Item) adapter.getItem(position);
+                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getProduct_name(), Toast.LENGTH_LONG).show();
 
+                //(ItemInformationActivity에 상품 ID 전달)
                 Intent intent = new Intent(getApplicationContext(), ItemInformationActivity.class);
-                intent.putExtra("productID", item.getProductID());
+                intent.putExtra("product_no", item.getProduct_no());
                 startActivity(intent);
             }
         });
 
-        btn_back = (ImageButton) findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+        btn_back = (ImageButton) findViewById(R.id.img_btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });
 
+        CONTEXT = this;
+        ((SearchActivity) SearchActivity.CONTEXT).onResume();
 
     }
 
-
-    public class CategoryList extends AsyncTask<String, Void, String> {
+    public class SearchList extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
+
         @Override
         protected String doInBackground(String... strings) {
             try {
                 String str;
                 // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-                URL url = new URL("http://daisoinmyhouse.cafe24.com/categoryList.jsp");
+                URL url = new URL("http://daisoinmyhouse.cafe24.com/searchList.jsp");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 conn.setRequestMethod("POST");
                 OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                 // 전송할 데이터. GET 방식으로 작성
-                sendMsg = "product_cate=" + category;
+                sendMsg = "product_name=" + strings[0];
                 osw.write(sendMsg);
                 osw.flush();
                 //jsp와 통신 성공 시 수행
@@ -99,6 +109,7 @@ public class CategoryKitchenItemActivity extends AppCompatActivity {
                     InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
                     BufferedReader reader = new BufferedReader(tmp);
                     StringBuffer buffer = new StringBuffer();
+
                     String page = "";
                     // jsp에서 보낸 값을 받는 부분
                     while ((str = reader.readLine()) != null) {
@@ -107,22 +118,21 @@ public class CategoryKitchenItemActivity extends AppCompatActivity {
                     }
                     // JSP에서 보낸 JSON 받아오자  JSONObject = siteDataMain
                     JSONObject json = new JSONObject(page);
-                    JSONArray jArr = json.getJSONArray("CATEGORY_LIST");
+                    JSONArray jArr = json.getJSONArray("SEARCH_LIST");
+
                     // JSON이 가진 크기만큼 데이터를 받아옴
                     for (int i = 0; i < jArr.length(); i++) {
                         json = jArr.getJSONObject(i);
-                        long now = System.currentTimeMillis();
-                        Date date = new Date(now);
 
-                        //카테고리 adapter따로 만들거나 해야될듯?
-                        adapter.addItem(new CategoryItem(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
+
+                        adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
                                 json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
-
                         receiveMsg = buffer.toString();
+
                         Log.i("테스트", receiveMsg);
                     }
                 } else{
