@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AlarmSettingActivity extends AppCompatActivity {
 
-    TextView btnBack;
+    ImageButton btnBack;
     Switch sbAlarm, sbChatAlarm, sbReplyitem, sbWish, sbReplyStore, sbDelivery, sbDeliveryComplete, sbKeyword;
 
     @Override
@@ -55,7 +56,7 @@ public class AlarmSettingActivity extends AppCompatActivity {
 
 
     // 뒤로가기 버튼
-        btnBack = (TextView) findViewById(R.id.btn_back);
+        btnBack = (ImageButton) findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

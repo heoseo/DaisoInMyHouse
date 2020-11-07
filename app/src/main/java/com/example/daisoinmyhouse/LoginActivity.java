@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,15 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인하세요.", Toast.LENGTH_LONG).show();
                     }
 
-                    // String[][] parsedData = jsonParserList(result);
-
-                    // Intent intent = new Intent(getApplicationContext(), LoginTest.class);
-                    // intent.putExtra("name", parsedData[0][0]);
-                    // intent.putExtra("id", parsedData[0][1]);
-                    // intent.putExtra("email", parsedData[0][2]);
-                    //intent.putExtra("phone", parsedData[0][3]);
-                    // intent.putExtra("address", parsedData[0][4]);
-                    // startActivity(intent);
                 }catch (Exception e){
                     Log.i("DB", "에러");
                 }
@@ -105,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // 뒤로가기 버튼
-        TextView btnBack = (TextView) findViewById(R.id.btn_back);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -73,8 +73,11 @@ public class MyPageFragment extends Fragment {
         }
 
         tvWishlist = rootView.findViewById(R.id.tv_wishlist);
-        StaticUserInformation.cntWishList = Integer.parseInt(preferences.getString("cntWishList", null));
-        tvWishlist.setText(Integer.toString(StaticUserInformation.cntWishList));
+        if(preferences.getString("cntWishList", null)==null){
+            StaticUserInformation.cntWishList = "0";
+        }
+        else StaticUserInformation.cntWishList = preferences.getString("cntWishList", null);
+        tvWishlist.setText(StaticUserInformation.cntWishList);
 
 
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
@@ -102,6 +105,9 @@ public class MyPageFragment extends Fragment {
                                 break;
                             case "로그아웃":
 
+                                SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
+                                StaticUserInformation.resetDate(preferences);
+
                                 MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
 
                                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -109,17 +115,6 @@ public class MyPageFragment extends Fragment {
 
 //                                fragmentTransaction.remove(MyPageFragment.this).commit();
                                 fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
-
-
-                                SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
-                                SharedPreferences.Editor editor=preferences.edit();
-                                editor.putString("nickName", null);
-                                editor.putString("profileUrl", null);
-                                editor.apply();
-                                editor.commit();
-                                StaticUserInformation.nickName=preferences.getString("nickName", null);
-                                StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
-
                                 break;
 
                         }

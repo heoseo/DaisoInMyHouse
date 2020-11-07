@@ -155,7 +155,7 @@ public class WishListActivity extends AppCompatActivity {
             editor.putString("cntWishList", Integer.toString(cnt));
             editor.apply();
 
-            StaticUserInformation.cntWishList = Integer.parseInt(preferences.getString("cntWishList", String.valueOf(cnt)));
+            StaticUserInformation.cntWishList = preferences.getString("cntWishList", String.valueOf(cnt));
         }
     }
 

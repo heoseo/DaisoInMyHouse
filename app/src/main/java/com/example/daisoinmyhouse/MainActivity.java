@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                         StaticUserInformation.nickName=preferences.getString("nickName", null);
 
+
+
                         if (StaticUserInformation.nickName != null) {
                             transaction.replace(R.id.frame_layout, myPageFragment).commitAllowingStateLoss();
                         }

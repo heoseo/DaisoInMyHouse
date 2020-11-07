@@ -42,8 +42,6 @@ public class MyPageLogOutFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
-        StaticUserInformation.nickName=preferences.getString("nickName", null);
-        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage_logout, container, false);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
@@ -58,33 +56,18 @@ public class MyPageLogOutFragment extends Fragment {
             }
         });
 
-        imgViewProfile = rootView.findViewById(R.id.imageview_profile);
-        tvID = rootView.findViewById(R.id.tv_nickname);
 
 
-        StaticUserInformation.nickName=preferences.getString("nickName", null);
-        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
-
-
-
-//        // 로그인 & 회원가입
+        // 로그인 & 회원가입
         btnLogin = rootView.findViewById(R.id.ll_login);
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivityForResult(intent ,REQ_COD_LOGIN);
-//                getContext().startActivity(intent);
-//                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
+
             }
         });
-
-
-
-
-
-
-
 
         return rootView;
     }

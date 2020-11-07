@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class KeywordAlarmActivity extends AppCompatActivity {
     EditText et_keyword;
     ListView lv_keyword;
     String selected_item;
-    TextView btn_back;
+    ImageButton btn_back;
 
     NotificationManager manager;
     private static String CHANNEL_ID = "channel1";
@@ -45,7 +46,7 @@ public class KeywordAlarmActivity extends AppCompatActivity {
         btn_register = (Button)findViewById(R.id.btn_keyword_register);
         et_keyword = (EditText)findViewById(R.id.et_keyword_register);
         lv_keyword = (ListView)findViewById(R.id.lv_keyword);
-        btn_back = (TextView) findViewById(R.id.btn_back);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
 
         final ArrayList<String> keyword = new ArrayList<String>();
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, keyword);
