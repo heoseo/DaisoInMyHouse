@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,6 @@ import com.kakao.message.template.ButtonObject;
 import com.kakao.message.template.ContentObject;
 import com.kakao.message.template.FeedTemplate;
 import com.kakao.message.template.LinkObject;
-import com.kakao.message.template.SocialObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
@@ -42,12 +40,12 @@ import java.util.concurrent.ExecutionException;
 
 public class ItemInformationActivity extends AppCompatActivity {
 
-    ImageView ivShare, ivNoWish, ivWish;
-    FrameLayout btn_wish;
+    ImageView ivShare, ivWish;
     TextView tvProduct_name, tvProduct_price, tvProduct_content, tvNickname;
 
     String product_no, nickname, user_id, product_name;
-    String userID = "";
+    String myID = "";
+    String myNickName="";
     String yourName;
     // 1028 코드추가(HomeFragment에서 아이템 클릭시 전달한 해당 상품ID 가져옴)
     @SuppressLint("ClickableViewAccessibility")
@@ -60,13 +58,14 @@ public class ItemInformationActivity extends AppCompatActivity {
         product_name = getIntent().getExtras().get("product_name").toString();
         String product_price = getIntent().getExtras().get("product_name").toString();
         String product_content = getIntent().getExtras().get("product_content").toString();
-        user_id = getIntent().getExtras().get("user_id").toString();
+        user_id = getIntent().getExtras().get("user_id").toString();    // 상품판매자ID
 
         tvProduct_name = (TextView)findViewById(R.id.tv_item_name);
         tvProduct_price = (TextView)findViewById(R.id.tv_item_price);
         tvProduct_content = (TextView)findViewById(R.id.tv_item_detail);
         tvNickname = (TextView)findViewById(R.id.tv_nickname);
 
+        // 상품 판매자 닉네임
         GetNickname getNickname = new GetNickname();
         try {
             nickname = getNickname.execute(user_id).get();
@@ -84,13 +83,14 @@ public class ItemInformationActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
         StaticUserInformation.userID=preferences.getString("userID", null);
-        userID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
+        myID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
 
+        // 찜 아이콘 처음 초기화.(빈하트 or 채운하트)
         ivWish = (ImageView)findViewById(R.id.imageview_wish);
 
         WishListFlag flag = new WishListFlag();
         try {
-            String flag_result = flag.execute(userID, product_no).get();
+            String flag_result = flag.execute(myID, product_no).get();
             if(flag_result.equals("0")) { //이미 위시리스트에 있음
                 ivWish.setImageResource(R.drawable.like);
             }else{
@@ -118,7 +118,7 @@ public class ItemInformationActivity extends AppCompatActivity {
                     //로직 수행
                     WishListAddActivity task = new WishListAddActivity();
                     try {
-                        String result = task.execute(userID, product_no).get();
+                        String result = task.execute(myID, product_no).get();
                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -133,7 +133,7 @@ public class ItemInformationActivity extends AppCompatActivity {
                     //로직 수행
                     WishListRemoveActivity task = new WishListRemoveActivity();
                     try {
-                        String result = task.execute(userID, product_no).get();
+                        String result = task.execute(myID, product_no).get();
                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -182,10 +182,12 @@ public class ItemInformationActivity extends AppCompatActivity {
 
                         Set<String> set = new HashSet<String>();
                         Iterator i = dataSnapshot.getChildren().iterator();
+                        String findRoomName = null;
 
                         while (i.hasNext()) {
+                            Log.i("테스트", "while문 들어옴");
 //                    set.add(((DataSnapshot) i.next()).getKey());
-                            String findRoomName = ((DataSnapshot) i.next()).getKey();
+                            findRoomName = ((DataSnapshot) i.next()).getKey();
 
                             // >를 기준으로 문자열을 추출할 것이다.
                             // 먼저 >의 인덱스를 찾는다.
@@ -201,19 +203,16 @@ public class ItemInformationActivity extends AppCompatActivity {
 
                             try{
                                 if(StaticUserInformation.nickName.equals(firstName))
+                                {
                                     findRoomName = StaticUserInformation.nickName +">"+ nickname;
+                                }
                                 else if(StaticUserInformation.nickName.equals(lastName))
+                                {
                                     findRoomName = nickname +">"+StaticUserInformation.nickName;
-                                else{       // 저장된 채팅이름없음.=> 디비에 저장
-                                    Log.i("테스트", "저장된채팅방이 없으므로 디비 저장");
-                                    Map<String, Object> map = new HashMap<String, Object>();
-                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
-
-                                    map.put(StaticUserInformation.nickName + ">" + nickname, StaticUserInformation.nickName + ">" + nickname);
-                                    reference.updateChildren(map);
-                                    findRoomName=StaticUserInformation.nickName + ">" + nickname;
                                 }
 
+
+                                Log.i("테스트", "findRoomName:"+findRoomName);
                                 StaticUserInformation.roomSet.add(findRoomName);
                             }
                             catch(Exception e){
@@ -221,6 +220,22 @@ public class ItemInformationActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+
+                        // 저장된 채팅이름없음.=> 디비에 저장
+                        if(findRoomName==null){
+
+                            Log.i("테스트", "저장된채팅방이 없으므로 디비 저장");
+                            Map<String, Object> map = new HashMap<String, Object>();
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
+
+                            map.put(StaticUserInformation.nickName + ">" + nickname, StaticUserInformation.nickName + ">" + nickname);
+                            reference.updateChildren(map);
+    //                        String findRoomName=StaticUserInformation.nickName + ">" + nickname;
+                            findRoomName=StaticUserInformation.nickName + ">" + nickname;
+                            Log.i("테스트", "findRoomName:"+findRoomName);
+                            StaticUserInformation.roomSet.add(findRoomName);
+                        }
+
                     }
                     @Override public void onCancelled(DatabaseError databaseError) {
                     }
@@ -228,7 +243,6 @@ public class ItemInformationActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
-//                System.out.println("@@@@@@@@@@@@@@@"+ getNewRoomName);
                 intent.putExtra("your_name", nickname);
                 startActivity(intent);
             }
@@ -260,7 +274,7 @@ public class ItemInformationActivity extends AppCompatActivity {
         serverCallbackArgs.put("user_id", "${current_user_id}");
         serverCallbackArgs.put("product_id", "${shared_product_id}");
 
-        KakaoLinkService.getInstance().sendDefault(this, params, serverCallbackArgs, new ResponseCallback<KakaoLinkResponse>() {
+        KakaoLinkService.getInstance().sendDefault(getApplicationContext(), params, serverCallbackArgs, new ResponseCallback<KakaoLinkResponse>() {
             @Override
             public void onFailure(ErrorResult errorResult) {
                 Logger.e(errorResult.toString());

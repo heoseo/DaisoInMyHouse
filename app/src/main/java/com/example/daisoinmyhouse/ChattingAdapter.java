@@ -51,10 +51,11 @@ public class ChattingAdapter extends BaseAdapter {
             itemView= layoutInflater.inflate(R.layout.my_msgbox,viewGroup,false);
         }else{
             itemView= layoutInflater.inflate(R.layout.other_msgbox,viewGroup,false);
+            CircleImageView iv= itemView.findViewById(R.id.iv);
+            Glide.with(itemView).load(item.getPofileUrl()).into(iv);
         }
 
         //만들어진 itemView에 값들 설정
-        CircleImageView iv= itemView.findViewById(R.id.iv);
         TextView tvName= itemView.findViewById(R.id.tv_name);
         TextView tvMsg= itemView.findViewById(R.id.tv_msg);
         TextView tvTime= itemView.findViewById(R.id.tv_time);
@@ -63,7 +64,6 @@ public class ChattingAdapter extends BaseAdapter {
         tvMsg.setText(item.getMessage());
         tvTime.setText(item.getTime());
 
-        Glide.with(itemView).load(item.getPofileUrl()).into(iv);
 
         return itemView;
     }
