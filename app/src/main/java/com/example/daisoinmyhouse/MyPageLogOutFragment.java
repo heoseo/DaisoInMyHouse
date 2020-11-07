@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,7 @@ public class MyPageLogOutFragment extends Fragment {
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
     LinearLayout btnKeyword;
-    LinearLayout btnLogin;
+    RelativeLayout btnLogin;
     Button btnLogout;
     LinearLayout btnTransaction;
     TextView tvID;

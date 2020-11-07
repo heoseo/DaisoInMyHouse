@@ -8,32 +8,41 @@
     tools:context=".MainActivity"
     tools:ignore="MissingDefaultResource">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="50dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <ImageButton
+            android:id="@+id/btn_bell"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_bell"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_setting"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"/>
 
         <ImageButton
             android:id="@+id/btn_setting"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginVertical="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_setting"
+            android:layout_margin="13dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/setting" />
-    </LinearLayout>
+            android:scaleType="fitCenter"/>
 
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -41,31 +50,34 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerInParent="true"
-            android:layout_above="@id/et_name"
+            android:layout_alignParentLeft="true"
             android:layout_margin="10dp"
             android:src="@drawable/profile"/>
 
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_msg_login"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:text="로그인해주세요"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imageview_profile"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tv_msg_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:text="로그인해주세요"
-                android:textColor="#000000"
-                android:textSize="20dp" />
+        <ImageButton
+            android:id="@+id/btn_arrow_right"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_arrow_right"
+            android:layout_margin="13dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"/>
 
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,12 +32,12 @@ public class MyPageFragment extends Fragment {
     ImageButton btnArrow;
     LinearLayout btnSettingMyArea;
     LinearLayout btnProfile;
-    LinearLayout btnKeyword;
+    RelativeLayout btnKeyword;
     Button btnLogin;
     Button btnLogout;
-    LinearLayout btnTransaction;
+    RelativeLayout btnTransaction;
     TextView tvNickName;
-    LinearLayout btnWishlist;
+    RelativeLayout btnWishlist;
     SharedPreferences preferences;
 
     @Nullable
@@ -74,7 +75,7 @@ public class MyPageFragment extends Fragment {
 
 
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
-        ImageButton btnPopUp = rootView.findViewById(R.id.btn_profile_popup);
+        RelativeLayout btnPopUp = rootView.findViewById(R.id.ll_profile);
         btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +130,7 @@ public class MyPageFragment extends Fragment {
 
 
         // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
-        btnKeyword = rootView.findViewById(R.id.ll_setting_keyword_notice);
+        btnKeyword = rootView.findViewById(R.id.ll_keword_notice);
         btnKeyword.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -152,7 +153,7 @@ public class MyPageFragment extends Fragment {
 
 
         //찜한 목록 띄우기
-        btnWishlist = rootView.findViewById((R.id.ll_heart));
+        btnWishlist = rootView.findViewById((R.id.ll_wishlist));
         btnWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
