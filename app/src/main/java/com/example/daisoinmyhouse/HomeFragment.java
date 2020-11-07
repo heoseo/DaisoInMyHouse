@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import org.json.JSONArray;
@@ -30,14 +32,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Date;
 import android.util.Log;
+import android.widget.TextView;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
     //홈화면 RecyclerView 설정
     RecyclerView recyclerView;
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
     ImageButton btn_wishlist, btn_search;
     RelativeLayout btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;
+    LinearLayout ll_want, ll_rent;
+    TextView tv_want, tv_rent;
 
     private FragmentManager fragmentManager;
     private HomeRentItemFragment fragmentRent;
@@ -51,23 +56,32 @@ public class HomeFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        fragmentManager = getActivity().getSupportFragmentManager();
+        ll_rent = v.findViewById(R.id.ll_rent);
+        ll_want = v.findViewById(R.id.ll_want);
+        tv_rent = v.findViewById(R.id.tv_rent);
+        tv_want = v.findViewById(R.id.tv_want);
+        ll_rent.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+        ll_rent.setOnClickListener(this);
+        ll_want.setOnClickListener(this);
+        tv_rent.setTextColor(getContext().getResources().getColor(R.color.white));
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+
+        fragmentRent = new HomeRentItemFragment();
+        fragmentWant = new HomeWantItemFragment();
+
+        transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frameLayout, fragmentRent).commitAllowingStateLoss();
+
+
+
+
+//        //홈화면 RecyclerView 설정
+//        recyclerView = (RecyclerView) v.findViewById(R.id.rv_product);
+//        layoutManager = new GridLayoutManager(getActivity(), 2);
+//        recyclerView.setLayoutManager(layoutManager);
 //
-//        fragmentRent = new HomeRentItemFragment();
-//        fragmentWant = new HomeWantItemFragment();
-//
-//        transaction = fragmentManager.beginTransaction();
-//        transaction.replace(R.id.frameLayout, fragmentRent).commitAllowingStateLoss();
-
-
-
-
-        //홈화면 RecyclerView 설정
-        recyclerView = (RecyclerView) v.findViewById(R.id.rv_product);
-        layoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setAdapter(adapter);
 
         //위시리스트 띄우기
         btn_wishlist = v.findViewById(R.id.img_btn_wishlist);
@@ -156,9 +170,32 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
         return v;
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        transaction = fragmentManager.beginTransaction();
+
+        switch(v.getId())
+        {
+            case R.id.ll_rent:
+                transaction.replace(R.id.frameLayout, fragmentRent).commitAllowingStateLoss();
+                ll_rent.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+                ll_want.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+                tv_rent.setTextColor(getContext().getResources().getColor(R.color.white));
+                tv_want.setTextColor(getContext().getResources().getColor(R.color.gray));
+                break;
+            case R.id.ll_want:
+                transaction.replace(R.id.frameLayout, fragmentWant).commitAllowingStateLoss();
+                ll_rent.setBackgroundColor(getContext().getResources().getColor(R.color.colorAccent));
+                ll_want.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
+                tv_rent.setTextColor(getContext().getResources().getColor(R.color.gray));
+                tv_want.setTextColor(getContext().getResources().getColor(R.color.white));
+                Log.i("homeTest", "ll_want선택됨");
+                break;
+        }
     }
 
     @Override
@@ -167,20 +204,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-//    public void clickHandler(View view)
-//    {
-//        transaction = fragmentManager.beginTransaction();
-//
-//        switch(view.getId())
-//        {
-//            case R.id.ll_rent:
-//                transaction.replace(R.id.frameLayout, fragmentRent).commitAllowingStateLoss();
-//                break;
-//            case R.id.ll_want:
-//                transaction.replace(R.id.frameLayout, fragmentWant).commitAllowingStateLoss();
-//                break;
-//        }
-//    }
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
