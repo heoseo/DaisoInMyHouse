@@ -40,7 +40,6 @@
     </RelativeLayout>
 
     <View
-        android:layout_marginVertical="10dp"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="6px" />
@@ -72,20 +71,11 @@
             android:textColor="#000000"
             android:textSize="20dp" />
 
-
-
     </RelativeLayout>
 
     <View
-        android:layout_marginVertical="10dp"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="6px" />
-
-
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
 
 </LinearLayout>

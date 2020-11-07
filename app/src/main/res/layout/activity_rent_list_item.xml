@@ -19,7 +19,8 @@
                 android:id="@+id/imageView_rent_item"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:srcCompat="@drawable/sample1" />
+                app:srcCompat="@drawable/sample1"
+                android:scaleType="centerCrop"/>
 
         </FrameLayout>
 
@@ -31,22 +32,43 @@
 
             <TextView
                 android:id="@+id/tv_rent_item_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
                 android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"/>
 
-            <TextView
-                android:id="@+id/tv_rent_item_price"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text=" 원"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp">
+
+                <TextView
+                    android:id="@+id/tv_rent_item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_price_unit"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_price_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="2dp"
+                    android:paddingLeft="2dp"
+                    android:paddingTop="2dp"
+                    android:text="원"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_rent_item_id"
@@ -62,7 +84,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="#808080"
                 android:textSize="14sp" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

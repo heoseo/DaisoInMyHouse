@@ -4,44 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:orientation="horizontal">
+        android:layout_height="50dp">
 
-        <TextView
+        <ImageButton
             android:id="@+id/btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="←"
-            android:textSize="30dp" />
-
-
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_back"
+            android:layout_margin="13dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"/>
 
         <TextView
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:text="대여/임대 목록"
+            android:text="대여 / 임대 목록"
             android:textColor="#000000"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"/>
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="10dp" />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="6dp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,8 +38,9 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_rent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -58,21 +48,18 @@
                 android:id="@+id/tv_rent_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:gravity="center"
                 android:text="대여"
-                android:textColor="#808080" />
+                android:textSize="16sp" />
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#808080" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_want"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -80,23 +67,18 @@
                 android:id="@+id/tv_lease_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:text="임대"
-                android:textColor="#FF0000" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#FF0000" />
         </LinearLayout>
-    </LinearLayout>
 
-    <View
-        android:id="@+id/view5"
-        android:layout_width="match_parent"
-        android:layout_height="15dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -107,6 +89,7 @@
             android:id="@+id/rv_lease_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </LinearLayout>
