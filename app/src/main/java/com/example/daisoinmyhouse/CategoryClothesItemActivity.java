@@ -97,7 +97,7 @@ public class CategoryClothesItemActivity extends AppCompatActivity {
                 osw.flush();
                 //jsp와 통신 성공 시 수행
                 if (conn.getResponseCode() == conn.HTTP_OK) {
-                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "EUC-kr");
                     BufferedReader reader = new BufferedReader(tmp);
                     StringBuffer buffer = new StringBuffer();
                     String page = "";

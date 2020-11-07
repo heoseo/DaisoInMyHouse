@@ -94,7 +94,7 @@ public class ItemInformationActivity extends AppCompatActivity {
             if(flag_result.equals("0")) { //이미 위시리스트에 있음
                 ivWish.setImageResource(R.drawable.like);
             }else{
-                ivWish.setImageResource(R.drawable.unlike);
+                ivWish.setImageResource(R.drawable.btn_wishlist);
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -108,7 +108,7 @@ public class ItemInformationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Drawable tempImg = ivWish.getDrawable();
-                Drawable tempRes = ItemInformationActivity.this.getResources().getDrawable(R.drawable.unlike);
+                Drawable tempRes = ItemInformationActivity.this.getResources().getDrawable(R.drawable.btn_wishlist);
                 Bitmap tmpBitmap = ((BitmapDrawable)tempImg).getBitmap();
                 Bitmap tmpBitmapRes = ((BitmapDrawable)tempRes).getBitmap();
 
@@ -129,7 +129,7 @@ public class ItemInformationActivity extends AppCompatActivity {
                 }
                 // like면 unlike로 바꿈.
                 else{
-                    ivWish.setImageResource(R.drawable.unlike);
+                    ivWish.setImageResource(R.drawable.btn_wishlist);
                     //로직 수행
                     WishListRemoveActivity task = new WishListRemoveActivity();
                     try {
