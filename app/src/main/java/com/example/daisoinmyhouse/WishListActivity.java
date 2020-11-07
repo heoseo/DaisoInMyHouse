@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,8 @@ public class WishListActivity extends AppCompatActivity {
 
         String user_id = StaticUserInformation.userID;
 
+        Log.i("user_id", user_id);
+
         WishlistList task = new WishlistList();
         task.execute(user_id);
 
@@ -55,7 +58,7 @@ public class WishListActivity extends AppCompatActivity {
         adapter.setOnWishlistClickListener(new WishListClickListener() {
             @Override
             public void onItemClick(WishListAdapter.ViewHolder holder, View view, int position) {
-                WIshList wishlist = (WIshList) adapter.getItem(position);
+                WishList wishlist = (WishList) adapter.getItem(position);
                 Toast.makeText(getApplicationContext(), "선택된 제품 : " + wishlist.getProduct_name(), Toast.LENGTH_LONG).show();
 
                 //(ItemInformationActivity에 상품 ID 전달)
@@ -116,13 +119,15 @@ public class WishListActivity extends AppCompatActivity {
                         json = jArr.getJSONObject(i);
 
 
-                        adapter.addItem(new WIshList(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
+                        adapter.addItem(new WishList(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
                                 json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
                         receiveMsg = buffer.toString();
+
+                        Log.i("위시리스트", receiveMsg);
                     }
                 } else{
                     //통신실패

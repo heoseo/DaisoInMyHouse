@@ -57,17 +57,34 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.writeNewItem: {
-                        transaction.replace(R.id.frame_layout, writeNewItemFragment).commitAllowingStateLoss();
+                        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                        StaticUserInformation.nickName=preferences.getString("nickName", null);
+                        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
+
+                        if (StaticUserInformation.nickName != null) {
+                            transaction.replace(R.id.frame_layout, writeNewItemFragment).commitAllowingStateLoss();
+                        }
+                        else if(StaticUserInformation.nickName == null){
+                            transaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
+                        }
                         break;
                     }
                     case R.id.chattingItem: {
-                        transaction.replace(R.id.frame_layout, chattingFragment).commitAllowingStateLoss();
+                        SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                        StaticUserInformation.nickName=preferences.getString("nickName", null);
+                        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
+
+                        if (StaticUserInformation.nickName != null) {
+                            transaction.replace(R.id.frame_layout, chattingFragment).commitAllowingStateLoss();
+                        }
+                        else if(StaticUserInformation.nickName == null){
+                            transaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
+                        }
                         break;
                     }
                     case R.id.mypageItem: {
                         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
                         StaticUserInformation.nickName=preferences.getString("nickName", null);
-                        StaticUserInformation.porfileUrl =preferences.getString("profileUrl", null);
 
                         if (StaticUserInformation.nickName != null) {
                             transaction.replace(R.id.frame_layout, myPageFragment).commitAllowingStateLoss();

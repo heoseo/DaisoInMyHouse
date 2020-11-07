@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHolder> implements WishListClickListener {
 
-    ArrayList<WIshList> items = new ArrayList<WIshList>();
+    ArrayList<WishList> items = new ArrayList<WishList>();
     WishListClickListener listener;
 
 
@@ -29,7 +29,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        WIshList wishlist = items.get(position);
+        WishList wishlist = items.get(position);
         holder.setItem(wishlist);
     }
 
@@ -38,19 +38,19 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
         return items.size();
     }
 
-    public void addItem(WIshList wishlist){
+    public void addItem(WishList wishlist){
         items.add(wishlist);
     }
 
-    public void setItems(ArrayList<WIshList> items){
+    public void setItems(ArrayList<WishList> items){
         this.items = items;
     }
 
-    public WIshList getItem(int position){
+    public WishList getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, WIshList wishlist){
+    public void setItem(int position, WishList wishlist){
         items.set(position, wishlist);
     }
 
@@ -96,7 +96,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             });
         }
 
-        public void setItem(WIshList wishlist){
+        public void setItem(WishList wishlist){
 
             tvName.setText(wishlist.getProduct_name());
             tvPrice.setText(String.valueOf(wishlist.getProduct_price()));

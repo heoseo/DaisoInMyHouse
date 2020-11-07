@@ -97,15 +97,10 @@ public class ChattingFragment extends Fragment {
                     String lastName = getNewRoomName.substring(idx+1);
 
                     try{
-
                         if(StaticUserInformation.nickName.equals(firstName))
-                        {
                             set.add(lastName);
-                        }
                         else if(StaticUserInformation.nickName.equals(lastName))
-                        {
                             set.add(firstName);
-                        }
 
                         StaticUserInformation.roomSet.add(getNewRoomName);
                     }
