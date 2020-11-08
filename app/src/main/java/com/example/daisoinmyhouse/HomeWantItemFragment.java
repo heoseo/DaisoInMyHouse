@@ -24,7 +24,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Date;
 
 public class HomeWantItemFragment extends Fragment {
 
@@ -54,7 +53,58 @@ public class HomeWantItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //prepareData();
 
-        ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/productList.jsp", null);
+
+//        wantAdapter.addItem(new ItemWant("test1234",
+//                "컴퓨터구해요",
+//                "천안시 쌍용동",
+//                "2020-11-07 13:00:00",
+//                1,
+//                "컴퓨터",
+//                "의류")
+//        );
+//        wantAdapter.addItem(new ItemWant("test1234",
+//                "컴퓨터구해요",
+//                "천안시 쌍용동",
+//                "2020-11-07 13:00:00",
+//                1,
+//                "컴퓨터",
+//                "생활용품")
+//        );
+//        wantAdapter.addItem(new ItemWant("test1234",
+//                "컴퓨터구해요",
+//                "천안시 쌍용동",
+//                "2020-11-07 13:00:00",
+//                1,
+//                "컴퓨터",
+//                "주방용품")
+//        );
+//        wantAdapter.addItem(new ItemWant("test1234",
+//                "컴퓨터구해요",
+//                "천안시 쌍용동",
+//                "2020-11-07 13:00:00",
+//                1,
+//                "컴퓨터",
+//                "디지털")
+//        );
+//        wantAdapter.addItem(new ItemWant("test1234",
+//                "컴퓨터구해요",
+//                "천안시 쌍용동",
+//                "2020-11-07 13:00:00",
+//                1,
+//                "컴퓨터",
+//                "도서")
+//        );
+//        wantAdapter.addItem(new ItemWant("test1234",
+//                "컴퓨터구해요",
+//                "천안시 쌍용동",
+//                "2020-11-07 13:00:00",
+//                1,
+//                "컴퓨터",
+//                "기타")
+//        );
+
+
+        ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/wantList.jsp", null);
         networkTask.execute();
 
         wantAdapter.setOnItemClickListener(new OnProductItemClickListener() {
@@ -67,10 +117,10 @@ public class HomeWantItemFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ItemWantInformationActivity.class);
 //                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
 //                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
-                intent.putExtra("product_no", itemWant.getProduct_no());
+                intent.putExtra("product_no", itemWant.getWant_no());
                 intent.putExtra("user_id", itemWant.getUser_id());
-                intent.putExtra("product_name", itemWant.getProduct_name());
-                intent.putExtra("product_content", itemWant.getProduct_content());
+                intent.putExtra("product_name", itemWant.getWant_name());
+                intent.putExtra("product_content", itemWant.getWant_content());
                 intent.putExtra("location", itemWant.getLocation());
                 intent.putExtra("category", itemWant.getCategory());
                 getContext().startActivity(intent);
@@ -163,25 +213,23 @@ public class HomeWantItemFragment extends Fragment {
                     try {
                         // JSP에서 보낸 JSON 받아오자  JSONObject = siteDataMain
                         JSONObject json = new JSONObject(page);
-                        JSONArray jArr = json.getJSONArray("PRODUCT_LIST");
+                        JSONArray jArr = json.getJSONArray("WANT_LIST");
 
                         // JSON이 가진 크기만큼 데이터를 받아옴
                         for (int i = 0; i < jArr.length(); i++) {
                             json = jArr.getJSONObject(i);
 
                             wantAdapter.addItem(new ItemWant(json.getString("user_id"),
-                                                    json.getString("product_content"),
+                                                    json.getString("want_content"),
                                                     json.getString("location"),
                                                     json.getString("time"),
-                                                    json.getInt("product_no"),
-                                                    json.getString("product_name"),
-                                                    json.getString("category")));
+                                                    json.getInt("want_no"),
+                                                    json.getString("want_name"),
+                                                    json.getString("want_cate"))
+                                                    );
 
 
-                            Log.i("테스트", "ok");
                         }
-                        // 가져온 데이터들 확인
-                        // textView.setText(가공 데이터);
                     } catch(Exception e){
                         e.printStackTrace();;
                     }

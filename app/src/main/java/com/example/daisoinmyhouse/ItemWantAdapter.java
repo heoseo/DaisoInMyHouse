@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,7 +77,8 @@ public class ItemWantAdapter extends RecyclerView.Adapter<ItemWantAdapter.ViewHo
         TextView tvName;
         TextView tvLocation;
         TextView tvTime;
-        TextView tvCategory;
+
+        ImageView imageView1;
 
 
         public ViewHolder(View itemView, final OnProductItemClickListener listener){
@@ -85,7 +87,8 @@ public class ItemWantAdapter extends RecyclerView.Adapter<ItemWantAdapter.ViewHo
             tvName = itemView.findViewById(R.id.tv_item_name);
             tvLocation = itemView.findViewById(R.id.tv_item_location);
             tvTime = itemView.findViewById(R.id.tv_item_time);
-            tvCategory = itemView.findViewById(R.id.tv_item_category);
+
+            imageView1 = itemView.findViewById(R.id.imageView_item);
 
 
             itemView.setOnClickListener(new View.OnClickListener(){
@@ -102,10 +105,32 @@ public class ItemWantAdapter extends RecyclerView.Adapter<ItemWantAdapter.ViewHo
         }
 
         public void setItem(ItemWant itemWant) throws ParseException {
-            tvName.setText(itemWant.getProduct_name());
+            tvName.setText(itemWant.getWant_name());
             tvLocation.setText(itemWant.getLocation());
             tvTime.setText(getGap(itemWant.getTime()));
-            tvCategory.setText(itemWant.getCategory());
+
+            switch(itemWant.getCategory()){
+                case "의류":
+                    imageView1.setImageResource(R.drawable.img_clothes);
+                    break;
+                case "생활용품":
+                    imageView1.setImageResource(R.drawable.img_clean);
+                    break;
+                case "주방용품":
+                    imageView1.setImageResource(R.drawable.img_kitchen);
+                    break;
+                case "디지털":
+                    imageView1.setImageResource(R.drawable.img_digital);
+                    break;
+                case "도서":
+                    imageView1.setImageResource(R.drawable.img_book);
+                    break;
+                case "기타":
+                    imageView1.setImageResource(R.drawable.img_etc);
+                    break;
+
+            }
+
         }
 
         public String getGap(String productTime) throws ParseException{

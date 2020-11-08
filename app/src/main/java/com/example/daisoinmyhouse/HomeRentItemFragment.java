@@ -176,10 +176,6 @@ public class HomeRentItemFragment extends Fragment {
                             adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
                                     json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
 
-//                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
-//                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
-//                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
-
                             Log.i("테스트", "ok");
                         }
                         // 가져온 데이터들 확인

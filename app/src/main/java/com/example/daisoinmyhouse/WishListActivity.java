@@ -116,8 +116,7 @@ public class WishListActivity extends AppCompatActivity {
                     JSONArray jArr = json.getJSONArray("WISHLIST_LIST");
 
                     // JSON이 가진 크기만큼 데이터를 받아옴
-                    int i = 0;
-                    for (i=0; i < jArr.length(); i++) {
+                    for (int i=0; i < jArr.length(); i++) {
                         json = jArr.getJSONObject(i);
 
 
@@ -129,11 +128,7 @@ public class WishListActivity extends AppCompatActivity {
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
                         receiveMsg = buffer.toString();
 
-                        Log.i("위시리스트", (i+1) +": " + receiveMsg);
                     }
-
-                    setCntWishList(i);
-                    Log.i("위시리스트", i+"개 저장됨 ");
 
                 } else{
                     //통신실패
@@ -148,15 +143,6 @@ public class WishListActivity extends AppCompatActivity {
             return receiveMsg;
         }
 
-        public void setCntWishList(int cnt){
-            SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
-            SharedPreferences.Editor editor=preferences.edit();
-
-            editor.putString("cntWishList", Integer.toString(cnt));
-            editor.apply();
-
-            StaticUserInformation.cntWishList = preferences.getString("cntWishList", String.valueOf(cnt));
-        }
     }
 
     @Override public void onResume() {
