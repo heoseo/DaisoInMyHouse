@@ -1,10 +1,13 @@
 package com.example.daisoinmyhouse;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.Date;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -162,5 +179,82 @@ public class MyPageFragment extends Fragment {
 
         return rootView;
     }
+
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        //prepareData();
+        SharedPreferences preferences = getActivity().getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.userID =preferences.getString("userID", null);
+
+
+        GetCntWishList getCntWishList = new GetCntWishList();
+        String cntWishList = null;    // 성공하면 닉네임 반환
+        try {
+            cntWishList = getCntWishList.execute(StaticUserInformation.userID).get();
+            Log.i("cntWishListTest", "get : "+cntWishList);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putString("cntWishList", cntWishList );
+
+        editor.apply();
+        editor.commit();
+        StaticUserInformation.cntWishList = preferences.getString("cntWishList", null);
+
+        Log.i("cntWishListTest", "getStatic : "+StaticUserInformation.cntWishList);
+
+
+    }
+
+    public class GetCntWishList extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
+                URL url = new URL("http://daisoinmyhouse.cafe24.com/wishlistCount.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                // 전송할 데이터. GET 방식으로 작성
+                sendMsg = "user_id=" + strings[0] ;
+                osw.write(sendMsg);
+                osw.flush();
+                //jsp와 통신 성공 시 수행
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    // jsp에서 보낸 값을 받는 부분
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                        System.out.println("cnt : " + str);
+                    }
+                    receiveMsg = buffer.toString();
+                    Log.i("cntWishListTest", receiveMsg);
+                } else {
+                    // 통신 실패
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //jsp로부터 받은 리턴 값
+            return receiveMsg;
+        }
+    }
+
+
+
+
+
+
 
 }

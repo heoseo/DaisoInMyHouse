@@ -1,5 +1,6 @@
 package com.example.daisoinmyhouse;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHolder> implements WishListClickListener {
 
@@ -30,7 +34,11 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         WishList wishlist = items.get(position);
-        holder.setItem(wishlist);
+        try {
+            holder.setItem(wishlist);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -96,14 +104,53 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             });
         }
 
-        public void setItem(WishList wishlist){
+        public void setItem(WishList wishlist) throws ParseException {
 
             tvName.setText(wishlist.getProduct_name());
             tvPrice.setText(String.valueOf(wishlist.getProduct_price()));
             tvLocation.setText(wishlist.getLocation());
-            tvTime.setText(wishlist.getTime());
+            tvTime.setText(getGap(wishlist.getTime()));
 
             imageView1.setImageResource(wishlist.getImageRes());
+        }
+
+        public String getGap(String productTime) throws ParseException {
+
+            String strGap="";
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date productTimeDate = dateFormat.parse(productTime);
+            long productTimeLong = productTimeDate.getTime();
+
+            Date curTime = new Date();
+            curTime = dateFormat.parse(dateFormat.format(curTime));
+            long curTimeLong = curTime.getTime();
+
+
+            //분으로 표현
+            long gap = (curTimeLong - productTimeLong) / 60000;
+            strGap = gap+"분";
+            if(gap > 60)// 60분 넘으면
+            {
+                gap = gap / 60;	// 시간으로
+                strGap = gap+"시간";
+                if(gap > 24)	// 24시간 넘으면
+                {
+                    long calDate = curTime.getTime() - productTimeDate.getTime();
+
+                    // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
+                    // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
+                    long calDateDays = calDate / ( 24*60*60*1000);
+
+                    gap = Math.abs(calDateDays);	// 일로.
+                    strGap = gap+"일";
+                }
+
+
+            }
+            Log.i("timeTest", strGap);
+
+            return strGap;
         }
     }
 

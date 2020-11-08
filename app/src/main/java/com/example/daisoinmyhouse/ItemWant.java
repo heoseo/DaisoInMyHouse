@@ -2,31 +2,29 @@ package com.example.daisoinmyhouse;
 
 import java.sql.Date;
 
-public class Item {
+public class ItemWant {
     String product_name;
     String user_id;
     String location;
     String time;
-    int product_price;
-    int imageRes;
     //1028코드추가
     int product_no;
     String product_content;
+    String category;
 
-    public Item(){
+    public ItemWant(){
 
     }
 
-    public Item(String user_id, String product_content, String location, int product_price, String time, int product_no,  String product_name, int imageRes){
+    public ItemWant(String user_id, String product_content, String location, String time, int product_no,  String product_name, String category){
         this.product_name = product_name;
         this.user_id = user_id;
         this.location = location;
         this.time = time;
-        this.product_price = product_price;
-        this.imageRes = imageRes;
         //1028 코드추가
         this.product_no = product_no;
         this.product_content = product_content;
+        this.category = category;
     }
 
     public String getProduct_name() {
@@ -61,23 +59,6 @@ public class Item {
         this.time = time;
     }
 
-    public int getProduct_price() {
-        return product_price;
-    }
-
-    public void setProduct_price(int product_price) {
-        this.product_price = product_price;
-    }
-
-    public int getImageRes() {
-        return imageRes;
-    }
-
-    public void setImageRes(int imageRes) {
-        this.imageRes = imageRes;
-    }
-
-    // 1028코드추가
     public int getProduct_no() {
         return product_no;
     }
@@ -92,6 +73,14 @@ public class Item {
 
     public void setProduct_content(String product_content){
         this.product_content = product_content;
+    }
+
+    public String getCategory(){
+        return category;
+    }
+
+    public void setCategory(String category){
+        this.category = category;
     }
 
 }

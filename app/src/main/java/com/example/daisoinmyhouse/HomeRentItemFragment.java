@@ -72,8 +72,12 @@ public class HomeRentItemFragment extends Fragment {
                 intent.putExtra("product_name", item.getProduct_name());
                 intent.putExtra("product_price", item.getProduct_price());
                 intent.putExtra("product_content", item.getProduct_content());
+                intent.putExtra("location", item.getLocation());
                 getContext().startActivity(intent);
             }
+
+            @Override
+            public void onItemWantClick(ItemWantAdapter.ViewHolder holder, View view, int position) { }
         });
     }
 

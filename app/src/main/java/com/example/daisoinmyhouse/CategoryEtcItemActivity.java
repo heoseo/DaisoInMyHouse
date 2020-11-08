@@ -45,7 +45,7 @@ public class CategoryEtcItemActivity extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        tv_category = (TextView) findViewById(R.id.tv_category);
+        tv_category = (TextView) findViewById(R.id.tv_item_category);
         category = getIntent().getExtras().getString("category");
 
         CategoryList categorylist = new CategoryList();

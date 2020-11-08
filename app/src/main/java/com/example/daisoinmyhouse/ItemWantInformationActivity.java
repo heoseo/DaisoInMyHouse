@@ -1,18 +1,13 @@
 package com.example.daisoinmyhouse;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,15 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kakao.kakaolink.v2.KakaoLinkResponse;
-import com.kakao.kakaolink.v2.KakaoLinkService;
-import com.kakao.message.template.ButtonObject;
-import com.kakao.message.template.ContentObject;
-import com.kakao.message.template.FeedTemplate;
-import com.kakao.message.template.LinkObject;
-import com.kakao.network.ErrorResult;
-import com.kakao.network.callback.ResponseCallback;
-import com.kakao.util.helper.log.Logger;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,35 +24,32 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-public class ItemInformationActivity extends AppCompatActivity {
+public class ItemWantInformationActivity extends AppCompatActivity {
 
     ImageView ivShare, ivWish;
-    TextView tvProduct_name, tvProduct_price, tvProduct_content, tvNickname, tvLocation;
+    TextView tvProduct_name, tvProduct_content, tvNickname, tvLocation, tvCategory;
 
     String product_no, nickname, user_id, product_name;
     String myID = "";
     String myNickName="";
     String yourName;
 
-
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iteminformation);
 
         product_no = getIntent().getExtras().get("product_no").toString();
         product_name = getIntent().getExtras().get("product_name").toString();
-        String product_price = getIntent().getExtras().get("product_name").toString();
         String product_content = getIntent().getExtras().get("product_content").toString();
         String location = getIntent().getExtras().get("location").toString();
+        String category = getIntent().getExtras().get("category").toString();
         user_id = getIntent().getExtras().get("user_id").toString();    // 상품판매자ID
 
         tvProduct_name = (TextView)findViewById(R.id.tv_item_name);
-        tvProduct_price = (TextView)findViewById(R.id.tv_item_price);
         tvProduct_content = (TextView)findViewById(R.id.tv_item_detail);
         tvNickname = (TextView)findViewById(R.id.tv_nickname);
         tvLocation=(TextView)findViewById(R.id.tv_location);
+        tvCategory = (TextView)findViewById(R.id.tv_item_category);
 
         // 상품 판매자 닉네임
         GetNickname getNickname = new GetNickname();
@@ -79,87 +62,26 @@ public class ItemInformationActivity extends AppCompatActivity {
         }
 
         tvProduct_name.setText(product_name);
-        tvProduct_price.setText(product_price);
         tvProduct_content.setText(product_content);
         tvNickname.setText(nickname);
         tvLocation.setText(location);
+        tvCategory.setText(category);
 
 
         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
         StaticUserInformation.userID=preferences.getString("userID", null);
         myID = StaticUserInformation.userID; // !!!! <- 로그인되면 나중에 userID로 고치기!!!
 
-        // 찜 아이콘 처음 초기화.(빈하트 or 채운하트)
-        ivWish = (ImageView)findViewById(R.id.imageview_wish);
 
-        WishListFlag flag = new WishListFlag();
-        try {
-            String flag_result = flag.execute(myID, product_no).get();
-            if(flag_result.equals("0")) { //이미 위시리스트에 있음
-                ivWish.setImageResource(R.drawable.like);
-            }else{
-                ivWish.setImageResource(R.drawable.btn_wishlist);
-            }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // 찜(아이콘) 누르면 찜되기 & 찜해제
-        ivWish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Drawable tempImg = ivWish.getDrawable();
-                Drawable tempRes = ItemInformationActivity.this.getResources().getDrawable(R.drawable.btn_wishlist);
-                Bitmap tmpBitmap = ((BitmapDrawable)tempImg).getBitmap();
-                Bitmap tmpBitmapRes = ((BitmapDrawable)tempRes).getBitmap();
-
-                // unlike면 like로 바꿈.
-                if(tmpBitmap.equals(tmpBitmapRes)) {
-                    ivWish.setImageResource(R.drawable.like);
-                    //로직 수행
-                    WishListAddActivity task = new WishListAddActivity();
-                    try {
-                        String result = task.execute(myID, product_no).get();
-                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-                // like면 unlike로 바꿈.
-                else{
-                    ivWish.setImageResource(R.drawable.btn_wishlist);
-                    //로직 수행
-                    WishListRemoveActivity task = new WishListRemoveActivity();
-                    try {
-                        String result = task.execute(myID, product_no).get();
-                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-        });
-
-
-        // 공유하기 이미지뷰(아이콘) 누르면 카톡공유.
-        ivShare = (ImageView)findViewById(R.id.imageview_share);
-        ivShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + product_no, Toast.LENGTH_LONG).show();
-                kakaolink();
-            }
-        });
+//        // 공유하기 이미지뷰(아이콘) 누르면 카톡공유.
+//        ivShare = (ImageView)findViewById(R.id.imageview_share);
+//        ivShare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(), "선택된 상품ID : " + product_no, Toast.LENGTH_LONG).show();
+//                kakaolink();
+//            }
+//        });
 
 
         // 채팅하기 버튼
@@ -234,7 +156,7 @@ public class ItemInformationActivity extends AppCompatActivity {
 
                             map.put(StaticUserInformation.nickName + ">" + nickname, StaticUserInformation.nickName + ">" + nickname);
                             reference.updateChildren(map);
-    //                        String findRoomName=StaticUserInformation.nickName + ">" + nickname;
+                            //                        String findRoomName=StaticUserInformation.nickName + ">" + nickname;
                             findRoomName=StaticUserInformation.nickName + ">" + nickname;
                             Log.i("테스트", "findRoomName:"+findRoomName);
                             StaticUserInformation.roomSet.add(findRoomName);
@@ -251,42 +173,36 @@ public class ItemInformationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 
-
-    // 카카오톡 공유
-    public void kakaolink() {
-        FeedTemplate params = FeedTemplate
-                .newBuilder(ContentObject.newBuilder(product_name,
-                        "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
-                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
-                                .setMobileWebUrl("https://developers.kakao.com").build())
-                        .build())
-                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
-                        .setWebUrl("'https://developers.kakao.com")
-                        .setMobileWebUrl("'https://developers.kakao.com")
-                        .setAndroidExecutionParams("key1=value1")
-                        .setIosExecutionParams("key1=value1")
-                        .build()))
-                .build();
-
-        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
-        serverCallbackArgs.put("user_id", "${current_user_id}");
-        serverCallbackArgs.put("product_id", "${shared_product_id}");
-
-        KakaoLinkService.getInstance().sendDefault(getApplicationContext(), params, serverCallbackArgs, new ResponseCallback<KakaoLinkResponse>() {
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                Logger.e(errorResult.toString());
-            }
-
-            @Override
-            public void onSuccess(KakaoLinkResponse result) { }
-        });
-    }
-
+//    // 카카오톡 공유
+//    public void kakaolink() {
+//        FeedTemplate params = FeedTemplate
+//                .newBuilder(ContentObject.newBuilder(product_name,
+//                        "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+//                        LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
+//                                .setMobileWebUrl("https://developers.kakao.com").build())
+//                        .build())
+//                .addButton(new ButtonObject("앱에서 보기", LinkObject.newBuilder()
+//                        .setWebUrl("'https://developers.kakao.com")
+//                        .setMobileWebUrl("'https://developers.kakao.com")
+//                        .setAndroidExecutionParams("key1=value1")
+//                        .setIosExecutionParams("key1=value1")
+//                        .build()))
+//                .build();
+//
+//        Map<String, String> serverCallbackArgs = new HashMap<String, String>();
+//        serverCallbackArgs.put("user_id", "${current_user_id}");
+//        serverCallbackArgs.put("product_id", "${shared_product_id}");
+//
+//        KakaoLinkService.getInstance().sendDefault(getApplicationContext(), params, serverCallbackArgs, new ResponseCallback<KakaoLinkResponse>() {
+//            @Override
+//            public void onFailure(ErrorResult errorResult) {
+//                Logger.e(errorResult.toString());
+//            }
+//
+//            @Override
+//            public void onSuccess(KakaoLinkResponse result) { }
+//        });
+//    }
 }

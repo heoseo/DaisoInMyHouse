@@ -29,7 +29,7 @@ import java.sql.Date;
 public class HomeWantItemFragment extends Fragment {
 
     RecyclerView recyclerView;
-    ItemAdapter adapter = new ItemAdapter();
+    ItemWantAdapter wantAdapter = new ItemWantAdapter();
     GridLayoutManager layoutManager;
 
     @Nullable
@@ -43,7 +43,7 @@ public class HomeWantItemFragment extends Fragment {
         layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(wantAdapter);
 
 
 
@@ -57,23 +57,27 @@ public class HomeWantItemFragment extends Fragment {
         ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/productList.jsp", null);
         networkTask.execute();
 
-        adapter.setOnItemClickListener(new OnProductItemClickListener() {
+        wantAdapter.setOnItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
-                Item item = (Item) adapter.getItem(position);
+                ItemWant itemWant = (ItemWant) wantAdapter.getItem(position);
 //                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
 
                 // 1028 코드추가 (ItemInformationActivyty에 상품ID전달)
-                Intent intent = new Intent(getContext(), ItemInformationActivity.class);
+                Intent intent = new Intent(getContext(), ItemWantInformationActivity.class);
 //                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
 //                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
-                intent.putExtra("product_no", item.getProduct_no());
-                intent.putExtra("user_id", item.getUser_id());
-                intent.putExtra("product_name", item.getProduct_name());
-                intent.putExtra("product_price", item.getProduct_price());
-                intent.putExtra("product_content", item.getProduct_content());
+                intent.putExtra("product_no", itemWant.getProduct_no());
+                intent.putExtra("user_id", itemWant.getUser_id());
+                intent.putExtra("product_name", itemWant.getProduct_name());
+                intent.putExtra("product_content", itemWant.getProduct_content());
+                intent.putExtra("location", itemWant.getLocation());
+                intent.putExtra("category", itemWant.getCategory());
                 getContext().startActivity(intent);
             }
+
+            @Override
+            public void onItemWantClick(ItemWantAdapter.ViewHolder holder, View view, int position) { }
         });
     }
 
@@ -165,16 +169,14 @@ public class HomeWantItemFragment extends Fragment {
                         for (int i = 0; i < jArr.length(); i++) {
                             json = jArr.getJSONObject(i);
 
+                            wantAdapter.addItem(new ItemWant(json.getString("user_id"),
+                                                    json.getString("product_content"),
+                                                    json.getString("location"),
+                                                    json.getString("time"),
+                                                    json.getInt("product_no"),
+                                                    json.getString("product_name"),
+                                                    json.getString("category")));
 
-                            long now = System.currentTimeMillis();
-                            Date date = new Date(now);
-
-                            adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
-                                    json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
-
-//                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
-//                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
-//                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
 
                             Log.i("테스트", "ok");
                         }

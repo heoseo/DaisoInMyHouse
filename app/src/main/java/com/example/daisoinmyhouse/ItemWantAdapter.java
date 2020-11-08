@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,24 +14,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> implements OnProductItemClickListener {
-    ArrayList<Item> items = new ArrayList<Item>();
+public class ItemWantAdapter extends RecyclerView.Adapter<ItemWantAdapter.ViewHolder> implements OnProductItemClickListener {
+    ArrayList<ItemWant> items = new ArrayList<ItemWant>();
     OnProductItemClickListener listener;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.fragment_home_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_want, viewGroup, false);
 
         return new ViewHolder(itemView, this);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Item item = items.get(position);
+        ItemWant itemWant = items.get(position);
         try {
-            viewHolder.setItem(item);
+            viewHolder.setItem(itemWant);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -43,20 +42,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
         return items.size();
     }
 
-    public void addItem(Item item) {
-        items.add(item);
+    public void addItem(ItemWant itemWant) {
+        items.add(itemWant);
     }
 
-    public void setItems(ArrayList<Item> items){
+    public void setItems(ArrayList<ItemWant> items){
         this.items = items;
     }
 
-    public Item getItem(int position){
+    public ItemWant getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, Item item){
-        items.set(position, item);
+    public void setItem(int position, ItemWant itemWant){
+        items.set(position, itemWant);
     }
 
     public void setOnItemClickListener(OnProductItemClickListener listener){
@@ -64,32 +63,30 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
     }
 
     @Override
-    public void onItemClick(ViewHolder holder, View view, int position) {
+    public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) { }
+
+    @Override
+    public void onItemWantClick(ItemWantAdapter.ViewHolder holder, View view, int position) {
         if(listener != null){
-            listener.onItemClick(holder, view, position);
+            listener.onItemWantClick(holder, view, position);
         }
     }
 
-    @Override
-    public void onItemWantClick(ItemWantAdapter.ViewHolder holder, View view, int position) { }
-
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView tv1;
-        TextView tv2;
-        TextView tv3;
-        TextView tv4;
+        TextView tvName;
+        TextView tvLocation;
+        TextView tvTime;
+        TextView tvCategory;
 
-        ImageView imageView1;
 
         public ViewHolder(View itemView, final OnProductItemClickListener listener){
             super(itemView);
 
-            tv1 = itemView.findViewById(R.id.tv_item_name);
-            tv2 = itemView.findViewById(R.id.tv_item_price);
-            tv3 = itemView.findViewById(R.id.tv_item_location);
-            tv4 = itemView.findViewById(R.id.tv_item_time);
+            tvName = itemView.findViewById(R.id.tv_item_name);
+            tvLocation = itemView.findViewById(R.id.tv_item_location);
+            tvTime = itemView.findViewById(R.id.tv_item_time);
+            tvCategory = itemView.findViewById(R.id.tv_item_category);
 
-            imageView1 = itemView.findViewById(R.id.imageView_item);
 
             itemView.setOnClickListener(new View.OnClickListener(){
 
@@ -98,21 +95,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
                     int position = getAdapterPosition();
 
                     if(listener != null){
-                        listener.onItemClick(ViewHolder.this, view, position);
+                        listener.onItemWantClick(ViewHolder.this, view, position);
                     }
                 }
             });
         }
 
-        public void setItem(Item item) throws ParseException {
-            tv1.setText(item.getProduct_name());
-            tv2.setText(String.valueOf(item.getProduct_price()));
-            tv3.setText(item.getLocation());
-
-            tv4.setText(getGap(item.getTime()));
-
-
-            imageView1.setImageResource(item.getImageRes());
+        public void setItem(ItemWant itemWant) throws ParseException {
+            tvName.setText(itemWant.getProduct_name());
+            tvLocation.setText(itemWant.getLocation());
+            tvTime.setText(getGap(itemWant.getTime()));
+            tvCategory.setText(itemWant.getCategory());
         }
 
         public String getGap(String productTime) throws ParseException{

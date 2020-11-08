@@ -1,6 +1,5 @@
 package com.example.daisoinmyhouse;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,8 +46,8 @@ public class CategoryClothesItemActivity extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        tv_category = (TextView) findViewById(R.id.tv_category);
-        category = getIntent().getExtras().getString("category");
+        tv_category = (TextView) findViewById(R.id.tv_item_category);
+        category = getIntent().getExtras().get("category").toString();
         CategoryList categorylist = new CategoryList();
 
         tv_category.setText(category);
