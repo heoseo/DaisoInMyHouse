@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     LoginAction loginAction = new LoginAction();
                     String resultNickname = loginAction.execute(user_id, user_pw).get();    // 성공하면 닉네임 반환
-                    System.out.println("@@@@@result:" + resultNickname);
 
                     if(!resultNickname.equals("1")){    // 로그인성공
 
@@ -146,14 +145,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            // 분해 된 데이터를 확인하기 위한 부분
-            for(int i=0; i<parseredData.length; i++){
-                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][0]);
-                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][1]);
-                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][2]);
-                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][3]);
-                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][4]);
-            }
+//            // 분해 된 데이터를 확인하기 위한 부분
+//            for(int i=0; i<parseredData.length; i++){
+//                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][0]);
+//                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][1]);
+//                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][2]);
+//                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][3]);
+//                Log.i("JSON을 분석한 데이터 "+i+" : ", parseredData[i][4]);
+//            }
             return parseredData;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -195,6 +194,5 @@ public class LoginActivity extends AppCompatActivity {
 
         //닉네임을 key 식별자로 하고 프로필 이미지의 주소를 값으로 저장
         profileRef.child(StaticUserInformation.nickName).setValue(StaticUserInformation.porfileUrl);
-//        Toast.makeText(this, StaticUserInformation.nickName + "님 프로필 저장 완료", Toast.LENGTH_SHORT).show();
     }//saveData() ..
 }

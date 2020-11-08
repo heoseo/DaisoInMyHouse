@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -19,12 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
 
     String yourName;
-    String roomName;
+    String roomName = null;
 
     EditText et;
     ListView listView;
@@ -64,6 +67,22 @@ public class ChattingActivity extends AppCompatActivity {
                 roomName = yourName +">"+StaticUserInformation.nickName;
         }
 
+        // 저장된 채팅이름없음.=> 디비에 저장
+        if(roomName==null){
+
+            Log.i("채팅테스트", "저장된채팅방이 없으므로 디비 저장");
+            Map<String, Object> map = new HashMap<String, Object>();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
+
+            map.put(StaticUserInformation.nickName + ">" + yourName, StaticUserInformation.nickName + ">" + yourName);
+            reference.updateChildren(map);
+            //                        String findRoomName=StaticUserInformation.nickName + ">" + nickname;
+            roomName=StaticUserInformation.nickName + ">" + yourName;
+            Log.i("채팅테스트", "if문 안 roomName:"+roomName);
+            StaticUserInformation.roomSet.add(roomName);
+        }
+
+
         chatRef= firebaseDatabase.getReference().child("chat_list").child(roomName);
 
         et=findViewById(R.id.et);
@@ -75,8 +94,7 @@ public class ChattingActivity extends AppCompatActivity {
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
         //Firebase DB관리 객체와 'caht'노드 참조객체 얻어오기
-        System.out.println("!!!!!!!!!!!roomname은 " + roomName + "임");
-        System.out.println("roomName: " + roomName);
+        Log.i("채팅테스트", "roomName:"+roomName);
 
 
 

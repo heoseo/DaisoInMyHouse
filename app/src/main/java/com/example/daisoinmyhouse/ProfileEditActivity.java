@@ -97,8 +97,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     void saveData(){
         //EditText의 닉네임 가져오기 [전역변수에]
 
-        Toast.makeText(ProfileEditActivity.this, StaticUserInformation.nickName
-                + "saveData()실행", Toast.LENGTH_SHORT).show();
+
 
         //이미지를 선택하지 않았을 수도 있으므로
         if(imgUri==null){

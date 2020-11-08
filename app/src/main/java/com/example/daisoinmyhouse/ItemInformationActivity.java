@@ -189,8 +189,6 @@ public class ItemInformationActivity extends AppCompatActivity {
                         String findRoomName = null;
 
                         while (i.hasNext()) {
-                            Log.i("테스트", "while문 들어옴");
-//                    set.add(((DataSnapshot) i.next()).getKey());
                             findRoomName = ((DataSnapshot) i.next()).getKey();
 
                             // >를 기준으로 문자열을 추출할 것이다.
@@ -225,20 +223,20 @@ public class ItemInformationActivity extends AppCompatActivity {
                             }
                         }
 
-                        // 저장된 채팅이름없음.=> 디비에 저장
-                        if(findRoomName==null){
-
-                            Log.i("테스트", "저장된채팅방이 없으므로 디비 저장");
-                            Map<String, Object> map = new HashMap<String, Object>();
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
-
-                            map.put(StaticUserInformation.nickName + ">" + nickname, StaticUserInformation.nickName + ">" + nickname);
-                            reference.updateChildren(map);
-    //                        String findRoomName=StaticUserInformation.nickName + ">" + nickname;
-                            findRoomName=StaticUserInformation.nickName + ">" + nickname;
-                            Log.i("테스트", "findRoomName:"+findRoomName);
-                            StaticUserInformation.roomSet.add(findRoomName);
-                        }
+//                        // 저장된 채팅이름없음.=> 디비에 저장
+//                        if(findRoomName==null){
+//
+//                            Log.i("테스트", "저장된채팅방이 없으므로 디비 저장");
+//                            Map<String, Object> map = new HashMap<String, Object>();
+//                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("chat_list");
+//
+//                            map.put(StaticUserInformation.nickName + ">" + nickname, StaticUserInformation.nickName + ">" + nickname);
+//                            reference.updateChildren(map);
+//    //                        String findRoomName=StaticUserInformation.nickName + ">" + nickname;
+//                            findRoomName=StaticUserInformation.nickName + ">" + nickname;
+//                            Log.i("테스트", "findRoomName:"+findRoomName);
+//                            StaticUserInformation.roomSet.add(findRoomName);
+//                        }
 
                     }
                     @Override public void onCancelled(DatabaseError databaseError) {
