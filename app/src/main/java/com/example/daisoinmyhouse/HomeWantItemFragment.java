@@ -110,6 +110,10 @@ public class HomeWantItemFragment extends Fragment {
         wantAdapter.setOnItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
+            }
+
+            @Override
+            public void onItemWantClick(ItemWantAdapter.ViewHolder holder, View view, int position) {
                 ItemWant itemWant = (ItemWant) wantAdapter.getItem(position);
 //                Toast.makeText(getContext(), "선택된 제품 : " + item.getName(), Toast.LENGTH_LONG).show();
 
@@ -117,17 +121,15 @@ public class HomeWantItemFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ItemWantInformationActivity.class);
 //                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
 //                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
-                intent.putExtra("product_no", itemWant.getWant_no());
+                intent.putExtra("want_no", itemWant.getWant_no());
                 intent.putExtra("user_id", itemWant.getUser_id());
-                intent.putExtra("product_name", itemWant.getWant_name());
-                intent.putExtra("product_content", itemWant.getWant_content());
+                intent.putExtra("want_name", itemWant.getWant_name());
+                intent.putExtra("want_content", itemWant.getWant_content());
                 intent.putExtra("location", itemWant.getLocation());
                 intent.putExtra("category", itemWant.getCategory());
                 getContext().startActivity(intent);
-            }
 
-            @Override
-            public void onItemWantClick(ItemWantAdapter.ViewHolder holder, View view, int position) { }
+            }
         });
     }
 
@@ -217,6 +219,7 @@ public class HomeWantItemFragment extends Fragment {
 
                         // JSON이 가진 크기만큼 데이터를 받아옴
                         for (int i = 0; i < jArr.length(); i++) {
+                            Log.i("want테스트 ", "ok");
                             json = jArr.getJSONObject(i);
 
                             wantAdapter.addItem(new ItemWant(json.getString("user_id"),
@@ -225,9 +228,8 @@ public class HomeWantItemFragment extends Fragment {
                                                     json.getString("time"),
                                                     json.getInt("want_no"),
                                                     json.getString("want_name"),
-                                                    json.getString("want_cate"))
-                                                    );
-
+                                                    json.getString("want_cate")
+                            ));
 
                         }
                     } catch(Exception e){

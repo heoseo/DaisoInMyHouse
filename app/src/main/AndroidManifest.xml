@@ -23,7 +23,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ProfileEditActivity"></activity>
-        <activity android:name=".ChattingFragment" />
         <activity android:name=".ChattingMainActivity" />
         <activity android:name=".ChattingActivity" /> <!-- <activity -->
         <!-- android:name=".ChatActivity" -->
@@ -53,6 +52,18 @@
         <activity android:name=".FindAddressActivity" />
         <activity android:name=".FindLocationActivity" />
         <activity android:name=".ItemInformationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ItemWantInformationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

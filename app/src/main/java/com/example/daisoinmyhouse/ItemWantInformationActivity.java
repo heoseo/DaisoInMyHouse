@@ -36,20 +36,20 @@ public class ItemWantInformationActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_iteminformation);
+        setContentView(R.layout.activity_item_want_information);
 
-        product_no = getIntent().getExtras().get("product_no").toString();
-        product_name = getIntent().getExtras().get("product_name").toString();
-        String product_content = getIntent().getExtras().get("product_content").toString();
+        product_no = getIntent().getExtras().get("want_no").toString();
+        product_name = getIntent().getExtras().get("want_name").toString();
+        String product_content = getIntent().getExtras().get("want_content").toString();
         String location = getIntent().getExtras().get("location").toString();
         String category = getIntent().getExtras().get("category").toString();
         user_id = getIntent().getExtras().get("user_id").toString();    // 상품판매자ID
 
-        tvProduct_name = (TextView)findViewById(R.id.tv_item_name);
-        tvProduct_content = (TextView)findViewById(R.id.tv_item_detail);
-        tvNickname = (TextView)findViewById(R.id.tv_nickname);
-        tvLocation=(TextView)findViewById(R.id.tv_location);
-        tvCategory = (TextView)findViewById(R.id.tv_item_category);
+        tvProduct_name = findViewById(R.id.tv_item_name);
+        tvProduct_content = findViewById(R.id.tv_item_detail);
+        tvNickname = findViewById(R.id.tv_nickname);
+        tvLocation=findViewById(R.id.tv_location);
+        tvCategory = findViewById(R.id.tv_item_category);
 
         // 상품 판매자 닉네임
         GetNickname getNickname = new GetNickname();

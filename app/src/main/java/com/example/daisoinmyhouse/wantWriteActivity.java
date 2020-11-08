@@ -24,8 +24,8 @@ public class wantWriteActivity extends AsyncTask<String, Void, String> {
             conn.setRequestMethod("POST");
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "want_no=" + strings[0] + "&user_id=" + strings[1] + "&want_cate=" + strings[2] +
-                    "&want_name=" + strings[3] + "&want_content=" + strings[4] + "&time=" + strings[5];
+            sendMsg = "&user_id=" + strings[0] + "&want_cate=" + strings[1] + "&want_name=" + strings[2] +
+                    "&want_content=" + strings[3] + "&location=" + strings[4];
             osw.write(sendMsg);
             osw.flush();
             //jsp와 통신 성공 시 수행

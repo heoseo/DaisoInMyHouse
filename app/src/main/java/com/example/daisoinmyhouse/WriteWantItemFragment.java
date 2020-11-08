@@ -2,6 +2,7 @@ package com.example.daisoinmyhouse;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,9 +26,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class WriteWantItemFragment extends Fragment {
 
+    private static final int SEARCH_LOCATION_ACTIVITY = 1000;
     EditText product_name,conttent,taag;
     TextView cattegory;
     Button writeBtn;
@@ -84,7 +89,8 @@ public class WriteWantItemFragment extends Fragment {
         btnSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getContext(), SettingMyAreaActivity.class) ,0);
+                Intent intent = new Intent(getContext(), FindLocationActivity.class);
+                startActivityForResult(intent, SEARCH_LOCATION_ACTIVITY);
 
             }
         });
@@ -96,19 +102,29 @@ public class WriteWantItemFragment extends Fragment {
         writeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
-                    String name = product_name.getText().toString();
-                    String category = cattegory.getText().toString();
-                    String tag = taag.getText().toString();
-                    String content = conttent.getText().toString();
-                    Write_RegisterActivity task =new Write_RegisterActivity();
+                    SharedPreferences preferences = getContext().getSharedPreferences("account", MODE_PRIVATE);
+                    StaticUserInformation.userID = preferences.getString("userID", null);
 
-                    String result = task.execute(name, category, content).get();
+                    String user_id = StaticUserInformation.userID;
+
+                    String want_name  = product_name.getText().toString();
+                    String want_cate  = cattegory.getText().toString();
+                    String location = btnSetLocation.getText().toString();
+                    String want_content = conttent.getText().toString();
+
+                    Log.i("테스트", want_name);
+
+                    wantWriteActivity task =new wantWriteActivity();
+
+                    //String result = task.execute(user_id,want_cate , want_name , want_content,location).get();
+
                     // 빈칸이 있는지 검사사
-                    if(name.getBytes().length <=0 || category.getBytes().length <= 0 || tag.getBytes().length <= 0  || content.getBytes().length <= 0 ){
+                    if(want_name.getBytes().length <=0 || want_cate.getBytes().length <= 0 || location.getBytes().length <= 0 || want_content.getBytes().length <= 0 ){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
+                        String result = task.execute(user_id,want_cate , want_name , want_content,location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                        activity.finish();
+                        //activity.finish();
                     }
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
