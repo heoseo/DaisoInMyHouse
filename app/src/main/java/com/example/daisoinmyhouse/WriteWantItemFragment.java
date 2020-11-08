@@ -26,13 +26,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import static android.content.ContentValues.TAG;
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class WriteWantItemFragment extends Fragment {
 
     private static final int SEARCH_LOCATION_ACTIVITY = 1000;
+    private final int REQ_CODE_LOCAION = 50;
     EditText product_name,conttent,taag;
     TextView cattegory;
     Button writeBtn;
@@ -107,24 +108,20 @@ public class WriteWantItemFragment extends Fragment {
 
                     String user_id = StaticUserInformation.userID;
 
-                    String want_name  = product_name.getText().toString();
-                    String want_cate  = cattegory.getText().toString();
+                    String want_name = product_name.getText().toString();
+                    String want_cate = cattegory.getText().toString();
                     String location = btnSetLocation.getText().toString();
                     String want_content = conttent.getText().toString();
-
-                    Log.i("테스트", want_name);
-
+                    String time = conttent.getText().toString();
                     wantWriteActivity task =new wantWriteActivity();
 
-                    //String result = task.execute(user_id,want_cate , want_name , want_content,location).get();
-
+                    String result = task.execute(user_id,want_cate,want_name, want_content,location,time).get();
                     // 빈칸이 있는지 검사사
-                    if(want_name.getBytes().length <=0 || want_cate.getBytes().length <= 0 || location.getBytes().length <= 0 || want_content.getBytes().length <= 0 ){
+                    if(want_name.getBytes().length <=0 || want_cate.getBytes().length <= 0 || want_content.getBytes().length <= 0 ){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요!", Toast.LENGTH_LONG).show();
                     }else{
-                        String result = task.execute(user_id,want_cate , want_name , want_content,location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                        //activity.finish();
+                        activity.finish();
                     }
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
@@ -137,6 +134,38 @@ public class WriteWantItemFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (resultCode != RESULT_OK) {
+//            Toast.makeText(getContext(), "결과가 성공이 아님.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if (requestCode == REQ_CODE_LOCAION) {
+            String resultMsg = intent.getStringExtra("result_msg");
+            btnSetLocation.setText(resultMsg);
+
+//            Toast.makeText(MainActivity.this, "결과 : " + resultMsg, Toast.LENGTH_SHORT).show();
+        } else {
+//            Toast.makeText(MainActivity.this, "REQUEST_ACT가 아님", Toast.LENGTH_SHORT).show();
+        }
+
+        if(requestCode == SEARCH_LOCATION_ACTIVITY) {
+            if (resultCode == RESULT_OK){
+                String data = intent.getStringExtra("location");
+
+                if(data != null){
+                    btnSetLocation.setText(data);
+                }
+            }
+        }
+
+
     }
 
 
