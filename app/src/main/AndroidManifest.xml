@@ -40,6 +40,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingActivity" />
+        <activity android:name=".LoadingActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity android:name=".AlarmSettingActivity" />
         <activity android:name=".CategoryInWriteActivity" />
         <activity android:name=".SettingMyAreaActivity" />
