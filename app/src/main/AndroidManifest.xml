@@ -39,6 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoadingActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity android:name=".SettingActivity" />
         <activity android:name=".AlarmSettingActivity" />
         <activity android:name=".CategoryInWriteActivity" />
@@ -46,7 +48,6 @@
         <activity android:name=".RentActivity" />
         <activity android:name=".LeaseActivity" />
         <activity android:name=".KeywordAlarmActivity" />
-        <activity android:name=".FirtstSettingAreaActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".FindAddressActivity" />

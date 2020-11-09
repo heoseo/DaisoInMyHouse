@@ -1,6 +1,7 @@
 package com.example.daisoinmyhouse;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);      // 타이틀바 없애기
         setContentView(R.layout.activity_main);
         getHashKey();
+
+        Intent intent = new Intent(this, LoadingActivity.class);
+        startActivity(intent);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫 화면 지정

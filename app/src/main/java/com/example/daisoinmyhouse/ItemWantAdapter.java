@@ -111,22 +111,22 @@ public class ItemWantAdapter extends RecyclerView.Adapter<ItemWantAdapter.ViewHo
 
             switch(itemWant.getCategory()){
                 case "의류":
-                    imageView1.setImageResource(R.drawable.img_clothes);
+                    imageView1.setImageResource(R.drawable.img_want_clothes);
                     break;
                 case "생활용품":
-                    imageView1.setImageResource(R.drawable.img_clean);
+                    imageView1.setImageResource(R.drawable.img_want_clean);
                     break;
                 case "주방용품":
-                    imageView1.setImageResource(R.drawable.img_kitchen);
+                    imageView1.setImageResource(R.drawable.img_want_kitchen);
                     break;
                 case "디지털":
-                    imageView1.setImageResource(R.drawable.img_digital);
+                    imageView1.setImageResource(R.drawable.img_want_digital);
                     break;
                 case "도서":
-                    imageView1.setImageResource(R.drawable.img_book);
+                    imageView1.setImageResource(R.drawable.img_want_book);
                     break;
                 case "기타":
-                    imageView1.setImageResource(R.drawable.img_etc);
+                    imageView1.setImageResource(R.drawable.img_want_etc);
                     break;
 
             }
