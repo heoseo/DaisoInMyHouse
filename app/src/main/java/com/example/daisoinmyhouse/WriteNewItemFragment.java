@@ -36,6 +36,7 @@ import androidx.fragment.app.Fragment;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
@@ -180,7 +181,8 @@ public class WriteNewItemFragment extends Fragment {
                     if(product_name.getBytes().length <= 0 || product_content.getBytes().length <= 0 || product_price.getBytes().length <=  0){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                     }else{
-                        String result = write.execute(user_id, product_cate, product_name, product_price, product_content, location).get();
+                        String result = write.execute(user_id, product_cate, product_name,
+                                product_price, product_content, location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
@@ -219,13 +221,30 @@ public class WriteNewItemFragment extends Fragment {
                 //이미지를 비트맵형식으로 반환
                 image_bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), intent.getData());
 
-                //사용자 단말기의 width , height 값 반환
+                //사용자 단말기의 width , height 값 반환 5
                 int reWidth = (int) (getActivity().getWindowManager().getDefaultDisplay().getWidth());
                 int reHeight = (int) (getActivity().getWindowManager().getDefaultDisplay().getHeight());
 
                 //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
                 image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 300, true);
                 // ImageView image = (ImageView) findViewById(R.id.imageView);  //이미지를 띄울 위젯 ID값
+                Log.i("imageTest", "1");
+
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                image_bitmap_copy.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String imgStr = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+
+                Log.i("imageTest", "2" + imgStr);
+
+                ImageSendTest imgSend = new ImageSendTest();
+
+                String result = imgSend.execute(imgStr).get();
+                Log.i("imageTest", "3");
+                Toast.makeText(getActivity().getApplicationContext(), "이미지send결과 : " +result, Toast.LENGTH_LONG).show();
+                Log.i("imageTest", result);
+
                 btn_photo.setImageBitmap(image_bitmap);
 
             } catch (Exception e) {
