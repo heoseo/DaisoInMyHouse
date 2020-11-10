@@ -9,8 +9,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -36,6 +38,13 @@ import androidx.fragment.app.Fragment;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
@@ -171,6 +180,7 @@ public class WriteNewItemFragment extends Fragment {
                     String product_name = product_name_et.getText().toString();
                     String product_price = product_price_et.getText().toString();
                     String product_content = product_content_et.getText().toString();
+                    String product_img = imageName;
                     String location = btnSetLocation.getText().toString();
 
                     Log.i("location", location);
@@ -180,7 +190,11 @@ public class WriteNewItemFragment extends Fragment {
                     if(product_name.getBytes().length <= 0 || product_content.getBytes().length <= 0 || product_price.getBytes().length <=  0){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                     }else{
-                        String result = write.execute(user_id, product_cate, product_name, product_price, product_content, location).get();
+                        String result = write.execute(user_id, product_cate, product_name, product_price, product_content, product_img, location).get();
+
+                        ImageUpload uploader = new ImageUpload(product_name_et.getText().toString(), imageName);
+                        uploader.uploadPicture(img_path);
+
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                         spinner_cate.setSelection(0);

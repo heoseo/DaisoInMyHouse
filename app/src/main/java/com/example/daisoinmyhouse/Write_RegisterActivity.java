@@ -27,7 +27,7 @@ public class Write_RegisterActivity extends AsyncTask<String, Void, String>  {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
             // 전송할 데이터. GET 방식으로 작성
             sendMsg = "user_id=" + strings[0] + "&product_cate=" + strings[1] + "&product_name=" + strings[2] +
-                    "&product_price=" + strings[3] + "&product_content=" + strings[4] + "&location=" + strings[5];
+                    "&product_price=" + strings[3] + "&product_content=" + strings[4] + "&product_img=" + strings[5] + "&location=" + strings[6];
             osw.write(sendMsg);
             osw.flush();
             //jsp와 통신 성공 시 수행
