@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         ll_rent.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimary));
         ll_rent.setOnClickListener(this);
         ll_want.setOnClickListener(this);
-        tv_rent.setTextColor(getContext().getResources().getColor(R.color.white));
+        tv_rent.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
 
         fragmentManager = getActivity().getSupportFragmentManager();
 

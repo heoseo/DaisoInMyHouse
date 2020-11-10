@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.kakao.message.template.LinkObject;
 import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +49,7 @@ public class ItemInformationActivity extends AppCompatActivity {
     String myID = "";
     String myNickName="";
     String yourName;
+    String userPrifileUrl;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -57,7 +60,7 @@ public class ItemInformationActivity extends AppCompatActivity {
 
         product_no = getIntent().getExtras().get("product_no").toString();
         product_name = getIntent().getExtras().get("product_name").toString();
-        String product_price = getIntent().getExtras().get("product_name").toString();
+        String product_price = getIntent().getExtras().get("product_price").toString();
         String product_content = getIntent().getExtras().get("product_content").toString();
         String location = getIntent().getExtras().get("location").toString();
         user_id = getIntent().getExtras().get("user_id").toString();    // 상품판매자ID
@@ -68,6 +71,7 @@ public class ItemInformationActivity extends AppCompatActivity {
         tvNickname = (TextView)findViewById(R.id.tv_nickname);
         tvLocation=(TextView)findViewById(R.id.tv_location);
 
+
         // 상품 판매자 닉네임
         GetNickname getNickname = new GetNickname();
         try {
@@ -77,6 +81,34 @@ public class ItemInformationActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+
+        // 판매자 프로필 사진
+        ImageView ivUserProfile = (ImageView)findViewById(R.id.imageview_profile) ;
+
+        //'profiles'라는 이름의 자식 노드 참조 객체 얻어오기
+        DatabaseReference profileRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = profileRef.child("profiles").child(nickname);
+        Log.d("profileTest",userRef.toString());
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("profileTest","들옴");
+
+                Log.d("profileTest", "Single ValueEventListener : " + dataSnapshot.getValue(String.class));
+                userPrifileUrl = dataSnapshot.getValue(String.class);
+                Log.d("profileTest", "Single ValueEventListener2 : " + userPrifileUrl);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        Log.d("profileTest", "Single ValueEventListener3 : " + userPrifileUrl);
+        Picasso.get().load(Uri.parse(userPrifileUrl)).into(ivUserProfile);
 
         tvProduct_name.setText(product_name);
         tvProduct_price.setText(product_price);

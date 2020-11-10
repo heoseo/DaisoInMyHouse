@@ -57,6 +57,17 @@ public class HomeRentItemFragment extends Fragment {
         ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/productList.jsp", null);
         networkTask.execute();
 
+
+        adapter.addItem(new Item("test1234", "기타 대여해줍니다.", "천안시 쌍용동", 30000,
+                "2020-11-10 00:00:00", 1, "기타", R.drawable.guitar));
+        adapter.addItem(new Item("labasimys", "실내자전거 대여해줍니다.", "천안시 두정동", 50000,
+                "2020-11-09 21:00:00", 2, "실내자전거", R.drawable.cycle));
+        adapter.addItem(new Item("labasimys", "드릴 대여해줍니다.", "천안시 백석동", 10000,
+                "2020-11-09 15:00:00", 3, "드릴", R.drawable.drill));
+        adapter.addItem(new Item("khm3813","카메라 대여해줍니다.", "천안시 신부동", 30000,
+                "2020-11-08 21:00:00", 4, "카메라", R.drawable.camera));
+
+
         adapter.setOnItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onItemClick(ItemAdapter.ViewHolder holder, View view, int position) {
@@ -174,7 +185,7 @@ public class HomeRentItemFragment extends Fragment {
                             Date date = new Date(now);
 
                             adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
-                                    json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
+                                    json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.heoseo));
 
                             Log.i("테스트", "ok");
                         }

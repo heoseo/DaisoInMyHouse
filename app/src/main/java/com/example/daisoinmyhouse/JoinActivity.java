@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -70,7 +71,7 @@ public class JoinActivity extends AppCompatActivity {
         });
 
         // 뒤로가기 버튼
-        TextView btnBack = (TextView) findViewById(R.id.btn_back);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -102,6 +102,11 @@ public class WriteWantItemFragment extends Fragment {
                     }else{
                         String result = task.execute(user_id, want_cate, want_name, want_content, location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+                        et_want_name.setText("");
+                        et_want_content.setText("");
+                        want_spinner.setSelection(0);
+                        btnSetLocation.setText("위치설정");
                     }
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");

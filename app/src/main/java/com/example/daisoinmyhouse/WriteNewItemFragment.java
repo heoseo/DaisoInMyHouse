@@ -8,7 +8,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -36,6 +40,15 @@ import androidx.fragment.app.Fragment;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
@@ -51,7 +64,6 @@ public class WriteNewItemFragment extends Fragment {
     MainActivity activity;
     Spinner spinner_cate;
     LinearLayout btn_otherwrite;
-
     private static final int SEARCH_LOCATION_ACTIVITY = 1000;
     private final int REQ_CODE_LOCAION = 50;
     private final int REQ_CODE_SELECT_IMAGE = 100;
@@ -59,6 +71,7 @@ public class WriteNewItemFragment extends Fragment {
     private Bitmap image_bitmap_copy = null;
     private Bitmap image_bitmap = null;
     private String imageName = null;
+    String image, imagestr;
 
     public static WriteNewItemFragment newInstance(){
         return new WriteNewItemFragment();
@@ -155,7 +168,12 @@ public class WriteNewItemFragment extends Fragment {
             }
         });
 
-
+        Bitmap bitmap = ((BitmapDrawable)btn_photo.getDrawable()).getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.setHasAlpha(true);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
         //글쓰기 등록시 db연결
         writeProductBtn = rootView.findViewById(R.id.btn_register);
@@ -164,32 +182,112 @@ public class WriteNewItemFragment extends Fragment {
                 try {
                     SharedPreferences preferences = getContext().getSharedPreferences("account", MODE_PRIVATE);
                     StaticUserInformation.userID = preferences.getString("userID", null);
-
                     String user_id = StaticUserInformation.userID;
-
                     String product_cate = spinner_cate.getSelectedItem().toString();
                     String product_name = product_name_et.getText().toString();
                     String product_price = product_price_et.getText().toString();
                     String product_content = product_content_et.getText().toString();
                     String location = btnSetLocation.getText().toString();
-
                     Log.i("location", location);
-
                     Write_RegisterActivity write = new Write_RegisterActivity();
-
                     if(product_name.getBytes().length <= 0 || product_content.getBytes().length <= 0 || product_price.getBytes().length <=  0){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                     }else{
                         String result = write.execute(user_id, product_cate, product_name, product_price, product_content, location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+                        spinner_cate.setSelection(0);
+                        product_name_et.setText("");
+                        product_price_et.setText("");
+                        product_content_et.setText("");
+                        btnSetLocation.setText("위치설정");
                     }
-                } catch (Exception e) {
+                }  catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
             }
         });
 
         return rootView;
+    }
+
+
+    public class getImg extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
+                URL url = new URL("http://daisoinmyhouse.cafe24.com/getImg.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+
+                //jsp와 통신 성공 시 수행
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    // jsp에서 보낸 값을 받는 부분
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+                    Log.i("테스트", receiveMsg);
+                } else {
+                    // 통신 실패
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //jsp로부터 받은 리턴 값
+            return receiveMsg;
+        }
+
+    }
+
+    public class imgTest extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
+                URL url = new URL("http://daisoinmyhouse.cafe24.com/imageTest.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                // 전송할 데이터. GET 방식으로 작성
+                sendMsg = "img=" + strings[0];
+                osw.write(sendMsg);
+                osw.flush();
+                //jsp와 통신 성공 시 수행
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    // jsp에서 보낸 값을 받는 부분
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+                    Log.i("테스트", receiveMsg);
+                } else {
+                    // 통신 실패
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //jsp로부터 받은 리턴 값
+            return receiveMsg;
+        }
+
     }
 
     @Override
@@ -223,10 +321,13 @@ public class WriteNewItemFragment extends Fragment {
                 int reWidth = (int) (getActivity().getWindowManager().getDefaultDisplay().getWidth());
                 int reHeight = (int) (getActivity().getWindowManager().getDefaultDisplay().getHeight());
 
+                int height = image_bitmap.getHeight();
+                int width  = image_bitmap.getWidth();
+
                 //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
-                image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 300, true);
+                image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 400, true);
                 // ImageView image = (ImageView) findViewById(R.id.imageView);  //이미지를 띄울 위젯 ID값
-                btn_photo.setImageBitmap(image_bitmap);
+                btn_photo.setImageBitmap(image_bitmap_copy);
 
             } catch (Exception e) {
                 e.printStackTrace();
