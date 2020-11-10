@@ -182,6 +182,12 @@ public class WriteNewItemFragment extends Fragment {
                     }else{
                         String result = write.execute(user_id, product_cate, product_name, product_price, product_content, location).get();
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+                        spinner_cate.setSelection(0);
+                        product_name_et.setText("");
+                        product_price_et.setText("");
+                        product_content_et.setText("");
+                        btnSetLocation.setText("위치설정");
                     }
                 } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
