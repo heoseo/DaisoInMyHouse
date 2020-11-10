@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.toolbox.HttpResponse;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +34,14 @@ import com.kakao.network.ErrorResult;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.util.helper.log.Logger;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,14 +51,14 @@ import java.util.concurrent.ExecutionException;
 
 public class ItemInformationActivity extends AppCompatActivity {
 
-    ImageView ivShare, ivWish;
+    ImageView ivShare, ivWish, ivproduct_img;
     TextView tvProduct_name, tvProduct_price, tvProduct_content, tvNickname, tvLocation;
 
     String product_no, nickname, user_id, product_name;
     String myID = "";
     String myNickName="";
     String yourName;
-
+    String product_img_str;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -67,6 +78,7 @@ public class ItemInformationActivity extends AppCompatActivity {
         tvProduct_content = (TextView)findViewById(R.id.tv_item_detail);
         tvNickname = (TextView)findViewById(R.id.tv_nickname);
         tvLocation=(TextView)findViewById(R.id.tv_location);
+        ivproduct_img = (ImageView)findViewById(R.id.imageview_item_image);
 
         // 상품 판매자 닉네임
         GetNickname getNickname = new GetNickname();
@@ -84,6 +96,20 @@ public class ItemInformationActivity extends AppCompatActivity {
         tvNickname.setText(nickname);
         tvLocation.setText(location);
 
+        getImage getimg = new getImage();
+        try {
+            product_img_str = getimg.execute(product_no).get();
+
+            Toast.makeText(getApplicationContext(), product_img_str, Toast.LENGTH_LONG).show();
+
+            getImageDrawable getdrawable = new getImageDrawable();
+            Drawable product_img = getdrawable.execute("http://daisoinmyhouse.cafe24.com/images/" + product_img_str).get();
+            ivproduct_img.setImageDrawable(product_img);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
         StaticUserInformation.userID=preferences.getString("userID", null);
@@ -255,12 +281,74 @@ public class ItemInformationActivity extends AppCompatActivity {
 
     }
 
+    public class getImageDrawable extends AsyncTask<String, Void, Drawable> {
+        Bitmap x;
+        @Override
+        protected Drawable doInBackground(String... strings) {
+            try {
+                HttpURLConnection connection =
+                        (HttpURLConnection) new URL(strings[0]).openConnection();
+                connection.connect();
+                InputStream input = connection.getInputStream();
+
+                x = BitmapFactory.decodeStream(input);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //jsp로부터 받은 리턴 값
+            return new BitmapDrawable(x);
+        }
+    }
+
+    public class getImage extends AsyncTask<String, Void, String> {
+        String sendMsg, receiveMsg;
+        Bitmap x;
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String str;
+                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
+                URL url = new URL("http://daisoinmyhouse.cafe24.com/getImage.jsp");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                // 전송할 데이터. GET 방식으로 작성
+                sendMsg = "product_no=" + strings[0];
+                osw.write(sendMsg);
+                osw.flush();
+                //jsp와 통신 성공 시 수행
+                if (conn.getResponseCode() == conn.HTTP_OK) {
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuffer buffer = new StringBuffer();
+                    // jsp에서 보낸 값을 받는 부분
+                    while ((str = reader.readLine()) != null) {
+                        buffer.append(str);
+                    }
+                    receiveMsg = buffer.toString();
+                    Log.i("테스트", receiveMsg);
+                } else {
+                    // 통신 실패
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //jsp로부터 받은 리턴 값
+            return receiveMsg;
+        }
+    }
 
     // 카카오톡 공유
     public void kakaolink() {
         FeedTemplate params = FeedTemplate
                 .newBuilder(ContentObject.newBuilder(product_name,
-                        "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+                        "http://daisoinmyhouse.cafe24.com/images/" + product_img_str,
                         LinkObject.newBuilder().setWebUrl("https://developers.kakao.com")
                                 .setMobileWebUrl("https://developers.kakao.com").build())
                         .build())
