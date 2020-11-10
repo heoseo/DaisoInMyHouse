@@ -126,6 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="상품설명"
+                    android:textSize="15dp"
                     android:padding="15dp"/>
 
             </LinearLayout>

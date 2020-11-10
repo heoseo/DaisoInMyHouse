@@ -1,5 +1,7 @@
 package com.example.daisoinmyhouse;
 
+import android.graphics.drawable.Drawable;
+
 public class WishList {
 
     String product_name;
@@ -7,7 +9,7 @@ public class WishList {
     String location;
     String time;
     int product_price;
-    int imageRes;
+    Drawable imageRes;
     //1028코드추가
     int product_no;
     String product_content;
@@ -16,7 +18,7 @@ public class WishList {
 
     }
 
-    public WishList(String user_id, String product_content, String location, int product_price, String time, int product_no, String product_name, int imageRes){
+    public WishList(String user_id, String product_content, String location, int product_price, String time, int product_no, String product_name, Drawable imageRes){
         this.product_name = product_name;
         this.user_id = user_id;
         this.location = location;
@@ -68,11 +70,11 @@ public class WishList {
         this.product_price = product_price;
     }
 
-    public int getImageRes() {
+    public Drawable getImageRes() {
         return imageRes;
     }
 
-    public void setImageRes(int imageRes) {
+    public void setImageRes(Drawable imageRes) {
         this.imageRes = imageRes;
     }
 

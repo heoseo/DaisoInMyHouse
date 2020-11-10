@@ -126,9 +126,8 @@ public class HomeWantItemFragment extends Fragment {
                 intent.putExtra("want_name", itemWant.getWant_name());
                 intent.putExtra("want_content", itemWant.getWant_content());
                 intent.putExtra("location", itemWant.getLocation());
-                intent.putExtra("category", itemWant.getCategory());
+                intent.putExtra("want_cate", itemWant.getCategory());
                 getContext().startActivity(intent);
-
             }
         });
     }

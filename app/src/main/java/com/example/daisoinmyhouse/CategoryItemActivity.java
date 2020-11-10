@@ -1,10 +1,15 @@
 package com.example.daisoinmyhouse;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -31,7 +37,7 @@ public class CategoryItemActivity extends AppCompatActivity {
     CategoryItemAdapter adapter = new CategoryItemAdapter();
     GridLayoutManager layoutManager;
 
-    TextView btn_back;
+    ImageButton btn_back;
     TextView tv_category;
 
     int categoryNum;
@@ -86,15 +92,15 @@ public class CategoryItemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(CategoryItemAdapter.ViewHolder holder, View view, int position) {
                 CategoryItem item = (CategoryItem) adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getItem_name(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getProduct_name(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getApplicationContext(), ItemInformationActivity.class);
-                intent.putExtra("productID", item.getProductID());
+                intent.putExtra("productID", item.getProduct_no());
                 startActivity(intent);
             }
         });
 
-        btn_back = (TextView) findViewById(R.id.btn_back);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 finish();
@@ -104,6 +110,18 @@ public class CategoryItemActivity extends AppCompatActivity {
 
     }
 
+    private Drawable drawableFromUrl(String url)
+            throws IOException {
+        Bitmap x;
+
+        HttpURLConnection connection =
+                (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(x);
+    }
 
     public class CategoryList extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
@@ -143,7 +161,7 @@ public class CategoryItemActivity extends AppCompatActivity {
 
                         //카테고리 adapter따로 만들거나 해야될듯?
                         adapter.addItem(new CategoryItem(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
-                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
+                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), drawableFromUrl("http://daisoinmyhouse.cafe24.com/images/" + json.getString("product_img"))));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));

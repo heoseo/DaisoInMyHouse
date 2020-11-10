@@ -104,12 +104,12 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         }
 
         public void setItem(CategoryItem categoryItem) throws ParseException {
-            tv1.setText(categoryItem.getItem_name());
-            tv2.setText(String.valueOf(categoryItem.getPrice()));
+            tv1.setText(categoryItem.getProduct_name());
+            tv2.setText(String.valueOf(categoryItem.getProduct_price()));
             tv3.setText(categoryItem.getLocation());
             tv4.setText(getGap(categoryItem.getTime()));
 
-            imageView.setImageResource(categoryItem.getImageRes());
+            imageView.setImageDrawable(categoryItem.getImageRes());
         }
 
         public String getGap(String productTime) throws ParseException {

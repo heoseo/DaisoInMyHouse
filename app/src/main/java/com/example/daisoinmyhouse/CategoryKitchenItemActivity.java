@@ -1,6 +1,10 @@
 package com.example.daisoinmyhouse;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -59,10 +64,17 @@ public class CategoryKitchenItemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(CategoryItemAdapter.ViewHolder holder, View view, int position) {
                 CategoryItem item = (CategoryItem) adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getItem_name(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getProduct_name(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getApplicationContext(), ItemInformationActivity.class);
-                intent.putExtra("productID", item.getProductID());
+//                Toast.makeText(getContext(), "선택된 제품번호 : " + item.getProduct_no(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "판매자 ID : " + item.getUser_id(), Toast.LENGTH_LONG).show();
+                intent.putExtra("product_no", item.getProduct_no());
+                intent.putExtra("user_id", item.getUser_id());
+                intent.putExtra("product_name", item.getProduct_name());
+                intent.putExtra("product_price", item.getProduct_price());
+                intent.putExtra("product_content", item.getProduct_content());
+                intent.putExtra("location", item.getLocation());
                 startActivity(intent);
             }
         });
@@ -77,6 +89,18 @@ public class CategoryKitchenItemActivity extends AppCompatActivity {
 
     }
 
+    private Drawable drawableFromUrl(String url)
+            throws IOException {
+        Bitmap x;
+
+        HttpURLConnection connection =
+                (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(x);
+    }
 
     public class CategoryList extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
@@ -116,7 +140,7 @@ public class CategoryKitchenItemActivity extends AppCompatActivity {
 
                         //카테고리 adapter따로 만들거나 해야될듯?
                         adapter.addItem(new CategoryItem(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
-                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
+                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), drawableFromUrl("http://daisoinmyhouse.cafe24.com/images/" + json.getString("product_img"))));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));

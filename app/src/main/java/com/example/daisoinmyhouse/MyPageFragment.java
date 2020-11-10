@@ -102,47 +102,22 @@ public class MyPageFragment extends Fragment {
         btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                builder.setTitle("프로필");
-
-                builder.setItems(R.array.menu_profile_popup, new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int pos)
-                    {
-                        String[] items = getResources().getStringArray(R.array.menu_profile_popup);
-                        String str = items[pos];
-
-                        switch (str){
-                            case "수정하기":
-                                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
-                                getContext().startActivity(intent);
-                                break;
-                            case "공유하기":
-                                break;
-                            case "로그아웃":
-
-                                SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
-                                StaticUserInformation.resetDate(preferences);
-
-                                MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
-
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-//                                fragmentTransaction.remove(MyPageFragment.this).commit();
-                                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
-                                break;
-
-                        }
-                    }
-                });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
+                getContext().startActivity(intent);
             }
         });
 
+//로그아웃
+        /*SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.resetDate(preferences);
+
+        MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+//                                fragmentTransaction.remove(MyPageFragment.this).commit();
+        fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();*/
 
         // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
         btnKeyword = rootView.findViewById(R.id.ll_keword_notice);

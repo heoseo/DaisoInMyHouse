@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +35,8 @@ public class ItemWantInformationActivity extends AppCompatActivity {
     String myNickName="";
     String yourName;
 
+    ImageButton btn_back;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_want_information);
@@ -42,14 +45,13 @@ public class ItemWantInformationActivity extends AppCompatActivity {
         product_name = getIntent().getExtras().get("want_name").toString();
         String product_content = getIntent().getExtras().get("want_content").toString();
         String location = getIntent().getExtras().get("location").toString();
-        String category = getIntent().getExtras().get("category").toString();
+        String category = getIntent().getExtras().get("want_cate").toString();
         user_id = getIntent().getExtras().get("user_id").toString();    // 상품판매자ID
 
         tvProduct_name = findViewById(R.id.tv_item_name);
         tvProduct_content = findViewById(R.id.tv_item_detail);
         tvNickname = findViewById(R.id.tv_nickname);
         tvLocation=findViewById(R.id.tv_location);
-        tvCategory = findViewById(R.id.tv_item_category);
 
         // 상품 판매자 닉네임
         GetNickname getNickname = new GetNickname();
@@ -65,8 +67,6 @@ public class ItemWantInformationActivity extends AppCompatActivity {
         tvProduct_content.setText(product_content);
         tvNickname.setText(nickname);
         tvLocation.setText(location);
-        tvCategory.setText(category);
-
 
         SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
         StaticUserInformation.userID=preferences.getString("userID", null);
@@ -82,6 +82,14 @@ public class ItemWantInformationActivity extends AppCompatActivity {
 //                kakaolink();
 //            }
 //        });
+
+        //뒤로가기 버튼
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                finish();
+            }
+        });
 
 
         // 채팅하기 버튼

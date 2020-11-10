@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +61,8 @@ public class ItemInformationActivity extends AppCompatActivity {
     String yourName;
     String product_img_str;
 
+    ImageButton btn_back;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +71,7 @@ public class ItemInformationActivity extends AppCompatActivity {
 
         product_no = getIntent().getExtras().get("product_no").toString();
         product_name = getIntent().getExtras().get("product_name").toString();
-        String product_price = getIntent().getExtras().get("product_name").toString();
+        String product_price = getIntent().getExtras().get("product_price").toString();
         String product_content = getIntent().getExtras().get("product_content").toString();
         String location = getIntent().getExtras().get("location").toString();
         user_id = getIntent().getExtras().get("user_id").toString();    // 상품판매자ID
@@ -99,9 +102,6 @@ public class ItemInformationActivity extends AppCompatActivity {
         getImage getimg = new getImage();
         try {
             product_img_str = getimg.execute(product_no).get();
-
-            Toast.makeText(getApplicationContext(), product_img_str, Toast.LENGTH_LONG).show();
-
             getImageDrawable getdrawable = new getImageDrawable();
             Drawable product_img = getdrawable.execute("http://daisoinmyhouse.cafe24.com/images/" + product_img_str).get();
             ivproduct_img.setImageDrawable(product_img);
@@ -184,6 +184,14 @@ public class ItemInformationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "선택된 상품ID : " + product_no, Toast.LENGTH_LONG).show();
                 kakaolink();
+            }
+        });
+
+        //뒤로가기 버튼
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                finish();
             }
         });
 
