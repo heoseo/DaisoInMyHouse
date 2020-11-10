@@ -31,6 +31,7 @@ public class HomeRentItemFragment extends Fragment {
     RecyclerView recyclerView;
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
+    String url = "http://daisoinmyhouse.cafe24.com/images/";
 
     @Nullable
     @Override
