@@ -9,16 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.kakao.auth.Session;
 
 import org.json.JSONArray;
@@ -30,6 +31,7 @@ import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
 
+    Uri defaultUri = Uri.parse("android.resource://com.example.daisoinmyhouse/" + R.drawable.profile);    // 기본이미지로 설정
     Button btnJoin;
     Button btnLogin;
     EditText id_et, pw_et;
@@ -58,13 +60,12 @@ public class LoginActivity extends AppCompatActivity {
                     LoginAction loginAction = new LoginAction();
                     String resultNickname = loginAction.execute(user_id, user_pw).get();    // 성공하면 닉네임 반환
 
-                    if(!resultNickname.equals("1")){    // 로그인성공
+                    if(resultNickname == null||resultNickname.equals("비밀번호가 틀렸습니다")) { // 로그인 실패
+                        Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인하세요.", Toast.LENGTH_LONG).show();
+                    }
+                    else if(!resultNickname.equals("1")){    // 로그인성공
 
-                        Uri uri = Uri.parse("android.resource://com.example.daisoinmyhouse/" + R.drawable.profile);    // 기본이미지로 설정
-
-
-
-                        saveData(resultNickname, user_id, uri);
+                        saveData(resultNickname, user_id, defaultUri);
 
                         Toast.makeText(getApplicationContext(), StaticUserInformation.nickName+"님 로그인되었습니다.", Toast.LENGTH_LONG).show();
 
@@ -73,9 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                         setResult(RESULT_OK, intent);
                         finish();
 
-                    }
-                    else if(!resultNickname.equals("1")||resultNickname == null) { // 로그인 실패
-                        Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인하세요.", Toast.LENGTH_LONG).show();
                     }
 
                 }catch (Exception e){
@@ -171,6 +169,28 @@ public class LoginActivity extends AppCompatActivity {
         //Firebase storage에 저장하기
         FirebaseStorage firebaseStorage= FirebaseStorage.getInstance();
         final StorageReference imgRef= firebaseStorage.getReference("profileImages/"+fileName);
+
+
+
+
+        //파일 업로드
+        UploadTask uploadTask=imgRef.putFile(defaultUri);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //이미지 업로드가 성공되었으므로...
+                //곧바로 firebase storage의 이미지 파일 다운로드 URL을 얻어오기
+                imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                    }
+                });
+            }
+        });
+
+
+
+
 
         //1. Firebase Database에 nickName, profileUrl을 저장
         //firebase DB관리자 객체 소환

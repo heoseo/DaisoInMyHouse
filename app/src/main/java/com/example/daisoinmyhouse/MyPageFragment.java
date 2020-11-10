@@ -38,6 +38,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -65,10 +66,10 @@ public class MyPageFragment extends Fragment {
     RelativeLayout btnWishlist;
     SharedPreferences preferences;
 
+        Bitmap bitmap;
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-
 //        ViewGroup rootView = null;
 
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
@@ -104,7 +105,6 @@ public class MyPageFragment extends Fragment {
         }
         else StaticUserInformation.cntWishList = preferences.getString("cntWishList", null);
         tvWishlist.setText(StaticUserInformation.cntWishList);
-
 
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
         RelativeLayout btnPopUp = rootView.findViewById(R.id.ll_profile);

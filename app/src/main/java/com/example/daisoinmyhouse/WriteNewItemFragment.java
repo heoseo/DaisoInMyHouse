@@ -32,6 +32,14 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -49,7 +57,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -90,6 +100,7 @@ public class WriteNewItemFragment extends Fragment {
         product_content_et = rootView.findViewById(R.id.et_product_content);
 
         spinner_cate = rootView.findViewById(R.id.spinner_product_cate);
+
         /*spinner_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cate_tv.setText(parent.getItemAtPosition(position).toString());
@@ -188,12 +199,18 @@ public class WriteNewItemFragment extends Fragment {
                     String product_price = product_price_et.getText().toString();
                     String product_content = product_content_et.getText().toString();
                     String location = btnSetLocation.getText().toString();
+                    String product_img = imageName;
+
                     Log.i("location", location);
+
                     Write_RegisterActivity write = new Write_RegisterActivity();
                     if(product_name.getBytes().length <= 0 || product_content.getBytes().length <= 0 || product_price.getBytes().length <=  0){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                     }else{
-                        String result = write.execute(user_id, product_cate, product_name, product_price, product_content, location).get();
+                        String result = write.execute(user_id, product_cate, product_name, product_price, product_content, product_img, location).get();
+
+                        ImageUpload uploader = new ImageUpload(product_name_et.getText().toString(), imageName);
+                        uploader.uploadPicture(img_path);
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                         spinner_cate.setSelection(0);

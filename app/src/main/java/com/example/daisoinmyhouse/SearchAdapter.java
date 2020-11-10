@@ -102,7 +102,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             tvLocation.setText(item.getLocation());
             tvTime.setText(item.getTime());
 
-            imageView.setImageResource(item.getImageRes());
+            imageView.setImageDrawable(item.getImageRes());
         }
     }
 }

@@ -273,11 +273,13 @@ public class FindLocationActivity extends AppCompatActivity
             return "주소 미발견";
         } else {
             String[] splitStr = addresses.get(0).toString().split(",");
-            String adr = splitStr[4] + "," + splitStr[5];
+            String adr = splitStr[2] + "," + splitStr[5];       // -> 특별시는 잉거 사용
+//            String adr = splitStr[4] + "," + splitStr[5];     // -> 나머지는 이거 사용
             String[] adr2 = adr.split(",");
             String locality = adr2[0].split("=")[1];
             String thoroughfare = adr2[1].split("=")[1];
 
+            Log.i("locationTest" , "addresses : " + addresses +", locality : " + locality);
             String location = locality + " " + thoroughfare;
             location_tv.setText(location);
             return location;

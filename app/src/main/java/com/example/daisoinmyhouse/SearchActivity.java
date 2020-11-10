@@ -3,6 +3,10 @@ package com.example.daisoinmyhouse;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -87,6 +92,19 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    private Drawable drawableFromUrl(String url)
+            throws IOException {
+        Bitmap x;
+
+        HttpURLConnection connection =
+                (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(x);
+    }
+
     public class SearchList extends AsyncTask<String, Void, String> {
         String sendMsg, receiveMsg;
 
@@ -126,7 +144,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                         adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
-                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.sample1));
+                                json.getString("time"), json.getInt("product_no"), json.getString("product_name"), drawableFromUrl("http://daisoinmyhouse.cafe24.com/images/" + json.getString("product_img"))));
 
 //                            adapter.addItem(new Item(json.getString("name"), json.getString("address"),
 //                                    date, json.getInt("price"), R.drawable.sample1, json.getInt("num")));
