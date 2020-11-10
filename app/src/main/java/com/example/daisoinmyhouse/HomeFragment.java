@@ -38,7 +38,6 @@ import android.widget.EditText;
 public class HomeFragment extends Fragment implements View.OnClickListener{
     //홈화면 RecyclerView 설정
     RecyclerView recyclerView;
-    ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
     ImageButton btn_wishlist, btn_search;
     RelativeLayout btn_clothes, btn_clean, btn_kitchen, btn_digital, btn_book, btn_etc;

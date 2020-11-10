@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,8 +113,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
 
             tv4.setText(getGap(item.getTime()));
 
-
-            imageView1.setImageResource(item.getImageRes());
+            imageView1.setImageDrawable(item.getImageRes());
         }
 
         public String getGap(String productTime) throws ParseException{

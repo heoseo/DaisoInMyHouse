@@ -1,5 +1,6 @@
 package com.example.daisoinmyhouse;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,17 +27,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Date;
 
+import java.io.InputStream;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
 public class HomeRentItemFragment extends Fragment {
 
     RecyclerView recyclerView;
     ItemAdapter adapter = new ItemAdapter();
     GridLayoutManager layoutManager;
+    String url = "http://daisoinmyhouse.cafe24.com/images/";
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home_rent_item, container, false);
+
+
 
         //홈화면 RecyclerView 설정
         recyclerView = v.findViewById(R.id.rv_product);
@@ -57,15 +68,15 @@ public class HomeRentItemFragment extends Fragment {
         ProductList networkTask = new ProductList("http://daisoinmyhouse.cafe24.com/productList.jsp", null);
         networkTask.execute();
 
-
-        adapter.addItem(new Item("test1234", "기타 대여해줍니다.", "천안시 쌍용동", 30000,
-                "2020-11-10 00:00:00", 1, "기타", R.drawable.guitar));
-        adapter.addItem(new Item("labasimys", "실내자전거 대여해줍니다.", "천안시 두정동", 50000,
-                "2020-11-09 21:00:00", 2, "실내자전거", R.drawable.cycle));
-        adapter.addItem(new Item("labasimys", "드릴 대여해줍니다.", "천안시 백석동", 10000,
-                "2020-11-09 15:00:00", 3, "드릴", R.drawable.drill));
-        adapter.addItem(new Item("khm3813","카메라 대여해줍니다.", "천안시 신부동", 30000,
-                "2020-11-08 21:00:00", 4, "카메라", R.drawable.camera));
+//
+//        adapter.addItem(new Item("test1234", "기타 대여해줍니다.", "천안시 쌍용동", 30000,
+//                "2020-11-10 00:00:00", 1, "기타", R.drawable.guitar));
+//        adapter.addItem(new Item("labasimys", "실내자전거 대여해줍니다.", "천안시 두정동", 50000,
+//                "2020-11-09 21:00:00", 2, "실내자전거", R.drawable.cycle));
+//        adapter.addItem(new Item("labasimys", "드릴 대여해줍니다.", "천안시 백석동", 10000,
+//                "2020-11-09 15:00:00", 3, "드릴", R.drawable.drill));
+//        adapter.addItem(new Item("khm3813","카메라 대여해줍니다.", "천안시 신부동", 30000,
+//                "2020-11-08 21:00:00", 4, "카메라", R.drawable.camera));
 
 
         adapter.setOnItemClickListener(new OnProductItemClickListener() {
@@ -117,6 +128,19 @@ public class HomeRentItemFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
         }
+    }
+
+    private Drawable drawableFromUrl(String url)
+            throws IOException {
+        Bitmap x;
+
+        HttpURLConnection connection =
+                (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(x);
     }
 
     public class RequestHttpURLConnection {
@@ -185,7 +209,7 @@ public class HomeRentItemFragment extends Fragment {
                             Date date = new Date(now);
 
                             adapter.addItem(new Item(json.getString("user_id"), json.getString("product_content"), json.getString("location"), json.getInt("product_price"),
-                                    json.getString("time"), json.getInt("product_no"), json.getString("product_name"), R.drawable.heoseo));
+                                    json.getString("time"), json.getInt("product_no"), json.getString("product_name"), drawableFromUrl("http://daisoinmyhouse.cafe24.com/images/" + json.getString("product_img"))));
 
                             Log.i("테스트", "ok");
                         }
