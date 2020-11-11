@@ -5,20 +5,14 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,16 +23,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -66,17 +57,16 @@ public class MyPageFragment extends Fragment {
     RelativeLayout btnWishlist;
     SharedPreferences preferences;
 
-        Bitmap bitmap;
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+
 //        ViewGroup rootView = null;
 
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mypage, container, false);
         preferences = this.getActivity().getSharedPreferences("account",MODE_PRIVATE);
 
         // [ fragment 에서 버튼 누르면 새 activity 띄우기 ]
-
 
         // 설정 버튼 -> SettingActivity 띄우기
         btnSetting = rootView.findViewById(R.id.btn_setting);
@@ -106,52 +96,28 @@ public class MyPageFragment extends Fragment {
         else StaticUserInformation.cntWishList = preferences.getString("cntWishList", null);
         tvWishlist.setText(StaticUserInformation.cntWishList);
 
+
         // 로그아웃, 수정하기, 공유하기 팝업띄우기
         RelativeLayout btnPopUp = rootView.findViewById(R.id.ll_profile);
         btnPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                builder.setTitle("프로필");
-
-                builder.setItems(R.array.menu_profile_popup, new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int pos)
-                    {
-                        String[] items = getResources().getStringArray(R.array.menu_profile_popup);
-                        String str = items[pos];
-
-                        switch (str){
-                            case "수정하기":
-                                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
-                                getContext().startActivity(intent);
-                                break;
-                            case "공유하기":
-                                break;
-                            case "로그아웃":
-
-                                SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
-                                StaticUserInformation.resetDate(preferences);
-
-                                MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
-
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-//                                fragmentTransaction.remove(MyPageFragment.this).commit();
-                                fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();
-                                break;
-
-                        }
-                    }
-                });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
+                getContext().startActivity(intent);
             }
         });
 
+//로그아웃
+        /*SharedPreferences preferences= getActivity().getSharedPreferences("account",MODE_PRIVATE);
+        StaticUserInformation.resetDate(preferences);
+
+        MyPageLogOutFragment myPageLogOutFragment = new MyPageLogOutFragment();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+//                                fragmentTransaction.remove(MyPageFragment.this).commit();
+        fragmentTransaction.replace(R.id.frame_layout, myPageLogOutFragment).commitAllowingStateLoss();*/
 
         // 키워드 알림 레이아웃 누르면 -> KeywordAlarmActivity 띄우기
         btnKeyword = rootView.findViewById(R.id.ll_keword_notice);

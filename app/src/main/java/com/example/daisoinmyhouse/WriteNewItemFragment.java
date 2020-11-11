@@ -8,13 +8,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -32,14 +30,6 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -49,17 +39,13 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -74,6 +60,7 @@ public class WriteNewItemFragment extends Fragment {
     MainActivity activity;
     Spinner spinner_cate;
     LinearLayout btn_otherwrite;
+
     private static final int SEARCH_LOCATION_ACTIVITY = 1000;
     private final int REQ_CODE_LOCAION = 50;
     private final int REQ_CODE_SELECT_IMAGE = 100;
@@ -81,7 +68,6 @@ public class WriteNewItemFragment extends Fragment {
     private Bitmap image_bitmap_copy = null;
     private Bitmap image_bitmap = null;
     private String imageName = null;
-    String image, imagestr;
 
     public static WriteNewItemFragment newInstance(){
         return new WriteNewItemFragment();
@@ -100,7 +86,6 @@ public class WriteNewItemFragment extends Fragment {
         product_content_et = rootView.findViewById(R.id.et_product_content);
 
         spinner_cate = rootView.findViewById(R.id.spinner_product_cate);
-
         /*spinner_cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cate_tv.setText(parent.getItemAtPosition(position).toString());
@@ -179,12 +164,7 @@ public class WriteNewItemFragment extends Fragment {
             }
         });
 
-        Bitmap bitmap = ((BitmapDrawable)btn_photo.getDrawable()).getBitmap();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.setHasAlpha(true);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
 
         //글쓰기 등록시 db연결
         writeProductBtn = rootView.findViewById(R.id.btn_register);
@@ -193,17 +173,20 @@ public class WriteNewItemFragment extends Fragment {
                 try {
                     SharedPreferences preferences = getContext().getSharedPreferences("account", MODE_PRIVATE);
                     StaticUserInformation.userID = preferences.getString("userID", null);
+
                     String user_id = StaticUserInformation.userID;
+
                     String product_cate = spinner_cate.getSelectedItem().toString();
                     String product_name = product_name_et.getText().toString();
                     String product_price = product_price_et.getText().toString();
                     String product_content = product_content_et.getText().toString();
-                    String location = btnSetLocation.getText().toString();
                     String product_img = imageName;
+                    String location = btnSetLocation.getText().toString();
 
                     Log.i("location", location);
 
                     Write_RegisterActivity write = new Write_RegisterActivity();
+
                     if(product_name.getBytes().length <= 0 || product_content.getBytes().length <= 0 || product_price.getBytes().length <=  0){
                         Toast.makeText(activity.getApplicationContext(), "모든 입력창을 입력해주세요", Toast.LENGTH_LONG).show();
                     }else{
@@ -211,6 +194,7 @@ public class WriteNewItemFragment extends Fragment {
 
                         ImageUpload uploader = new ImageUpload(product_name_et.getText().toString(), imageName);
                         uploader.uploadPicture(img_path);
+
                         Toast.makeText(activity.getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                         spinner_cate.setSelection(0);
@@ -218,93 +202,15 @@ public class WriteNewItemFragment extends Fragment {
                         product_price_et.setText("");
                         product_content_et.setText("");
                         btnSetLocation.setText("위치설정");
+                        btn_photo.setImageResource(R.drawable.btn_add_img);
                     }
-                }  catch (Exception e) {
+                } catch (Exception e) {
                     Log.i("DBtest", ".....ERROR.....!");
                 }
             }
         });
 
         return rootView;
-    }
-
-
-    public class getImg extends AsyncTask<String, Void, String> {
-        String sendMsg, receiveMsg;
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                String str;
-                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-                URL url = new URL("http://daisoinmyhouse.cafe24.com/getImg.jsp");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestMethod("POST");
-
-                //jsp와 통신 성공 시 수행
-                if (conn.getResponseCode() == conn.HTTP_OK) {
-                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
-                    BufferedReader reader = new BufferedReader(tmp);
-                    StringBuffer buffer = new StringBuffer();
-                    // jsp에서 보낸 값을 받는 부분
-                    while ((str = reader.readLine()) != null) {
-                        buffer.append(str);
-                    }
-                    receiveMsg = buffer.toString();
-                    Log.i("테스트", receiveMsg);
-                } else {
-                    // 통신 실패
-                }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //jsp로부터 받은 리턴 값
-            return receiveMsg;
-        }
-
-    }
-
-    public class imgTest extends AsyncTask<String, Void, String> {
-        String sendMsg, receiveMsg;
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                String str;
-                // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-                URL url = new URL("http://daisoinmyhouse.cafe24.com/imageTest.jsp");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestMethod("POST");
-                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                // 전송할 데이터. GET 방식으로 작성
-                sendMsg = "img=" + strings[0];
-                osw.write(sendMsg);
-                osw.flush();
-                //jsp와 통신 성공 시 수행
-                if (conn.getResponseCode() == conn.HTTP_OK) {
-                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
-                    BufferedReader reader = new BufferedReader(tmp);
-                    StringBuffer buffer = new StringBuffer();
-                    // jsp에서 보낸 값을 받는 부분
-                    while ((str = reader.readLine()) != null) {
-                        buffer.append(str);
-                    }
-                    receiveMsg = buffer.toString();
-                    Log.i("테스트", receiveMsg);
-                } else {
-                    // 통신 실패
-                }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //jsp로부터 받은 리턴 값
-            return receiveMsg;
-        }
-
     }
 
     @Override
@@ -338,13 +244,10 @@ public class WriteNewItemFragment extends Fragment {
                 int reWidth = (int) (getActivity().getWindowManager().getDefaultDisplay().getWidth());
                 int reHeight = (int) (getActivity().getWindowManager().getDefaultDisplay().getHeight());
 
-                int height = image_bitmap.getHeight();
-                int width  = image_bitmap.getWidth();
-
                 //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
-                image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 400, true);
+                image_bitmap_copy = Bitmap.createScaledBitmap(image_bitmap, 400, 300, true);
                 // ImageView image = (ImageView) findViewById(R.id.imageView);  //이미지를 띄울 위젯 ID값
-                btn_photo.setImageBitmap(image_bitmap_copy);
+                btn_photo.setImageBitmap(image_bitmap);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -360,8 +263,6 @@ public class WriteNewItemFragment extends Fragment {
                 }
             }
         }
-
-
     }
 
     public String getImagePathToUri(Uri data) {
@@ -382,40 +283,4 @@ public class WriteNewItemFragment extends Fragment {
 
         return imgPath;
     }//end of getImagePathToUri()
-
-
-    /* image폴더에 있는 이미지 띄우기
-        btn_photo = rootView.findViewById(R.id.imageView_photo);
-        Thread uThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    //서버에 올려둔 이미지 URL
-                    URL url = new URL("http://daisoinmyhouse.cafe24.com/images/%EC%9E%AC%ED%95%99%EC%A6%9D%EB%AA%85%EC%84%9C_%EC%B2%9C%EA%B3%A0%EB%A7%88%EB%B9%84_%EA%B9%80%ED%98%9C%EB%AF%BC.jpg");
-                    //Web에서 이미지 가져온 후 ImageView에 지정할 Bitmap 만들기
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoInput(true); //Server 통신에서 입력 가능한 상태로 만듦
-                    conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
-                    InputStream is = conn.getInputStream(); //inputStream 값 가져오기
-                    bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 반환
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        uThread.start(); // 작업 Thread 실행
-        try {
-            //메인 Thread는 별도의 작업을 완료할 때까지 대기한다!
-            //join() 호출하여 별도의 작업 Thread가 종료될 때까지 메인 Thread가 기다림
-            //join() 메서드는 InterruptedException을 발생시킨다.
-            uThread.join();
-            //작업 Thread에서 이미지를 불러오는 작업을 완료한 뒤
-            //UI 작업을 할 수 있는 메인 Thread에서 ImageView에 이미지 지정
-            btn_photo.setImageBitmap(bitmap);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
 }

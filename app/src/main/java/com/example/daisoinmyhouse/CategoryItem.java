@@ -1,4 +1,6 @@
 package com.example.daisoinmyhouse;
+import android.graphics.drawable.Drawable;
+
 import java.util.Date;
 
 public class CategoryItem {
@@ -8,8 +10,8 @@ public class CategoryItem {
     String time;
     String product_content;
     int price;
-    int imageRes;
-    int productID;
+    Drawable imageRes;
+    int product_no;
 
 
 
@@ -17,7 +19,7 @@ public class CategoryItem {
 
     }
 
-    public CategoryItem(String user_id, String product_content, String location, int price, String time, int productID, String item_name, int imageRes){
+    public CategoryItem(String user_id, String product_content, String location, int price, String time, int productID, String item_name, Drawable imageRes){
         this.user_id = user_id;
         this.product_content = product_content;
         this.location = location;
@@ -25,7 +27,7 @@ public class CategoryItem {
         this.time = time;
         this.item_name = item_name;
         this.imageRes = imageRes;
-        this.productID = productID;
+        this.product_no = productID;
     }
 
     public String getProduct_content() {
@@ -44,7 +46,7 @@ public class CategoryItem {
         this.user_id = user_id;
     }
 
-    public String getItem_name() {
+    public String getProduct_name() {
         return item_name;
     }
 
@@ -68,7 +70,7 @@ public class CategoryItem {
         this.time = time;
     }
 
-    public int getPrice() {
+    public int getProduct_price() {
         return price;
     }
 
@@ -76,19 +78,19 @@ public class CategoryItem {
         this.price = price;
     }
 
-    public int getImageRes() {
+    public Drawable getImageRes() {
         return imageRes;
     }
 
-    public void setImageRes(int imageRes) {
+    public void setImageRes(Drawable imageRes) {
         this.imageRes = imageRes;
     }
 
-    public int getProductID() {
-        return productID;
+    public int getProduct_no() {
+        return product_no;
     }
 
     public void setProductID(int productID) {
-        this.productID = productID;
+        this.product_no = productID;
     }
 }

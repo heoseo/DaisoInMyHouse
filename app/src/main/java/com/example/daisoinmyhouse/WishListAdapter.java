@@ -111,7 +111,7 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.ViewHo
             tvLocation.setText(wishlist.getLocation());
             tvTime.setText(getGap(wishlist.getTime()));
 
-            imageView1.setImageResource(wishlist.getImageRes());
+            imageView1.setImageDrawable(wishlist.getImageRes());
         }
 
         public String getGap(String productTime) throws ParseException {
