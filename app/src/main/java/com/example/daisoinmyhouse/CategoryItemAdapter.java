@@ -48,6 +48,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     public void addItem(CategoryItem categoryItem){
         items.add(categoryItem);
+        Log.i("categoryListTest", categoryItem.getProduct_name());
     }
 
     public void setItems(ArrayList<CategoryItem> items){
@@ -110,6 +111,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
             tv4.setText(getGap(categoryItem.getTime()));
 
             imageView.setImageDrawable(categoryItem.getImageRes());
+
         }
 
         public String getGap(String productTime) throws ParseException {

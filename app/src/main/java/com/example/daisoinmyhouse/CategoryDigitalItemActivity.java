@@ -7,13 +7,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,9 +44,11 @@ public class CategoryDigitalItemActivity extends AppCompatActivity {
 
     String category;
 
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_item);
+        CategoryList categorylist = new CategoryList();
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_category_item);
 
@@ -53,11 +58,20 @@ public class CategoryDigitalItemActivity extends AppCompatActivity {
         tv_category = (TextView) findViewById(R.id.tv_item_category);
         category = getIntent().getExtras().getString("category");
 
-        CategoryList categorylist = new CategoryList();
 
         tv_category.setText(category);
         categorylist.execute(category);
-        recyclerView.setAdapter(adapter);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+
+        }, 100);   // 1000 = 1초 후 도출
 
         adapter.setOnCategoryItemClickListener(new CategoryItemClickListener() {
             @Override
@@ -87,6 +101,8 @@ public class CategoryDigitalItemActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private Drawable drawableFromUrl(String url)
             throws IOException {
@@ -146,7 +162,7 @@ public class CategoryDigitalItemActivity extends AppCompatActivity {
 //                            adapter.addItem(new Item(json.getString("name"), "두정동", now, json.getInt("price"), R.drawable.sample1, 1));
 
                         receiveMsg = buffer.toString();
-                        Log.i("테스트", receiveMsg);
+                        Log.i("digitalTest", receiveMsg);
                     }
                 } else{
                     //통신실패
@@ -161,5 +177,6 @@ public class CategoryDigitalItemActivity extends AppCompatActivity {
             return receiveMsg;
         }
     }
+
 
 }

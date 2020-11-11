@@ -121,11 +121,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
             String strGap="";
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
             Date productTimeDate = dateFormat.parse(productTime);
             long productTimeLong = productTimeDate.getTime();
 
             Date curTime = new Date();
-            curTime = dateFormat.parse(dateFormat.format(curTime));
             long curTimeLong = curTime.getTime();
 
 
@@ -150,7 +150,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> im
 
 
             }
-            Log.i("timeTest", strGap);
 
             return strGap;
         }

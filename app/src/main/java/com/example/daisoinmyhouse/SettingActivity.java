@@ -2,6 +2,7 @@ package com.example.daisoinmyhouse;
 
 import android.app.AppComponentFactory;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -44,6 +45,17 @@ public class SettingActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
+            }
+        });
+
+        LinearLayout btnLogout = (LinearLayout)findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = getSharedPreferences("account",MODE_PRIVATE);
+                StaticUserInformation.resetDate(preferences);
+
                 finish();
             }
         });

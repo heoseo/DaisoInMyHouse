@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +51,7 @@ public class SearchActivity extends AppCompatActivity {
         search = getIntent().getExtras().getString("search");
         et_search = (EditText) findViewById(R.id.et_search_item);
         et_search.setText(search);
+        et_search.requestFocus();
 
         recyclerView = (RecyclerView) findViewById(R.id.search_list);
 
@@ -66,15 +69,30 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+
+        }, 100);   // 1000 = 1초 후 도출
+
         adapter.setOnSearchClickListener(new SearchItemClickListener() {
             @Override
             public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
                 Item item = (Item) adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "선택된 제품 : " + item.getProduct_name(), Toast.LENGTH_LONG).show();
 
                 //(ItemInformationActivity에 상품 ID 전달)
                 Intent intent = new Intent(getApplicationContext(), ItemInformationActivity.class);
                 intent.putExtra("product_no", item.getProduct_no());
+                intent.putExtra("user_id", item.getUser_id());
+                intent.putExtra("product_name", item.getProduct_name());
+                intent.putExtra("product_price", item.getProduct_price());
+                intent.putExtra("product_content", item.getProduct_content());
+                intent.putExtra("location", item.getLocation());
                 startActivity(intent);
             }
         });
@@ -89,6 +107,21 @@ public class SearchActivity extends AppCompatActivity {
 
         CONTEXT = this;
         ((SearchActivity) SearchActivity.CONTEXT).onResume();
+
+
+//        //검색버튼
+//        et_search = v.findViewById(R.id.et_search_item);
+//        btn_search=v.findViewById(R.id.img_btn_search);
+//        btn_search.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String search = et_search.getText().toString();
+//                et_search.setText(null);
+//                Intent intent = new Intent(getContext(), SearchActivity.class);
+//                intent.putExtra("search", search);
+//                getContext().startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -124,7 +157,7 @@ public class SearchActivity extends AppCompatActivity {
                 osw.flush();
                 //jsp와 통신 성공 시 수행
                 if (conn.getResponseCode() == conn.HTTP_OK) {
-                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "EUC-kr");
                     BufferedReader reader = new BufferedReader(tmp);
                     StringBuffer buffer = new StringBuffer();
 
